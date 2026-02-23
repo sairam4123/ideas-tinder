@@ -20,13 +20,13 @@ Users can swipe through a pre-coded set of startup ideas with:
 
 ## Quick Start
 
-1) Install dependencies:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2) Create your environment file (for example `.env`):
+2. Create your environment file (for example `.env`):
 
 ```env
 DATABASE_URL="file:./db.sqlite"
@@ -35,13 +35,13 @@ BETTER_AUTH_GITHUB_CLIENT_ID="your-github-client-id"
 BETTER_AUTH_GITHUB_CLIENT_SECRET="your-github-client-secret"
 ```
 
-3) Run the app:
+3. Run the app:
 
 ```bash
 npm run dev
 ```
 
-4) Open:
+4. Open:
 
 ```text
 http://localhost:3000
