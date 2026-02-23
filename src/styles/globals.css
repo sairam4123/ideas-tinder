@@ -1,6 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+  --font-sans:
+    var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@keyframes card-enter-z {
+  from {
+    transform: translateZ(-120px) scale(0.92);
+    opacity: 0.75;
+  }
+
+  to {
+    transform: translateZ(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.card-enter-z {
+  transform-style: preserve-3d;
+  animation: card-enter-z 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
 }

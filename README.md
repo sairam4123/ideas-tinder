@@ -1,29 +1,88 @@
-# Create T3 App
+# Ideas Tinder
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A simple Tinder-like idea discovery app built with Next.js + T3 stack tooling.
 
-## What's next? How do I make an app with this?
+Users can swipe through a pre-coded set of startup ideas with:
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Drag and swipe interactions (mouse + touch)
+- Like / Dislike actions
+- Card stack depth animation (z-direction)
+- Restart deck flow when all ideas are consumed
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Tech Stack
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- Next.js (App Router)
+- React + TypeScript
+- Tailwind CSS
+- tRPC
+- Prisma
+- better-auth
 
-## Learn More
+## Quick Start
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+1) Install dependencies:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+npm install
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+2) Create your environment file (for example `.env`):
 
-## How do I deploy this?
+```env
+DATABASE_URL="file:./db.sqlite"
+BETTER_AUTH_SECRET="replace-with-a-random-secret"
+BETTER_AUTH_GITHUB_CLIENT_ID="your-github-client-id"
+BETTER_AUTH_GITHUB_CLIENT_SECRET="your-github-client-secret"
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+3) Run the app:
+
+```bash
+npm run dev
+```
+
+4) Open:
+
+```text
+http://localhost:3000
+```
+
+## Scripts
+
+- `npm run dev` – Start local dev server
+- `npm run build` – Production build
+- `npm run start` – Run built app
+- `npm run lint` – ESLint
+- `npm run typecheck` – TypeScript check
+- `npm run check` – Lint + type check
+- `npm run db:generate` – Create/apply Prisma migration in dev
+- `npm run db:push` – Push Prisma schema to database
+- `npm run db:studio` – Open Prisma Studio
+
+## Swipe Deck Location
+
+Main swipe UI lives in:
+
+- `src/app/_components/idea-tinder.tsx`
+
+Home page renders the deck in:
+
+- `src/app/page.tsx`
+
+## Important Environment Note
+
+`src/server/better-auth/config.ts` uses:
+
+- `env.BETTER_AUTH_GITHUB_CLIENT_ID`
+- `env.BETTER_AUTH_GITHUB_CLIENT_SECRET`
+
+If type checks fail saying those properties do not exist, ensure the same keys are defined in `src/env.js` under both:
+
+- `server`
+- `runtimeEnv`
+
+They are currently commented out in many fresh templates and must be enabled if GitHub auth is configured.
+
+## Current Scope
+
+This project is intentionally minimal: pre-defined ideas + Tinder-style swipe animation. No persistence or backend idea feed is required for the MVP UI.
