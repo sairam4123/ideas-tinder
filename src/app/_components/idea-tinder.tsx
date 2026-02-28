@@ -1,375 +1,365 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { motion, useAnimation, type PanInfo } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { X, Heart, Star, Info } from "lucide-react";
 
-type SwipeDirection = "left" | "right";
+import { api } from "~/trpc/react";
 
-type Idea = {
-  id: number;
-  title: string;
-  pitch: string;
-  tags: string[];
+type SwipeDirection = "left" | "right" | "top";
+type QueuedSwipe = {
+  stackId: string;
+  ideaId: string;
+  direction: SwipeDirection;
 };
 
-const IDEAS: Idea[] = [
-  {
-    id: 1,
-    title: "Parking Buddy",
-    pitch:
-      "Live neighborhood map showing free parking spots from user reports.",
-    tags: ["Mobility", "Local", "Crowdsourced"],
-  },
-  {
-    id: 2,
-    title: "Fridge Chef",
-    pitch: "Generate dinner recipes from what you already have in your fridge.",
-    tags: ["Food", "AI", "Household"],
-  },
-  {
-    id: 3,
-    title: "Study Sprints",
-    pitch:
-      "Find instant 25-minute online focus sessions with accountability peers.",
-    tags: ["Education", "Productivity", "Community"],
-  },
-  {
-    id: 4,
-    title: "Pet Pulse",
-    pitch: "Daily pet wellbeing check-ins that flag unusual behavior patterns.",
-    tags: ["Pets", "Health", "Tracking"],
-  },
-  {
-    id: 5,
-    title: "Event Split",
-    pitch: "Group event planning with built-in budget splitting and reminders.",
-    tags: ["Events", "Finance", "Social"],
-  },
-];
-
-const SWIPE_DISTANCE_THRESHOLD = 90;
-const SWIPE_VELOCITY_THRESHOLD = 0.45;
-
 export function IdeaTinder() {
+  const utils = api.useUtils();
   const [index, setIndex] = useState(0);
-  const [dragX, setDragX] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState<number | null>(null);
-  const [lastClientX, setLastClientX] = useState<number | null>(null);
-  const [lastMoveTime, setLastMoveTime] = useState<number | null>(null);
-  const [velocityX, setVelocityX] = useState(0);
-  const [swipeOut, setSwipeOut] = useState<SwipeDirection | null>(null);
+  const [dragRotation, setDragRotation] = useState(0);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const controls = useAnimation();
+  const pendingSwipesRef = useRef<QueuedSwipe[]>([]);
+  const isProcessingRef = useRef(false);
 
-  const currentIdea = IDEAS[index] ?? null;
-  const visibleIdeas = IDEAS.slice(index, index + 3);
-  const totalIdeas = IDEAS.length;
+  const preferencesQuery = api.idea.getPreferences.useQuery();
+  const stackQuery = api.idea.getStack.useQuery(undefined, {
+    enabled: preferencesQuery.data?.onboardingCompleted === true,
+    refetchInterval: 30_000,
+  });
 
-  const stackStyles = useMemo(
-    () => [
-      { transform: "translateY(0px) scale(1) translateZ(0px)", opacity: 1 },
-      {
-        transform: "translateY(12px) scale(0.97) translateZ(-90px)",
-        opacity: 0.88,
+  const swipeMutation = api.idea.swipeIdea.useMutation();
+
+  useEffect(() => {
+    setIndex(0);
+  }, [stackQuery.data?.id]);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(
+      "(max-width: 768px), (pointer: coarse)",
+    );
+
+    const syncTouchMode = () => {
+      setIsTouchDevice(mediaQuery.matches);
+    };
+
+    syncTouchMode();
+    mediaQuery.addEventListener("change", syncTouchMode);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncTouchMode);
+    };
+  }, []);
+
+  const currentItem = stackQuery.data?.ideas[index] ?? null;
+  const nextItem = stackQuery.data?.ideas[index + 1] ?? null;
+  const allItems = stackQuery.data?.ideas ?? [];
+
+  const processSwipeQueue = () => {
+    if (isProcessingRef.current) {
+      return;
+    }
+
+    const queuedSwipe = pendingSwipesRef.current.shift();
+    if (!queuedSwipe) {
+      void utils.idea.getPreferences.invalidate();
+      return;
+    }
+
+    isProcessingRef.current = true;
+
+    swipeMutation.mutate(queuedSwipe, {
+      onSettled: () => {
+        isProcessingRef.current = false;
+        processSwipeQueue();
       },
-      {
-        transform: "translateY(24px) scale(0.94) translateZ(-180px)",
-        opacity: 0.74,
-      },
-    ],
-    [],
-  );
+    });
+  };
 
-  function getCardStyle(relativeIndex: number) {
-    if (relativeIndex === 0) {
-      if (swipeOut === "left") {
-        return {
-          transform: "translateX(-560px) rotate(-24deg)",
-          opacity: 0,
-        };
-      }
-
-      if (swipeOut === "right") {
-        return {
-          transform: "translateX(560px) rotate(24deg)",
-          opacity: 0,
-        };
-      }
-
-      const rotate = dragX * 0.08;
-      return {
-        transform: `translateX(${dragX}px) rotate(${rotate}deg) translateZ(0px)`,
-        opacity: 1,
-      };
-    }
-
-    return stackStyles[relativeIndex] ?? stackStyles[stackStyles.length - 1]!;
-  }
-
-  function startDrag(clientX: number) {
-    if (!currentIdea || swipeOut) {
+  const triggerSwipe = async (direction: SwipeDirection) => {
+    if (!currentItem || !stackQuery.data?.id) {
       return;
     }
 
-    setStartX(clientX);
-    setLastClientX(clientX);
-    setLastMoveTime(Date.now());
-    setVelocityX(0);
-    setIsDragging(true);
-  }
+    const swipeTravel = isTouchDevice ? 360 : 500;
+    const x =
+      direction === "left"
+        ? -swipeTravel
+        : direction === "right"
+          ? swipeTravel
+          : 0;
+    const y = direction === "top" ? -swipeTravel : 0;
+    const rotation =
+      direction === "left" ? -16 : direction === "right" ? 16 : 0;
 
-  function updateDrag(clientX: number) {
-    if (!isDragging || startX === null || swipeOut) {
-      return;
+    setDragRotation(rotation);
+
+    await controls.start({
+      x,
+      y,
+      opacity: 0,
+      scale: 0.8,
+      transition: { duration: 0.3 },
+    });
+
+    setIndex((value) => value + 1);
+
+    pendingSwipesRef.current.push({
+      stackId: stackQuery.data.id,
+      ideaId: currentItem.idea.id,
+      direction,
+    });
+    processSwipeQueue();
+
+    // Reset controls for the next card immediately after mutation is queued
+    controls.set({ x: 0, y: 0, opacity: 1, scale: 1 });
+    setDragRotation(0);
+  };
+
+  const handleDragEnd = async (_: unknown, info: PanInfo) => {
+    const swipeThreshold = isTouchDevice ? 40 : 90;
+    const velocityThreshold = isTouchDevice ? 160 : 420;
+
+    const isLeftSwipe =
+      info.offset.x < -swipeThreshold || info.velocity.x < -velocityThreshold;
+    const isRightSwipe =
+      info.offset.x > swipeThreshold || info.velocity.x > velocityThreshold;
+    const isTopSwipe =
+      info.offset.y < -swipeThreshold || info.velocity.y < -velocityThreshold;
+
+    if (isTopSwipe) {
+      await triggerSwipe("top");
+    } else if (isRightSwipe) {
+      await triggerSwipe("right");
+    } else if (isLeftSwipe) {
+      await triggerSwipe("left");
+    } else {
+      setDragRotation(0);
+      void controls.start({ x: 0, y: 0, transition: { type: "spring" } });
     }
+  };
 
-    const now = Date.now();
-    if (lastClientX !== null && lastMoveTime !== null) {
-      const deltaTime = now - lastMoveTime;
-      if (deltaTime > 0) {
-        setVelocityX((clientX - lastClientX) / deltaTime);
-      }
-    }
-
-    setLastClientX(clientX);
-    setLastMoveTime(now);
-
-    setDragX(clientX - startX);
-  }
-
-  function triggerSwipe(direction: SwipeDirection) {
-    if (!currentIdea || swipeOut) {
-      return;
-    }
-
-    setIsDragging(false);
-    setSwipeOut(direction);
-  }
-
-  function handleCardTransitionEnd(
-    event: React.TransitionEvent<HTMLDivElement>,
-  ) {
-    if (!swipeOut || event.propertyName !== "transform") {
-      return;
-    }
-
-    setIndex((previousIndex) => previousIndex + 1);
-    setSwipeOut(null);
-    setDragX(0);
-    setStartX(null);
-    setLastClientX(null);
-    setLastMoveTime(null);
-    setVelocityX(0);
-    setIsDragging(false);
-  }
-
-  function handlePointerDown(event: React.PointerEvent<HTMLDivElement>) {
-    if (event.pointerType === "touch") {
-      event.preventDefault();
-    }
-    event.currentTarget.setPointerCapture(event.pointerId);
-    startDrag(event.clientX);
-  }
-
-  function handlePointerMove(event: React.PointerEvent<HTMLDivElement>) {
-    if (event.pointerType === "touch") {
-      event.preventDefault();
-    }
-
-    updateDrag(event.clientX);
-  }
-
-  function handlePointerEnd() {
-    if (!isDragging || swipeOut) {
-      return;
-    }
-
-    setIsDragging(false);
-
-    const shouldSwipeRight =
-      dragX > SWIPE_DISTANCE_THRESHOLD || velocityX > SWIPE_VELOCITY_THRESHOLD;
-    const shouldSwipeLeft =
-      dragX < -SWIPE_DISTANCE_THRESHOLD ||
-      velocityX < -SWIPE_VELOCITY_THRESHOLD;
-
-    if (shouldSwipeRight) {
-      triggerSwipe("right");
-      return;
-    }
-
-    if (shouldSwipeLeft) {
-      triggerSwipe("left");
-      return;
-    }
-
-    setDragX(0);
-    setVelocityX(0);
-    setLastClientX(null);
-    setLastMoveTime(null);
-  }
-
-  function handleTouchStart(event: React.TouchEvent<HTMLDivElement>) {
-    if (event.touches.length !== 1) {
-      return;
-    }
-
-    const touch = event.touches.item(0);
-    if (!touch) {
-      return;
-    }
-
-    event.preventDefault();
-    startDrag(touch.clientX);
-  }
-
-  function handleTouchMove(event: React.TouchEvent<HTMLDivElement>) {
-    if (event.touches.length !== 1) {
-      return;
-    }
-
-    const touch = event.touches.item(0);
-    if (!touch) {
-      return;
-    }
-
-    event.preventDefault();
-    updateDrag(touch.clientX);
-  }
-
-  function handleTouchEnd() {
-    handlePointerEnd();
-  }
-
-  if (!currentIdea) {
+  if (preferencesQuery.isPending || stackQuery.isPending) {
     return (
-      <div className="flex w-full max-w-md flex-col items-center gap-4 rounded-2xl bg-white p-8 text-center shadow-lg">
-        <h2 className="text-2xl font-semibold text-slate-900">No more ideas</h2>
-        <p className="text-slate-600">You reached the end of the deck.</p>
+      <div className="flex h-112.5 w-full max-w-sm flex-col items-center justify-center gap-4 rounded-4xl border border-slate-100 bg-white p-10 text-center shadow-xl">
+        <div className="mb-4 flex animate-pulse space-x-2">
+          <div className="h-3 w-3 rounded-full bg-indigo-300"></div>
+          <div
+            className="h-3 w-3 rounded-full bg-indigo-300"
+            style={{ animationDelay: "150ms" }}
+          ></div>
+          <div
+            className="h-3 w-3 rounded-full bg-indigo-300"
+            style={{ animationDelay: "300ms" }}
+          ></div>
+        </div>
+        <h2 className="animate-pulse text-xl font-medium text-slate-500">
+          Crafting ideas...
+        </h2>
+      </div>
+    );
+  }
+
+  if (!preferencesQuery.data?.onboardingCompleted) {
+    return (
+      <div className="relative flex h-112.5 w-full max-w-sm flex-col items-center justify-center gap-6 overflow-hidden rounded-4xl border border-slate-100 bg-white p-10 text-center shadow-2xl">
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 h-32 w-32 rounded-full bg-indigo-50 blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-32 w-32 rounded-full bg-blue-50 blur-3xl"></div>
+
+        <div className="relative z-10">
+          <h2 className="mb-2 text-3xl font-bold text-slate-900">
+            Complete Setup
+          </h2>
+          <p className="mb-6 text-sm leading-relaxed text-slate-500">
+            Select your fields of interest first to personalize your
+            AI-generated recommendations.
+          </p>
+          <Link
+            className="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 font-semibold text-white shadow-xl shadow-slate-200 transition-all hover:scale-105 active:scale-95"
+            href="/onboarding"
+          >
+            Go to Onboarding
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentItem) {
+    return (
+      <div className="flex h-112.5 w-full max-w-sm flex-col items-center justify-center gap-6 rounded-4xl border border-slate-100 bg-white p-10 text-center shadow-2xl">
+        <div className="mb-2 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
+          <Star className="h-8 w-8 text-indigo-400" />
+        </div>
+        <div>
+          <h2 className="mb-2 text-2xl font-bold text-slate-900">
+            You&apos;re caught up!
+          </h2>
+          <p className="text-sm leading-relaxed text-slate-500">
+            Refresh to generate a new stack of AI ideas based on your recent
+            swipes.
+          </p>
+        </div>
         <button
-          className="rounded-full bg-slate-900 px-6 py-2 font-medium text-white transition hover:bg-slate-700"
-          onClick={() => {
+          className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 font-semibold text-white shadow-xl shadow-slate-200 transition-all hover:scale-105 active:scale-95"
+          onClick={async () => {
+            await stackQuery.refetch();
             setIndex(0);
-            setDragX(0);
-            setSwipeOut(null);
           }}
           type="button"
         >
-          Restart deck
+          Generate New Stack
         </button>
       </div>
     );
   }
 
-  const showDislike = dragX < -28;
-  const showLike = dragX > 28;
-
   return (
-    <div className="flex w-full max-w-md flex-col items-center gap-6 select-none">
-      <div className="relative h-[460px] w-full [perspective:1000px]">
-        {visibleIdeas
-          .slice()
-          .reverse()
-          .map((idea) => {
-            const relativeIndex = visibleIdeas.findIndex(
-              (visibleIdea) => visibleIdea.id === idea.id,
+    <div className="flex w-full max-w-3xl flex-col gap-6">
+      <div className="relative flex h-150 w-full max-w-sm flex-col items-center self-center select-none">
+        {/* Background/Next card preview */}
+        {nextItem && (
+          <div className="absolute top-2 z-0 flex h-112.5 w-full scale-95 flex-col items-center justify-center overflow-hidden rounded-4xl border border-slate-200 bg-slate-50 opacity-80 shadow-sm">
+            <div className="h-full w-full p-8 opacity-40 mix-blend-multiply blur-[2px]">
+              <div className="mb-8 flex items-center justify-between">
+                <div className="h-6 w-12 animate-pulse rounded-full bg-slate-300" />
+                <div className="h-8 w-8 animate-pulse rounded-full bg-slate-300" />
+              </div>
+              <div className="mb-6 h-8 w-3/4 animate-pulse rounded-xl bg-slate-400" />
+              <div className="space-y-3">
+                <div className="h-4 w-full animate-pulse rounded-lg bg-slate-300" />
+                <div className="h-4 w-5/6 animate-pulse rounded-lg bg-slate-300" />
+                <div className="h-4 w-4/6 animate-pulse rounded-lg bg-slate-300" />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Main card */}
+        <motion.div
+          drag
+          dragElastic={isTouchDevice ? 0.95 : 0.9}
+          dragMomentum
+          onDrag={(_, info) => {
+            const nextRotation = Math.max(
+              -18,
+              Math.min(18, info.offset.x / 10),
             );
-            const isTopCard = relativeIndex === 0;
+            setDragRotation(nextRotation);
+          }}
+          onDragEnd={handleDragEnd}
+          animate={controls}
+          whileTap={{ cursor: "grabbing" }}
+          style={{ transformOrigin: "50% 100%", rotate: dragRotation }}
+          className="relative z-10 flex h-112.5 w-full cursor-grab touch-none flex-col overflow-hidden rounded-4xl border border-slate-200 bg-white p-8 shadow-2xl"
+        >
+          <div className="mb-auto flex items-center justify-between">
+            <span className="rounded-full border border-slate-100 bg-slate-50 px-3 py-1.5 text-xs font-bold tracking-wide text-slate-500">
+              {index + 1} / {stackQuery.data?.ideaCount ?? 0}
+            </span>
+            <Link
+              className="rounded-full border border-slate-100 bg-slate-50 p-2 text-slate-400 transition-colors hover:border-indigo-100 hover:bg-indigo-50 hover:text-indigo-500"
+              href={`/ideas/${currentItem.idea.id}`}
+              title="Details"
+            >
+              <Info className="h-5 w-5" />
+            </Link>
+          </div>
+
+          <div className="my-auto flex flex-col pt-4">
+            <h2 className="mb-4 line-clamp-3 text-3xl leading-tight font-black tracking-tight text-slate-900 transition-all hover:line-clamp-none">
+              {currentItem.idea.title}
+            </h2>
+            <p className="custom-scrollbar max-h-40 overflow-y-auto pr-2 text-base leading-relaxed font-medium text-slate-600">
+              {currentItem.idea.description}
+            </p>
+          </div>
+
+          <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-slate-50 pt-6 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+            <div>
+              Swipe right to Like{" "}
+              <span className="mx-1 inline-block text-slate-300">•</span> Swipe
+              up to Fave
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Action Buttons */}
+        <div className="z-10 mt-8 flex items-center gap-6">
+          <button
+            className="group flex h-16 w-16 items-center justify-center rounded-full border-2 border-slate-200 bg-white shadow-lg transition-all hover:scale-110 hover:border-red-400 hover:bg-red-50 active:scale-95 disabled:opacity-50"
+            onClick={() => triggerSwipe("left")}
+            title="Dislike"
+          >
+            <X className="h-8 w-8 text-slate-400 transition-colors group-hover:text-red-500" />
+          </button>
+
+          <button
+            className="group mb-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-slate-200 bg-white shadow-lg transition-all hover:scale-110 hover:border-sky-400 hover:bg-sky-50 active:scale-95 disabled:opacity-50"
+            onClick={() => triggerSwipe("top")}
+            title="Favorite"
+          >
+            <Star className="h-6 w-6 text-slate-400 transition-all group-hover:fill-sky-500 group-hover:text-sky-500" />
+          </button>
+
+          <button
+            className="group flex h-16 w-16 items-center justify-center rounded-full border-2 border-slate-200 bg-white shadow-lg transition-all hover:scale-110 hover:border-emerald-400 hover:bg-emerald-50 active:scale-95 disabled:opacity-50"
+            onClick={() => triggerSwipe("right")}
+            title="Like"
+          >
+            <Heart className="h-8 w-8 text-slate-400 transition-all group-hover:fill-emerald-500 group-hover:text-emerald-500" />
+          </button>
+        </div>
+      </div>
+
+      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+        <h3 className="text-sm font-semibold tracking-wide text-slate-800 uppercase">
+          Full Stack
+        </h3>
+        <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
+          {allItems.map((item, itemIndex) => {
+            const isCurrent = itemIndex === index;
+            const isSeen = itemIndex < index;
 
             return (
-              <div
-                key={idea.id}
-                className={`absolute inset-0 transform-gpu transition-opacity transition-transform ${
-                  isTopCard && isDragging ? "duration-0" : "duration-300"
+              <Link
+                className={`block rounded-lg border px-3 py-2 text-sm transition ${
+                  isCurrent
+                    ? "border-indigo-200 bg-indigo-50 text-indigo-800"
+                    : isSeen
+                      ? "border-slate-200 bg-slate-50 text-slate-500"
+                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
                 }`}
-                onTransitionEnd={
-                  isTopCard ? handleCardTransitionEnd : undefined
-                }
-                style={getCardStyle(relativeIndex)}
+                href={`/ideas/${item.idea.id}`}
+                key={item.stackItemId}
               >
-                <div
-                  className={`absolute inset-0 rounded-3xl border border-slate-200 bg-white p-6 shadow-xl ${
-                    isTopCard
-                      ? `touch-none transition-opacity transition-transform duration-200 ${
-                          isDragging ? "cursor-grabbing" : "cursor-grab"
-                        }`
-                      : "pointer-events-none"
-                  }`}
-                  onPointerDown={isTopCard ? handlePointerDown : undefined}
-                  onPointerMove={isTopCard ? handlePointerMove : undefined}
-                  onPointerUp={isTopCard ? handlePointerEnd : undefined}
-                  onPointerLeave={isTopCard ? handlePointerEnd : undefined}
-                  onPointerCancel={isTopCard ? handlePointerEnd : undefined}
-                  onTouchStart={isTopCard ? handleTouchStart : undefined}
-                  onTouchMove={isTopCard ? handleTouchMove : undefined}
-                  onTouchEnd={isTopCard ? handleTouchEnd : undefined}
-                  onTouchCancel={isTopCard ? handleTouchEnd : undefined}
-                >
-                  <div className="flex h-full flex-col justify-between">
-                    <div className="flex items-start justify-between">
-                      <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">
-                        Idea {index + 1}/{totalIdeas}
-                      </span>
-                      {isTopCard && showDislike ? (
-                        <span className="rounded-md border-2 border-red-500 px-2 py-1 text-xs font-bold tracking-wide text-red-500">
-                          NOPE
-                        </span>
-                      ) : null}
-                      {isTopCard && showLike ? (
-                        <span className="rounded-md border-2 border-emerald-500 px-2 py-1 text-xs font-bold tracking-wide text-emerald-500">
-                          LIKE
-                        </span>
-                      ) : null}
-                    </div>
-
-                    <div className="space-y-4">
-                      <h2 className="text-3xl font-bold text-slate-900">
-                        {idea.title}
-                      </h2>
-                      <p className="text-lg leading-relaxed text-slate-700">
-                        {idea.pitch}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {idea.tags.map((tag) => (
-                          <span
-                            className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
-                            key={tag}
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <p className="text-sm text-slate-500">
-                      {isTopCard
-                        ? "Drag left or right to swipe"
-                        : `In stack: ${idea.title}`}
-                    </p>
-                  </div>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="line-clamp-1 font-medium">{item.idea.title}</p>
+                  <span className="text-xs">#{itemIndex + 1}</span>
                 </div>
-              </div>
+              </Link>
             );
           })}
-      </div>
+        </div>
+      </section>
 
-      <div className="flex items-center gap-4">
-        <button
-          className="rounded-full border border-red-300 bg-red-50 px-5 py-2 font-semibold text-red-600 transition hover:bg-red-100"
-          onClick={() => {
-            triggerSwipe("left");
-          }}
-          type="button"
-        >
-          Dislike
-        </button>
-        <button
-          className="rounded-full border border-emerald-300 bg-emerald-50 px-5 py-2 font-semibold text-emerald-600 transition hover:bg-emerald-100"
-          onClick={() => {
-            triggerSwipe("right");
-          }}
-          type="button"
-        >
-          Like
-        </button>
-      </div>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+      `,
+        }}
+      />
     </div>
   );
 }

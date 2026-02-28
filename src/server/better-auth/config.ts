@@ -6,18 +6,22 @@ import { db } from "~/server/db";
 
 export const auth = betterAuth({
   database: prismaAdapter(db, {
-    provider: "sqlite", // or "sqlite" or "mysql"
+    provider: env.DB_PROVIDER === "postgres" ? "postgresql" : "sqlite",
   }),
   emailAndPassword: {
     enabled: true,
   },
-  socialProviders: {
-    github: {
-      clientId: env.BETTER_AUTH_GITHUB_CLIENT_ID,
-      clientSecret: env.BETTER_AUTH_GITHUB_CLIENT_SECRET,
-      redirectURI: "http://localhost:3000/api/auth/callback/github",
-    },
-  },
+  trustedOrigins: ["http://localhost:3000", "http://192.168.1.2:3000"],
+  socialProviders:
+    env.BETTER_AUTH_GITHUB_CLIENT_ID && env.BETTER_AUTH_GITHUB_CLIENT_SECRET
+      ? {
+          github: {
+            clientId: env.BETTER_AUTH_GITHUB_CLIENT_ID,
+            clientSecret: env.BETTER_AUTH_GITHUB_CLIENT_SECRET,
+            redirectURI: "http://localhost:3000/api/auth/callback/github",
+          },
+        }
+      : undefined,
 });
 
 export type Session = typeof auth.$Infer.Session;

@@ -11,9 +11,22 @@ export const env = createEnv({
       process.env.NODE_ENV === "production"
         ? z.string()
         : z.string().optional(),
-    // BETTER_AUTH_GITHUB_CLIENT_ID: z.string(),
-    // BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string(),
+    BETTER_AUTH_GITHUB_CLIENT_ID: z.string().optional(),
+    BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string().optional(),
     DATABASE_URL: z.string().url(),
+    DB_PROVIDER: z.enum(["sqlite", "postgres"]).default("sqlite"),
+    GOOGLE_API_KEY: z.string().min(1),
+    GEMINI_MODEL: z.string().default("gemini-2.5-flash"),
+    GEMINI_EMBED_MODEL: z.string().default("text-embedding-004"),
+    STACK_SIZE_MIN: z.coerce.number().int().min(10).max(20).default(10),
+    STACK_SIZE_MAX: z.coerce.number().int().min(10).max(20).default(20),
+    STACK_REFRESH_TEST_SECONDS: z.coerce.number().int().min(1).default(30),
+    STACK_REFRESH_PROD_SECONDS: z.coerce.number().int().min(60).default(1800),
+    SWIPE_WEIGHT_LEFT: z.coerce.number().default(-1),
+    SWIPE_WEIGHT_RIGHT: z.coerce.number().default(1),
+    SWIPE_WEIGHT_TOP: z.coerce.number().default(0.5),
+    PREF_LEARNING_RATE: z.coerce.number().min(0).max(1).default(0.1),
+    EMBED_CHUNK_SIZE: z.coerce.number().int().min(100).default(800),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -34,10 +47,23 @@ export const env = createEnv({
    */
   runtimeEnv: {
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
-    // BETTER_AUTH_GITHUB_CLIENT_ID: process.env.BETTER_AUTH_GITHUB_CLIENT_ID,
-    // BETTER_AUTH_GITHUB_CLIENT_SECRET:
-    // process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET,
+    BETTER_AUTH_GITHUB_CLIENT_ID: process.env.BETTER_AUTH_GITHUB_CLIENT_ID,
+    BETTER_AUTH_GITHUB_CLIENT_SECRET:
+      process.env.BETTER_AUTH_GITHUB_CLIENT_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
+    DB_PROVIDER: process.env.DB_PROVIDER,
+    GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    GEMINI_MODEL: process.env.GEMINI_MODEL,
+    GEMINI_EMBED_MODEL: process.env.GEMINI_EMBED_MODEL,
+    STACK_SIZE_MIN: process.env.STACK_SIZE_MIN,
+    STACK_SIZE_MAX: process.env.STACK_SIZE_MAX,
+    STACK_REFRESH_TEST_SECONDS: process.env.STACK_REFRESH_TEST_SECONDS,
+    STACK_REFRESH_PROD_SECONDS: process.env.STACK_REFRESH_PROD_SECONDS,
+    SWIPE_WEIGHT_LEFT: process.env.SWIPE_WEIGHT_LEFT,
+    SWIPE_WEIGHT_RIGHT: process.env.SWIPE_WEIGHT_RIGHT,
+    SWIPE_WEIGHT_TOP: process.env.SWIPE_WEIGHT_TOP,
+    PREF_LEARNING_RATE: process.env.PREF_LEARNING_RATE,
+    EMBED_CHUNK_SIZE: process.env.EMBED_CHUNK_SIZE,
     NODE_ENV: process.env.NODE_ENV,
   },
   /**
