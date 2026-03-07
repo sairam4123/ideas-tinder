@@ -173,6 +173,90 @@ exports.Prisma.IdeaChunkEmbeddingScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.TagScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  label: 'label',
+  embedding: 'embedding',
+  parentTagId: 'parentTagId',
+  status: 'status',
+  canonicalTagId: 'canonicalTagId',
+  source: 'source',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TagAliasScalarFieldEnum = {
+  id: 'id',
+  alias: 'alias',
+  tagId: 'tagId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.TagSimilarityScalarFieldEnum = {
+  id: 'id',
+  tagAId: 'tagAId',
+  tagBId: 'tagBId',
+  similarity: 'similarity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IdeaTagScalarFieldEnum = {
+  id: 'id',
+  ideaId: 'ideaId',
+  tagId: 'tagId',
+  weight: 'weight',
+  sourceConfidence: 'sourceConfidence',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserTagPreferenceScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tagId: 'tagId',
+  weight: 'weight',
+  explicitWeight: 'explicitWeight',
+  implicitWeight: 'implicitWeight',
+  lastReinforcedAt: 'lastReinforcedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.UserInterestProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  latentVector: 'latentVector',
+  positiveCentroid: 'positiveCentroid',
+  negativeCentroid: 'negativeCentroid',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IdeaInteractionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  ideaId: 'ideaId',
+  interactionType: 'interactionType',
+  reward: 'reward',
+  dwellTimeMs: 'dwellTimeMs',
+  context: 'context',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.RecommendationImpressionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  ideaId: 'ideaId',
+  rank: 'rank',
+  explicitScore: 'explicitScore',
+  latentScore: 'latentScore',
+  explorationScore: 'explorationScore',
+  finalScore: 'finalScore',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.IdeaStackScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -279,6 +363,27 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.TagStatus = exports.$Enums.TagStatus = {
+  ACTIVE: 'ACTIVE',
+  ALIAS: 'ALIAS',
+  MERGED: 'MERGED'
+};
+
+exports.TagSource = exports.$Enums.TagSource = {
+  SYSTEM: 'SYSTEM',
+  USER: 'USER',
+  MODEL: 'MODEL'
+};
+
+exports.InteractionType = exports.$Enums.InteractionType = {
+  VIEW: 'VIEW',
+  LIKE: 'LIKE',
+  SAVE: 'SAVE',
+  SHARE: 'SHARE',
+  SKIP: 'SKIP',
+  GENERATE_RELATED: 'GENERATE_RELATED'
+};
+
 exports.SwipeAction = exports.$Enums.SwipeAction = {
   DISLIKE: 'DISLIKE',
   LIKE_AND_FAVE: 'LIKE_AND_FAVE',
@@ -292,6 +397,14 @@ exports.Prisma.ModelName = {
   UserFieldSelection: 'UserFieldSelection',
   Idea: 'Idea',
   IdeaChunkEmbedding: 'IdeaChunkEmbedding',
+  Tag: 'Tag',
+  TagAlias: 'TagAlias',
+  TagSimilarity: 'TagSimilarity',
+  IdeaTag: 'IdeaTag',
+  UserTagPreference: 'UserTagPreference',
+  UserInterestProfile: 'UserInterestProfile',
+  IdeaInteraction: 'IdeaInteraction',
+  RecommendationImpression: 'RecommendationImpression',
   IdeaStack: 'IdeaStack',
   IdeaStackItem: 'IdeaStackItem',
   SwipeEvent: 'SwipeEvent',

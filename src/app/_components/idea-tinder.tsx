@@ -21,6 +21,7 @@ type QueuedSwipe = {
 };
 
 type StackIdea = RouterOutputs["idea"]["getStack"]["ideas"][number];
+type SwipeStatus = "dislike" | "like" | "fav";
 type DeckCard =
   | {
       kind: "idea";
@@ -32,9 +33,72 @@ type DeckCard =
       key: "caught-up";
     };
 
+const STACK_PROGRESS_STORAGE_KEY = "idea-tinder-stack-progress";
+
+type PersistedStackProgress = {
+  index: number;
+  actions: Record<string, SwipeStatus>;
+  updatedAt: number;
+};
+
+const directionToStatus: Record<SwipeDirection, SwipeStatus> = {
+  left: "dislike",
+  right: "like",
+  top: "fav",
+};
+
+const swipeActionToStatus = (
+  action: StackIdea["swipeAction"],
+): SwipeStatus | null => {
+  if (action === "DISLIKE") {
+    return "dislike";
+  }
+  if (action === "LIKE_AND_FAVE") {
+    return "fav";
+  }
+  if (action === "FAVE_ONLY") {
+    return "like";
+  }
+  return null;
+};
+
+const readPersistedProgress = (): Record<string, PersistedStackProgress> => {
+  if (typeof window === "undefined") {
+    return {};
+  }
+
+  const raw = window.localStorage.getItem(STACK_PROGRESS_STORAGE_KEY);
+  if (!raw) {
+    return {};
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as Record<string, PersistedStackProgress>;
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+};
+
+const writePersistedProgress = (
+  value: Record<string, PersistedStackProgress>,
+) => {
+  if (typeof window === "undefined") {
+    return;
+  }
+
+  window.localStorage.setItem(
+    STACK_PROGRESS_STORAGE_KEY,
+    JSON.stringify(value),
+  );
+};
+
 export function IdeaTinder() {
   const utils = api.useUtils();
   const [index, setIndex] = useState(0);
+  const [swipeStatusByIdea, setSwipeStatusByIdea] = useState<
+    Record<string, SwipeStatus>
+  >({});
   const [visibleCards, setVisibleCards] = useState<DeckCard[]>([]);
   const [swipeProgress, setSwipeProgress] = useState(0);
   const dragX = useMotionValue(0);
@@ -89,10 +153,53 @@ export function IdeaTinder() {
       return;
     }
 
+    const serverActionByIdea = stackData.ideas.reduce<
+      Record<string, SwipeStatus>
+    >((accumulator, stackItem) => {
+      const status = swipeActionToStatus(stackItem.swipeAction);
+      if (status) {
+        accumulator[stackItem.idea.id] = status;
+      }
+      return accumulator;
+    }, {});
+
+    const persistedProgress = readPersistedProgress();
+    const persistedForStack = persistedProgress[nextStackId];
+    const firstUnswipedIndex = stackData.ideas.findIndex(
+      (stackItem) => swipeActionToStatus(stackItem.swipeAction) === null,
+    );
+    const serverIndex =
+      firstUnswipedIndex === -1 ? stackData.ideas.length : firstUnswipedIndex;
+    const persistedIndex = persistedForStack?.index ?? serverIndex;
+    const nextIndex = Math.max(
+      serverIndex,
+      Math.min(persistedIndex, stackData.ideas.length),
+    );
+    const mergedActions = {
+      ...serverActionByIdea,
+      ...(persistedForStack?.actions ?? {}),
+    };
+
     lastStackIdRef.current = nextStackId;
-    setIndex(0);
-    setVisibleCards(buildDeckCards(stackData.ideas));
+    setSwipeStatusByIdea(mergedActions);
+    setIndex(nextIndex);
+    setVisibleCards(buildDeckCards(stackData.ideas.slice(nextIndex)));
   }, [stackQuery.data]);
+
+  useEffect(() => {
+    const stackId = stackQuery.data?.id;
+    if (!stackId) {
+      return;
+    }
+
+    const persistedProgress = readPersistedProgress();
+    persistedProgress[stackId] = {
+      index,
+      actions: swipeStatusByIdea,
+      updatedAt: Date.now(),
+    };
+    writePersistedProgress(persistedProgress);
+  }, [index, swipeStatusByIdea, stackQuery.data?.id]);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(
@@ -120,7 +227,14 @@ export function IdeaTinder() {
   const currentCard = visibleCards[0] ?? null;
   const currentIdea =
     currentCard?.kind === "idea" ? currentCard.stackItem : null;
+  const isStackExhausted = currentCard?.kind === "caught-up";
   const allItems = stackQuery.data?.ideas ?? [];
+  const stackExpiresAt = stackQuery.data?.expiresAt
+    ? new Date(stackQuery.data.expiresAt)
+    : null;
+  const isStackExpired =
+    stackExpiresAt !== null ? stackExpiresAt.getTime() <= Date.now() : true;
+  const canGenerateNewStack = isStackExpired && !isStreamingStack;
   const deckCards = visibleCards.slice(0, 6);
 
   const closeStream = () => {
@@ -212,6 +326,10 @@ export function IdeaTinder() {
 
     setVisibleCards((cards) => cards.slice(1));
     setIndex((value) => value + 1);
+    setSwipeStatusByIdea((previous) => ({
+      ...previous,
+      [currentIdea.idea.id]: directionToStatus[direction],
+    }));
 
     pendingSwipesRef.current.push({
       stackId: stackQuery.data.id,
@@ -260,41 +378,59 @@ export function IdeaTinder() {
 
   if (preferencesQuery.isPending || stackQuery.isPending) {
     return (
-      <div className="h-112.5 rounded-4xl flex w-full max-w-sm flex-col items-center justify-center gap-4 border border-slate-100 bg-white p-10 text-center shadow-xl md:max-w-2xl">
-        <div className="mb-4 flex animate-pulse space-x-2">
-          <div className="h-3 w-3 rounded-full bg-indigo-300"></div>
-          <div
-            className="h-3 w-3 rounded-full bg-indigo-300"
-            style={{ animationDelay: "150ms" }}
-          ></div>
-          <div
-            className="h-3 w-3 rounded-full bg-indigo-300"
-            style={{ animationDelay: "300ms" }}
-          ></div>
+      <div className="flex w-full max-w-5xl flex-col gap-6">
+        <div className="relative mx-auto flex h-150 w-full max-w-sm flex-col items-center self-center md:max-w-2xl">
+          <div className="border-border bg-background-surface flex h-112.5 w-full flex-col rounded-4xl border p-8 shadow-sm">
+            <div className="mb-auto flex items-center justify-between">
+              <div className="skeleton h-7 w-22 rounded-full" />
+              <div className="skeleton h-9 w-9 rounded-full" />
+            </div>
+
+            <div className="my-auto flex flex-col pt-4">
+              <div className="skeleton mb-3 h-10 w-4/5 rounded-xl" />
+              <div className="skeleton mb-2 h-5 w-full rounded-lg" />
+              <div className="skeleton h-5 w-10/12 rounded-lg" />
+            </div>
+
+            <div className="border-border mt-auto border-t pt-6">
+              <div className="skeleton h-3 w-2/3 rounded-lg" />
+            </div>
+          </div>
         </div>
-        <h2 className="animate-pulse text-xl font-medium text-slate-500">
-          Crafting ideas...
-        </h2>
+
+        <section className="border-border bg-background-surface rounded-2xl border p-4 shadow-sm">
+          <div className="skeleton h-5 w-28 rounded-lg" />
+          <div className="mt-3 space-y-2">
+            {[1, 2, 3, 4].map((item) => (
+              <div key={item} className="border-border rounded-lg border p-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="skeleton h-4 w-3/4 rounded-lg" />
+                  <div className="skeleton h-4 w-8 rounded-lg" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     );
   }
 
   if (!preferencesQuery.data?.onboardingCompleted) {
     return (
-      <div className="h-112.5 rounded-4xl relative flex w-full max-w-sm flex-col items-center justify-center gap-6 overflow-hidden border border-slate-100 bg-white p-10 text-center shadow-2xl md:max-w-2xl">
-        <div className="absolute right-0 top-0 -mr-10 -mt-10 h-32 w-32 rounded-full bg-indigo-50 blur-3xl"></div>
+      <div className="border-border bg-background-surface relative flex h-112.5 w-full max-w-sm flex-col items-center justify-center gap-6 overflow-hidden rounded-4xl border p-10 text-center shadow-sm md:max-w-2xl">
+        <div className="absolute top-0 right-0 -mt-10 -mr-10 h-32 w-32 rounded-full bg-indigo-50 blur-3xl"></div>
         <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-32 w-32 rounded-full bg-blue-50 blur-3xl"></div>
 
         <div className="relative z-10">
-          <h2 className="mb-2 text-3xl font-bold text-slate-900">
+          <h2 className="text-foreground mb-2 text-3xl font-bold">
             Complete Setup
           </h2>
-          <p className="mb-6 text-sm leading-relaxed text-slate-500">
+          <p className="text-foreground-muted mb-6 text-sm leading-relaxed">
             Select your fields of interest first to personalize your
             AI-generated recommendations.
           </p>
           <Link
-            className="inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 font-semibold text-white shadow-xl shadow-slate-200 transition-all hover:scale-105 active:scale-95"
+            className="bg-foreground inline-flex w-full items-center justify-center rounded-2xl px-6 py-4 font-semibold text-white transition-all hover:scale-105 active:scale-95"
             href="/onboarding"
           >
             Go to Onboarding
@@ -310,7 +446,7 @@ export function IdeaTinder() {
 
   return (
     <div className="flex w-full max-w-5xl flex-col gap-6">
-      <div className="h-150 relative flex w-full max-w-sm select-none flex-col items-center self-center md:max-w-2xl">
+      <div className="relative flex h-150 w-full max-w-sm flex-col items-center self-center select-none md:max-w-2xl">
         {/* Unified card stack */}
         {deckCards
           .slice()
@@ -408,7 +544,7 @@ export function IdeaTinder() {
                         zIndex: 0,
                       }
                 }
-                className={`h-112.5 rounded-4xl absolute top-0 flex w-full flex-col overflow-hidden border border-slate-200 bg-white p-8 shadow-lg ${
+                className={`border-border bg-background-surface absolute top-0 flex h-112.5 w-full flex-col overflow-hidden rounded-4xl border p-8 shadow-sm ${
                   isTop ? "touch-none" : "pointer-events-none"
                 } ${isTop && isIdea ? "relative cursor-grab" : "cursor-default"}`}
               >
@@ -429,27 +565,27 @@ export function IdeaTinder() {
                           style={{ opacity: topDragHighlightOpacity }}
                         />
                         <motion.div
-                          className="rounded-4xl pointer-events-none absolute inset-0 border-2 border-red-300"
+                          className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-red-300"
                           style={{ opacity: leftDragBorderOpacity }}
                         />
                         <motion.div
-                          className="rounded-4xl pointer-events-none absolute inset-0 border-2 border-emerald-300"
+                          className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-emerald-300"
                           style={{ opacity: rightDragBorderOpacity }}
                         />
                         <motion.div
-                          className="rounded-4xl pointer-events-none absolute inset-0 border-2 border-sky-300"
+                          className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-sky-300"
                           style={{ opacity: topDragBorderOpacity }}
                         />
                       </>
                     )}
 
                     <div className="mb-auto flex items-center justify-between">
-                      <span className="rounded-full border border-slate-100 bg-slate-50 px-3 py-1.5 text-xs font-bold tracking-wide text-slate-500">
+                      <span className="border-border bg-background-muted text-foreground-muted rounded-full border px-3 py-1.5 text-xs font-bold tracking-wide">
                         {index + depth + 1} / {stackQuery.data?.ideaCount ?? 0}
                       </span>
                       <Link
-                        className="rounded-full border border-slate-100 bg-slate-50 p-2 text-slate-400 transition-colors hover:border-indigo-100 hover:bg-indigo-50 hover:text-indigo-500"
-                        href={`/ideas/${card.stackItem.idea.id}`}
+                        className="border-border bg-background-muted text-foreground-muted rounded-full border p-2 transition-colors hover:border-indigo-100 hover:bg-indigo-50 hover:text-indigo-500"
+                        href={`/ideas/${card.stackItem.idea.id}?from=stack`}
                         title="Details"
                       >
                         <Info className="h-5 w-5" />
@@ -457,15 +593,15 @@ export function IdeaTinder() {
                     </div>
 
                     <div className="my-auto flex flex-col pt-4">
-                      <h2 className="mb-4 line-clamp-3 text-3xl font-black leading-tight tracking-tight text-slate-900 transition-all hover:line-clamp-none">
+                      <h2 className="text-foreground mb-4 line-clamp-3 text-3xl leading-tight font-black tracking-tight transition-all hover:line-clamp-none">
                         {card.stackItem.idea.title}
                       </h2>
-                      <p className="custom-scrollbar max-h-40 overflow-y-auto pr-2 text-base font-medium leading-relaxed text-slate-600">
+                      <p className="custom-scrollbar text-foreground-muted max-h-40 overflow-y-auto pr-2 text-base leading-relaxed font-medium">
                         {card.stackItem.idea.description}
                       </p>
                     </div>
 
-                    <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-slate-50 pt-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                    <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-slate-100 pt-6 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
                       <div>
                         Swipe right to Like{" "}
                         <span className="mx-1 inline-block text-slate-300">
@@ -477,23 +613,25 @@ export function IdeaTinder() {
                   </>
                 ) : (
                   <div className="my-auto flex flex-col items-center justify-center text-center">
-                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-slate-50">
+                    <div className="bg-background-muted mb-4 flex h-16 w-16 items-center justify-center rounded-full">
                       <Star className="h-8 w-8 text-indigo-400" />
                     </div>
-                    <h2 className="mb-2 text-2xl font-bold text-slate-900">
+                    <h2 className="text-foreground mb-2 text-2xl font-bold">
                       You&apos;re caught up!
                     </h2>
-                    <p className="mb-6 text-sm leading-relaxed text-slate-500">
-                      Refresh to generate a new stack of AI ideas based on your
-                      recent swipes.
+                    <p className="text-foreground-muted mb-6 text-sm leading-relaxed">
+                      {isStackExpired
+                        ? "Your stack expired. Generate a new set of AI ideas based on your recent swipes."
+                        : `Your current stack is still active until ${stackExpiresAt?.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}.`}
                     </p>
                     {isTop && (
                       <button
-                        className="mt-2 inline-flex w-full items-center justify-center rounded-2xl bg-slate-900 px-6 py-4 font-semibold text-white shadow-xl shadow-slate-200 transition-all hover:scale-105 active:scale-95"
+                        className="bg-foreground mt-2 inline-flex w-full items-center justify-center rounded-2xl px-6 py-4 font-semibold text-white transition-all hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:hover:scale-100"
                         onClick={async () => {
                           startStackStream(true);
                         }}
                         type="button"
+                        disabled={!canGenerateNewStack}
                       >
                         {isStreamingStack
                           ? "Generating..."
@@ -508,9 +646,9 @@ export function IdeaTinder() {
 
         {/* Action Buttons */}
         {currentCard.kind === "idea" && (
-          <div className="absolute bottom-0 left-0 right-0 z-10 flex items-center justify-center gap-6">
+          <div className="absolute right-0 bottom-0 left-0 z-10 flex items-center justify-center gap-6">
             <button
-              className="group flex h-16 w-16 items-center justify-center rounded-full border-2 border-slate-200 bg-white shadow-lg transition-all hover:scale-110 hover:border-red-400 hover:bg-red-50 active:scale-95 disabled:opacity-50"
+              className="group border-border bg-background-surface flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-red-400 hover:bg-red-50 active:scale-95 disabled:opacity-50"
               onClick={() => triggerSwipe("left")}
               title="Dislike"
             >
@@ -518,7 +656,7 @@ export function IdeaTinder() {
             </button>
 
             <button
-              className="group -mt-10 flex h-14 w-14 items-center justify-center rounded-full border-2 border-slate-200 bg-white shadow-lg transition-all hover:scale-110 hover:border-sky-400 hover:bg-sky-50 active:scale-95 disabled:opacity-50"
+              className="group border-border bg-background-surface -mt-10 flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-sky-400 hover:bg-sky-50 active:scale-95 disabled:opacity-50"
               onClick={() => triggerSwipe("top")}
               title="Like + Favorite"
             >
@@ -526,7 +664,7 @@ export function IdeaTinder() {
             </button>
 
             <button
-              className="group flex h-16 w-16 items-center justify-center rounded-full border-2 border-slate-200 bg-white shadow-lg transition-all hover:scale-110 hover:border-emerald-400 hover:bg-emerald-50 active:scale-95 disabled:opacity-50"
+              className="group border-border bg-background-surface flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-emerald-400 hover:bg-emerald-50 active:scale-95 disabled:opacity-50"
               onClick={() => triggerSwipe("right")}
               title="Like"
             >
@@ -536,14 +674,30 @@ export function IdeaTinder() {
         )}
       </div>
 
-      <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-800">
+      <section className="border-border bg-background-surface rounded-2xl border p-4 shadow-sm">
+        <h3 className="text-foreground-surface text-sm font-semibold tracking-wide uppercase">
           Full Stack
         </h3>
+        {isStackExhausted ? (
+          <p className="text-foreground-muted mt-1 text-xs font-medium">
+            Swipe recap: dislike, like, and favorite outcomes.
+          </p>
+        ) : null}
         <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
           {allItems.map((item, itemIndex) => {
-            const isCurrent = itemIndex === index;
-            const isSeen = itemIndex < index;
+            const itemStatus = swipeStatusByIdea[item.idea.id] ?? null;
+            const isCurrent =
+              currentCard.kind === "idea" && itemIndex === index;
+            const isSeen = itemStatus !== null || itemIndex < index;
+
+            const statusIcon =
+              itemStatus === "dislike" ? (
+                <X className="h-4 w-4 text-red-500" />
+              ) : itemStatus === "like" ? (
+                <Heart className="h-4 w-4 text-emerald-500" />
+              ) : itemStatus === "fav" ? (
+                <Star className="h-4 w-4 text-sky-500" />
+              ) : null;
 
             return (
               <Link
@@ -551,15 +705,18 @@ export function IdeaTinder() {
                   isCurrent
                     ? "border-indigo-200 bg-indigo-50 text-indigo-800"
                     : isSeen
-                      ? "border-slate-200 bg-slate-50 text-slate-500"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                      ? "border-border bg-background-muted text-foreground-muted"
+                      : "border-border bg-background-surface text-foreground-surface hover:border-slate-300"
                 }`}
-                href={`/ideas/${item.idea.id}`}
+                href={`/ideas/${item.idea.id}?from=stack`}
                 key={item.stackItemId}
               >
                 <div className="flex items-start justify-between gap-3">
                   <p className="line-clamp-1 font-medium">{item.idea.title}</p>
-                  <span className="text-xs">#{itemIndex + 1}</span>
+                  <div className="flex items-center gap-2">
+                    {isStackExhausted ? statusIcon : null}
+                    <span className="text-xs">#{itemIndex + 1}</span>
+                  </div>
                 </div>
               </Link>
             );
@@ -568,7 +725,7 @@ export function IdeaTinder() {
             className={`rounded-lg border px-3 py-2 text-sm transition ${
               currentCard.kind === "caught-up"
                 ? "border-indigo-200 bg-indigo-50 text-indigo-800"
-                : "border-slate-200 bg-white text-slate-500"
+                : "border-border bg-background-surface text-foreground-muted"
             }`}
           >
             <div className="flex items-start justify-between gap-3">

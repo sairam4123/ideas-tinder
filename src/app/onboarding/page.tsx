@@ -40,14 +40,15 @@ function OnboardingContent() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10">
-      <div className="w-full max-w-3xl space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+    <main className="bg-background flex min-h-screen items-center justify-center px-4 py-10">
+      <div className="border-border bg-background-surface w-full max-w-3xl space-y-6 rounded-2xl border p-6 shadow-sm">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">
+          <h1 className="text-foreground text-2xl font-bold">
             Choose your fields
           </h1>
-          <p className="text-sm text-slate-600">
-            We use these interests to initialize your preference vector.
+          <p className="text-foreground-muted text-sm">
+            We use these interests as an initial seed and adapt over time from
+            your interactions.
           </p>
         </div>
 
@@ -58,8 +59,8 @@ function OnboardingContent() {
               <button
                 className={`rounded-md border px-3 py-2 text-sm ${
                   checked
-                    ? "border-slate-900 bg-slate-900 text-white"
-                    : "border-slate-300 bg-white text-slate-700"
+                    ? "border-foreground bg-foreground text-white"
+                    : "border-border bg-background-surface text-foreground-surface"
                 }`}
                 key={field.id}
                 onClick={() => {
@@ -79,21 +80,21 @@ function OnboardingContent() {
 
         <div className="space-y-2">
           <label
-            className="text-sm font-medium text-slate-700"
+            className="text-foreground-surface text-sm font-medium"
             htmlFor="custom-field"
           >
             Add custom field
           </label>
           <div className="flex gap-2">
             <input
-              className="w-full rounded-md border border-slate-300 px-3 py-2"
+              className="border-border bg-background-surface text-foreground w-full rounded-md border px-3 py-2"
               id="custom-field"
               onChange={(event) => setCustomField(event.target.value)}
               placeholder="e.g. Quantum"
               value={customField}
             />
             <button
-              className="rounded-md border border-slate-300 px-3 py-2 text-sm"
+              className="border-border bg-background-surface text-foreground-surface rounded-md border px-3 py-2 text-sm"
               onClick={() => {
                 const next = customField.trim();
                 if (!next) return;
@@ -110,7 +111,7 @@ function OnboardingContent() {
             <div className="flex flex-wrap gap-2">
               {customFields.map((field) => (
                 <button
-                  className="rounded-full border border-slate-300 px-3 py-1 text-xs"
+                  className="border-border bg-background-surface text-foreground-surface rounded-full border px-3 py-1 text-xs"
                   key={field}
                   onClick={() => {
                     setCustomFields((previous) =>
@@ -127,7 +128,7 @@ function OnboardingContent() {
         </div>
 
         <button
-          className="rounded-md bg-slate-900 px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="bg-foreground rounded-md px-4 py-2 font-medium text-white disabled:opacity-60"
           disabled={
             saveMutation.isPending ||
             selectedFields.length + customFields.length === 0

@@ -99,3 +99,57 @@ export const asVector = (value: unknown): Vector => {
     .map((entry) => (typeof entry === "number" ? entry : Number(entry)))
     .filter((entry) => Number.isFinite(entry));
 };
+
+export const vectorMagnitude = (vector: Vector) =>
+  Math.sqrt(vector.reduce((sum, value) => sum + value * value, 0));
+
+export const normalizeVector = (vector: Vector): Vector => {
+  const magnitude = vectorMagnitude(vector);
+  if (magnitude === 0) {
+    return vector;
+  }
+
+  return vector.map((value) => value / magnitude);
+};
+
+export const blendVectors = (
+  current: Vector,
+  idea: Vector,
+  reward: number,
+  alpha: number,
+): Vector => {
+  if (idea.length === 0) {
+    return current;
+  }
+
+  if (current.length === 0) {
+    return normalizeVector(idea);
+  }
+
+  if (current.length !== idea.length) {
+    return current;
+  }
+
+  const boundedReward = clamp(reward, -1, 1.5);
+  const next = current.map((currentValue, index) => {
+    const ideaValue = idea[index] ?? currentValue;
+    return currentValue * (1 - alpha) + alpha * boundedReward * ideaValue;
+  });
+
+  return normalizeVector(next);
+};
+
+export const applyDailyDecay = (
+  weight: number,
+  daysElapsed: number,
+  gamma: number,
+) => {
+  if (daysElapsed <= 0) {
+    return weight;
+  }
+
+  return weight * gamma ** daysElapsed;
+};
+
+export const boundedWeight = (value: number, min = -2.5, max = 3): number =>
+  Math.max(min, Math.min(max, value));

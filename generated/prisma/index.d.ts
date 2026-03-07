@@ -44,6 +44,46 @@ export type Idea = $Result.DefaultSelection<Prisma.$IdeaPayload>
  */
 export type IdeaChunkEmbedding = $Result.DefaultSelection<Prisma.$IdeaChunkEmbeddingPayload>
 /**
+ * Model Tag
+ * 
+ */
+export type Tag = $Result.DefaultSelection<Prisma.$TagPayload>
+/**
+ * Model TagAlias
+ * 
+ */
+export type TagAlias = $Result.DefaultSelection<Prisma.$TagAliasPayload>
+/**
+ * Model TagSimilarity
+ * 
+ */
+export type TagSimilarity = $Result.DefaultSelection<Prisma.$TagSimilarityPayload>
+/**
+ * Model IdeaTag
+ * 
+ */
+export type IdeaTag = $Result.DefaultSelection<Prisma.$IdeaTagPayload>
+/**
+ * Model UserTagPreference
+ * 
+ */
+export type UserTagPreference = $Result.DefaultSelection<Prisma.$UserTagPreferencePayload>
+/**
+ * Model UserInterestProfile
+ * 
+ */
+export type UserInterestProfile = $Result.DefaultSelection<Prisma.$UserInterestProfilePayload>
+/**
+ * Model IdeaInteraction
+ * 
+ */
+export type IdeaInteraction = $Result.DefaultSelection<Prisma.$IdeaInteractionPayload>
+/**
+ * Model RecommendationImpression
+ * 
+ */
+export type RecommendationImpression = $Result.DefaultSelection<Prisma.$RecommendationImpressionPayload>
+/**
  * Model IdeaStack
  * 
  */
@@ -96,11 +136,53 @@ export namespace $Enums {
 
 export type SwipeAction = (typeof SwipeAction)[keyof typeof SwipeAction]
 
+
+export const TagStatus: {
+  ACTIVE: 'ACTIVE',
+  ALIAS: 'ALIAS',
+  MERGED: 'MERGED'
+};
+
+export type TagStatus = (typeof TagStatus)[keyof typeof TagStatus]
+
+
+export const TagSource: {
+  SYSTEM: 'SYSTEM',
+  USER: 'USER',
+  MODEL: 'MODEL'
+};
+
+export type TagSource = (typeof TagSource)[keyof typeof TagSource]
+
+
+export const InteractionType: {
+  VIEW: 'VIEW',
+  LIKE: 'LIKE',
+  SAVE: 'SAVE',
+  SHARE: 'SHARE',
+  SKIP: 'SKIP',
+  GENERATE_RELATED: 'GENERATE_RELATED'
+};
+
+export type InteractionType = (typeof InteractionType)[keyof typeof InteractionType]
+
 }
 
 export type SwipeAction = $Enums.SwipeAction
 
 export const SwipeAction: typeof $Enums.SwipeAction
+
+export type TagStatus = $Enums.TagStatus
+
+export const TagStatus: typeof $Enums.TagStatus
+
+export type TagSource = $Enums.TagSource
+
+export const TagSource: typeof $Enums.TagSource
+
+export type InteractionType = $Enums.InteractionType
+
+export const InteractionType: typeof $Enums.InteractionType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -279,6 +361,86 @@ export class PrismaClient<
     * ```
     */
   get ideaChunkEmbedding(): Prisma.IdeaChunkEmbeddingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tag`: Exposes CRUD operations for the **Tag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tags
+    * const tags = await prisma.tag.findMany()
+    * ```
+    */
+  get tag(): Prisma.TagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tagAlias`: Exposes CRUD operations for the **TagAlias** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TagAliases
+    * const tagAliases = await prisma.tagAlias.findMany()
+    * ```
+    */
+  get tagAlias(): Prisma.TagAliasDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tagSimilarity`: Exposes CRUD operations for the **TagSimilarity** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TagSimilarities
+    * const tagSimilarities = await prisma.tagSimilarity.findMany()
+    * ```
+    */
+  get tagSimilarity(): Prisma.TagSimilarityDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ideaTag`: Exposes CRUD operations for the **IdeaTag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IdeaTags
+    * const ideaTags = await prisma.ideaTag.findMany()
+    * ```
+    */
+  get ideaTag(): Prisma.IdeaTagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userTagPreference`: Exposes CRUD operations for the **UserTagPreference** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserTagPreferences
+    * const userTagPreferences = await prisma.userTagPreference.findMany()
+    * ```
+    */
+  get userTagPreference(): Prisma.UserTagPreferenceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.userInterestProfile`: Exposes CRUD operations for the **UserInterestProfile** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more UserInterestProfiles
+    * const userInterestProfiles = await prisma.userInterestProfile.findMany()
+    * ```
+    */
+  get userInterestProfile(): Prisma.UserInterestProfileDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.ideaInteraction`: Exposes CRUD operations for the **IdeaInteraction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IdeaInteractions
+    * const ideaInteractions = await prisma.ideaInteraction.findMany()
+    * ```
+    */
+  get ideaInteraction(): Prisma.IdeaInteractionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.recommendationImpression`: Exposes CRUD operations for the **RecommendationImpression** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RecommendationImpressions
+    * const recommendationImpressions = await prisma.recommendationImpression.findMany()
+    * ```
+    */
+  get recommendationImpression(): Prisma.RecommendationImpressionDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.ideaStack`: Exposes CRUD operations for the **IdeaStack** model.
@@ -806,6 +968,14 @@ export namespace Prisma {
     UserFieldSelection: 'UserFieldSelection',
     Idea: 'Idea',
     IdeaChunkEmbedding: 'IdeaChunkEmbedding',
+    Tag: 'Tag',
+    TagAlias: 'TagAlias',
+    TagSimilarity: 'TagSimilarity',
+    IdeaTag: 'IdeaTag',
+    UserTagPreference: 'UserTagPreference',
+    UserInterestProfile: 'UserInterestProfile',
+    IdeaInteraction: 'IdeaInteraction',
+    RecommendationImpression: 'RecommendationImpression',
     IdeaStack: 'IdeaStack',
     IdeaStackItem: 'IdeaStackItem',
     SwipeEvent: 'SwipeEvent',
@@ -832,7 +1002,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "post" | "user" | "fieldCatalog" | "userFieldSelection" | "idea" | "ideaChunkEmbedding" | "ideaStack" | "ideaStackItem" | "swipeEvent" | "favorite" | "preferenceUpdateLog" | "session" | "account" | "verification"
+      modelProps: "post" | "user" | "fieldCatalog" | "userFieldSelection" | "idea" | "ideaChunkEmbedding" | "tag" | "tagAlias" | "tagSimilarity" | "ideaTag" | "userTagPreference" | "userInterestProfile" | "ideaInteraction" | "recommendationImpression" | "ideaStack" | "ideaStackItem" | "swipeEvent" | "favorite" | "preferenceUpdateLog" | "session" | "account" | "verification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1277,6 +1447,598 @@ export namespace Prisma {
           count: {
             args: Prisma.IdeaChunkEmbeddingCountArgs<ExtArgs>
             result: $Utils.Optional<IdeaChunkEmbeddingCountAggregateOutputType> | number
+          }
+        }
+      }
+      Tag: {
+        payload: Prisma.$TagPayload<ExtArgs>
+        fields: Prisma.TagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          findFirst: {
+            args: Prisma.TagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          findMany: {
+            args: Prisma.TagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          create: {
+            args: Prisma.TagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          createMany: {
+            args: Prisma.TagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          delete: {
+            args: Prisma.TagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          update: {
+            args: Prisma.TagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          deleteMany: {
+            args: Prisma.TagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TagUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>[]
+          }
+          upsert: {
+            args: Prisma.TagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagPayload>
+          }
+          aggregate: {
+            args: Prisma.TagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTag>
+          }
+          groupBy: {
+            args: Prisma.TagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TagCountArgs<ExtArgs>
+            result: $Utils.Optional<TagCountAggregateOutputType> | number
+          }
+        }
+      }
+      TagAlias: {
+        payload: Prisma.$TagAliasPayload<ExtArgs>
+        fields: Prisma.TagAliasFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TagAliasFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TagAliasFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>
+          }
+          findFirst: {
+            args: Prisma.TagAliasFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TagAliasFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>
+          }
+          findMany: {
+            args: Prisma.TagAliasFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>[]
+          }
+          create: {
+            args: Prisma.TagAliasCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>
+          }
+          createMany: {
+            args: Prisma.TagAliasCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TagAliasCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>[]
+          }
+          delete: {
+            args: Prisma.TagAliasDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>
+          }
+          update: {
+            args: Prisma.TagAliasUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>
+          }
+          deleteMany: {
+            args: Prisma.TagAliasDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TagAliasUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TagAliasUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>[]
+          }
+          upsert: {
+            args: Prisma.TagAliasUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagAliasPayload>
+          }
+          aggregate: {
+            args: Prisma.TagAliasAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTagAlias>
+          }
+          groupBy: {
+            args: Prisma.TagAliasGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TagAliasGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TagAliasCountArgs<ExtArgs>
+            result: $Utils.Optional<TagAliasCountAggregateOutputType> | number
+          }
+        }
+      }
+      TagSimilarity: {
+        payload: Prisma.$TagSimilarityPayload<ExtArgs>
+        fields: Prisma.TagSimilarityFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TagSimilarityFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TagSimilarityFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>
+          }
+          findFirst: {
+            args: Prisma.TagSimilarityFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TagSimilarityFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>
+          }
+          findMany: {
+            args: Prisma.TagSimilarityFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>[]
+          }
+          create: {
+            args: Prisma.TagSimilarityCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>
+          }
+          createMany: {
+            args: Prisma.TagSimilarityCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TagSimilarityCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>[]
+          }
+          delete: {
+            args: Prisma.TagSimilarityDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>
+          }
+          update: {
+            args: Prisma.TagSimilarityUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>
+          }
+          deleteMany: {
+            args: Prisma.TagSimilarityDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TagSimilarityUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TagSimilarityUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>[]
+          }
+          upsert: {
+            args: Prisma.TagSimilarityUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagSimilarityPayload>
+          }
+          aggregate: {
+            args: Prisma.TagSimilarityAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTagSimilarity>
+          }
+          groupBy: {
+            args: Prisma.TagSimilarityGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TagSimilarityGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TagSimilarityCountArgs<ExtArgs>
+            result: $Utils.Optional<TagSimilarityCountAggregateOutputType> | number
+          }
+        }
+      }
+      IdeaTag: {
+        payload: Prisma.$IdeaTagPayload<ExtArgs>
+        fields: Prisma.IdeaTagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IdeaTagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IdeaTagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>
+          }
+          findFirst: {
+            args: Prisma.IdeaTagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IdeaTagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>
+          }
+          findMany: {
+            args: Prisma.IdeaTagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>[]
+          }
+          create: {
+            args: Prisma.IdeaTagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>
+          }
+          createMany: {
+            args: Prisma.IdeaTagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IdeaTagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>[]
+          }
+          delete: {
+            args: Prisma.IdeaTagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>
+          }
+          update: {
+            args: Prisma.IdeaTagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>
+          }
+          deleteMany: {
+            args: Prisma.IdeaTagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IdeaTagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IdeaTagUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>[]
+          }
+          upsert: {
+            args: Prisma.IdeaTagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaTagPayload>
+          }
+          aggregate: {
+            args: Prisma.IdeaTagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIdeaTag>
+          }
+          groupBy: {
+            args: Prisma.IdeaTagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IdeaTagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IdeaTagCountArgs<ExtArgs>
+            result: $Utils.Optional<IdeaTagCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserTagPreference: {
+        payload: Prisma.$UserTagPreferencePayload<ExtArgs>
+        fields: Prisma.UserTagPreferenceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserTagPreferenceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserTagPreferenceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>
+          }
+          findFirst: {
+            args: Prisma.UserTagPreferenceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserTagPreferenceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>
+          }
+          findMany: {
+            args: Prisma.UserTagPreferenceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>[]
+          }
+          create: {
+            args: Prisma.UserTagPreferenceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>
+          }
+          createMany: {
+            args: Prisma.UserTagPreferenceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserTagPreferenceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>[]
+          }
+          delete: {
+            args: Prisma.UserTagPreferenceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>
+          }
+          update: {
+            args: Prisma.UserTagPreferenceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserTagPreferenceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserTagPreferenceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserTagPreferenceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>[]
+          }
+          upsert: {
+            args: Prisma.UserTagPreferenceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserTagPreferencePayload>
+          }
+          aggregate: {
+            args: Prisma.UserTagPreferenceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserTagPreference>
+          }
+          groupBy: {
+            args: Prisma.UserTagPreferenceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserTagPreferenceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserTagPreferenceCountArgs<ExtArgs>
+            result: $Utils.Optional<UserTagPreferenceCountAggregateOutputType> | number
+          }
+        }
+      }
+      UserInterestProfile: {
+        payload: Prisma.$UserInterestProfilePayload<ExtArgs>
+        fields: Prisma.UserInterestProfileFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UserInterestProfileFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UserInterestProfileFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>
+          }
+          findFirst: {
+            args: Prisma.UserInterestProfileFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UserInterestProfileFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>
+          }
+          findMany: {
+            args: Prisma.UserInterestProfileFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>[]
+          }
+          create: {
+            args: Prisma.UserInterestProfileCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>
+          }
+          createMany: {
+            args: Prisma.UserInterestProfileCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.UserInterestProfileCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>[]
+          }
+          delete: {
+            args: Prisma.UserInterestProfileDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>
+          }
+          update: {
+            args: Prisma.UserInterestProfileUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>
+          }
+          deleteMany: {
+            args: Prisma.UserInterestProfileDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UserInterestProfileUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.UserInterestProfileUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>[]
+          }
+          upsert: {
+            args: Prisma.UserInterestProfileUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UserInterestProfilePayload>
+          }
+          aggregate: {
+            args: Prisma.UserInterestProfileAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUserInterestProfile>
+          }
+          groupBy: {
+            args: Prisma.UserInterestProfileGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UserInterestProfileGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UserInterestProfileCountArgs<ExtArgs>
+            result: $Utils.Optional<UserInterestProfileCountAggregateOutputType> | number
+          }
+        }
+      }
+      IdeaInteraction: {
+        payload: Prisma.$IdeaInteractionPayload<ExtArgs>
+        fields: Prisma.IdeaInteractionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IdeaInteractionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IdeaInteractionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>
+          }
+          findFirst: {
+            args: Prisma.IdeaInteractionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IdeaInteractionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>
+          }
+          findMany: {
+            args: Prisma.IdeaInteractionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>[]
+          }
+          create: {
+            args: Prisma.IdeaInteractionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>
+          }
+          createMany: {
+            args: Prisma.IdeaInteractionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IdeaInteractionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>[]
+          }
+          delete: {
+            args: Prisma.IdeaInteractionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>
+          }
+          update: {
+            args: Prisma.IdeaInteractionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>
+          }
+          deleteMany: {
+            args: Prisma.IdeaInteractionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IdeaInteractionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IdeaInteractionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>[]
+          }
+          upsert: {
+            args: Prisma.IdeaInteractionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IdeaInteractionPayload>
+          }
+          aggregate: {
+            args: Prisma.IdeaInteractionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIdeaInteraction>
+          }
+          groupBy: {
+            args: Prisma.IdeaInteractionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IdeaInteractionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IdeaInteractionCountArgs<ExtArgs>
+            result: $Utils.Optional<IdeaInteractionCountAggregateOutputType> | number
+          }
+        }
+      }
+      RecommendationImpression: {
+        payload: Prisma.$RecommendationImpressionPayload<ExtArgs>
+        fields: Prisma.RecommendationImpressionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RecommendationImpressionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RecommendationImpressionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>
+          }
+          findFirst: {
+            args: Prisma.RecommendationImpressionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RecommendationImpressionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>
+          }
+          findMany: {
+            args: Prisma.RecommendationImpressionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>[]
+          }
+          create: {
+            args: Prisma.RecommendationImpressionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>
+          }
+          createMany: {
+            args: Prisma.RecommendationImpressionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RecommendationImpressionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>[]
+          }
+          delete: {
+            args: Prisma.RecommendationImpressionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>
+          }
+          update: {
+            args: Prisma.RecommendationImpressionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>
+          }
+          deleteMany: {
+            args: Prisma.RecommendationImpressionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RecommendationImpressionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RecommendationImpressionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>[]
+          }
+          upsert: {
+            args: Prisma.RecommendationImpressionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RecommendationImpressionPayload>
+          }
+          aggregate: {
+            args: Prisma.RecommendationImpressionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRecommendationImpression>
+          }
+          groupBy: {
+            args: Prisma.RecommendationImpressionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RecommendationImpressionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RecommendationImpressionCountArgs<ExtArgs>
+            result: $Utils.Optional<RecommendationImpressionCountAggregateOutputType> | number
           }
         }
       }
@@ -1974,6 +2736,14 @@ export namespace Prisma {
     userFieldSelection?: UserFieldSelectionOmit
     idea?: IdeaOmit
     ideaChunkEmbedding?: IdeaChunkEmbeddingOmit
+    tag?: TagOmit
+    tagAlias?: TagAliasOmit
+    tagSimilarity?: TagSimilarityOmit
+    ideaTag?: IdeaTagOmit
+    userTagPreference?: UserTagPreferenceOmit
+    userInterestProfile?: UserInterestProfileOmit
+    ideaInteraction?: IdeaInteractionOmit
+    recommendationImpression?: RecommendationImpressionOmit
     ideaStack?: IdeaStackOmit
     ideaStackItem?: IdeaStackItemOmit
     swipeEvent?: SwipeEventOmit
@@ -2070,6 +2840,9 @@ export namespace Prisma {
     swipeEvents: number
     favorites: number
     preferenceLogs: number
+    tagPreferences: number
+    interactions: number
+    impressions: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2081,6 +2854,9 @@ export namespace Prisma {
     swipeEvents?: boolean | UserCountOutputTypeCountSwipeEventsArgs
     favorites?: boolean | UserCountOutputTypeCountFavoritesArgs
     preferenceLogs?: boolean | UserCountOutputTypeCountPreferenceLogsArgs
+    tagPreferences?: boolean | UserCountOutputTypeCountTagPreferencesArgs
+    interactions?: boolean | UserCountOutputTypeCountInteractionsArgs
+    impressions?: boolean | UserCountOutputTypeCountImpressionsArgs
   }
 
   // Custom InputTypes
@@ -2150,6 +2926,27 @@ export namespace Prisma {
     where?: PreferenceUpdateLogWhereInput
   }
 
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountTagPreferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserTagPreferenceWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountInteractionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdeaInteractionWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountImpressionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecommendationImpressionWhereInput
+  }
+
 
   /**
    * Count Type FieldCatalogCountOutputType
@@ -2200,6 +2997,9 @@ export namespace Prisma {
     stackItems: number
     swipeEvents: number
     favorites: number
+    tags: number
+    interactions: number
+    impressions: number
   }
 
   export type IdeaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2207,6 +3007,9 @@ export namespace Prisma {
     stackItems?: boolean | IdeaCountOutputTypeCountStackItemsArgs
     swipeEvents?: boolean | IdeaCountOutputTypeCountSwipeEventsArgs
     favorites?: boolean | IdeaCountOutputTypeCountFavoritesArgs
+    tags?: boolean | IdeaCountOutputTypeCountTagsArgs
+    interactions?: boolean | IdeaCountOutputTypeCountInteractionsArgs
+    impressions?: boolean | IdeaCountOutputTypeCountImpressionsArgs
   }
 
   // Custom InputTypes
@@ -2246,6 +3049,112 @@ export namespace Prisma {
    */
   export type IdeaCountOutputTypeCountFavoritesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FavoriteWhereInput
+  }
+
+  /**
+   * IdeaCountOutputType without action
+   */
+  export type IdeaCountOutputTypeCountTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdeaTagWhereInput
+  }
+
+  /**
+   * IdeaCountOutputType without action
+   */
+  export type IdeaCountOutputTypeCountInteractionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdeaInteractionWhereInput
+  }
+
+  /**
+   * IdeaCountOutputType without action
+   */
+  export type IdeaCountOutputTypeCountImpressionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecommendationImpressionWhereInput
+  }
+
+
+  /**
+   * Count Type TagCountOutputType
+   */
+
+  export type TagCountOutputType = {
+    childTags: number
+    canonicalOf: number
+    aliasRecords: number
+    similarityAsA: number
+    similarityAsB: number
+    ideaTags: number
+    userPreferences: number
+  }
+
+  export type TagCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    childTags?: boolean | TagCountOutputTypeCountChildTagsArgs
+    canonicalOf?: boolean | TagCountOutputTypeCountCanonicalOfArgs
+    aliasRecords?: boolean | TagCountOutputTypeCountAliasRecordsArgs
+    similarityAsA?: boolean | TagCountOutputTypeCountSimilarityAsAArgs
+    similarityAsB?: boolean | TagCountOutputTypeCountSimilarityAsBArgs
+    ideaTags?: boolean | TagCountOutputTypeCountIdeaTagsArgs
+    userPreferences?: boolean | TagCountOutputTypeCountUserPreferencesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagCountOutputType
+     */
+    select?: TagCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountChildTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountCanonicalOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountAliasRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagAliasWhereInput
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountSimilarityAsAArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagSimilarityWhereInput
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountSimilarityAsBArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagSimilarityWhereInput
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountIdeaTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdeaTagWhereInput
+  }
+
+  /**
+   * TagCountOutputType without action
+   */
+  export type TagCountOutputTypeCountUserPreferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserTagPreferenceWhereInput
   }
 
 
@@ -3549,6 +4458,10 @@ export namespace Prisma {
     swipeEvents?: boolean | User$swipeEventsArgs<ExtArgs>
     favorites?: boolean | User$favoritesArgs<ExtArgs>
     preferenceLogs?: boolean | User$preferenceLogsArgs<ExtArgs>
+    tagPreferences?: boolean | User$tagPreferencesArgs<ExtArgs>
+    interestProfile?: boolean | User$interestProfileArgs<ExtArgs>
+    interactions?: boolean | User$interactionsArgs<ExtArgs>
+    impressions?: boolean | User$impressionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3598,6 +4511,10 @@ export namespace Prisma {
     swipeEvents?: boolean | User$swipeEventsArgs<ExtArgs>
     favorites?: boolean | User$favoritesArgs<ExtArgs>
     preferenceLogs?: boolean | User$preferenceLogsArgs<ExtArgs>
+    tagPreferences?: boolean | User$tagPreferencesArgs<ExtArgs>
+    interestProfile?: boolean | User$interestProfileArgs<ExtArgs>
+    interactions?: boolean | User$interactionsArgs<ExtArgs>
+    impressions?: boolean | User$impressionsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -3614,6 +4531,10 @@ export namespace Prisma {
       swipeEvents: Prisma.$SwipeEventPayload<ExtArgs>[]
       favorites: Prisma.$FavoritePayload<ExtArgs>[]
       preferenceLogs: Prisma.$PreferenceUpdateLogPayload<ExtArgs>[]
+      tagPreferences: Prisma.$UserTagPreferencePayload<ExtArgs>[]
+      interestProfile: Prisma.$UserInterestProfilePayload<ExtArgs> | null
+      interactions: Prisma.$IdeaInteractionPayload<ExtArgs>[]
+      impressions: Prisma.$RecommendationImpressionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4027,6 +4948,10 @@ export namespace Prisma {
     swipeEvents<T extends User$swipeEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$swipeEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SwipeEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     favorites<T extends User$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, User$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     preferenceLogs<T extends User$preferenceLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$preferenceLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PreferenceUpdateLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tagPreferences<T extends User$tagPreferencesArgs<ExtArgs> = {}>(args?: Subset<T, User$tagPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    interestProfile<T extends User$interestProfileArgs<ExtArgs> = {}>(args?: Subset<T, User$interestProfileArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    interactions<T extends User$interactionsArgs<ExtArgs> = {}>(args?: Subset<T, User$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    impressions<T extends User$impressionsArgs<ExtArgs> = {}>(args?: Subset<T, User$impressionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4640,6 +5565,97 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PreferenceUpdateLogScalarFieldEnum | PreferenceUpdateLogScalarFieldEnum[]
+  }
+
+  /**
+   * User.tagPreferences
+   */
+  export type User$tagPreferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    where?: UserTagPreferenceWhereInput
+    orderBy?: UserTagPreferenceOrderByWithRelationInput | UserTagPreferenceOrderByWithRelationInput[]
+    cursor?: UserTagPreferenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserTagPreferenceScalarFieldEnum | UserTagPreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * User.interestProfile
+   */
+  export type User$interestProfileArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    where?: UserInterestProfileWhereInput
+  }
+
+  /**
+   * User.interactions
+   */
+  export type User$interactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    where?: IdeaInteractionWhereInput
+    orderBy?: IdeaInteractionOrderByWithRelationInput | IdeaInteractionOrderByWithRelationInput[]
+    cursor?: IdeaInteractionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdeaInteractionScalarFieldEnum | IdeaInteractionScalarFieldEnum[]
+  }
+
+  /**
+   * User.impressions
+   */
+  export type User$impressionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    where?: RecommendationImpressionWhereInput
+    orderBy?: RecommendationImpressionOrderByWithRelationInput | RecommendationImpressionOrderByWithRelationInput[]
+    cursor?: RecommendationImpressionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecommendationImpressionScalarFieldEnum | RecommendationImpressionScalarFieldEnum[]
   }
 
   /**
@@ -7002,6 +8018,9 @@ export namespace Prisma {
     stackItems?: boolean | Idea$stackItemsArgs<ExtArgs>
     swipeEvents?: boolean | Idea$swipeEventsArgs<ExtArgs>
     favorites?: boolean | Idea$favoritesArgs<ExtArgs>
+    tags?: boolean | Idea$tagsArgs<ExtArgs>
+    interactions?: boolean | Idea$interactionsArgs<ExtArgs>
+    impressions?: boolean | Idea$impressionsArgs<ExtArgs>
     _count?: boolean | IdeaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["idea"]>
 
@@ -7044,6 +8063,9 @@ export namespace Prisma {
     stackItems?: boolean | Idea$stackItemsArgs<ExtArgs>
     swipeEvents?: boolean | Idea$swipeEventsArgs<ExtArgs>
     favorites?: boolean | Idea$favoritesArgs<ExtArgs>
+    tags?: boolean | Idea$tagsArgs<ExtArgs>
+    interactions?: boolean | Idea$interactionsArgs<ExtArgs>
+    impressions?: boolean | Idea$impressionsArgs<ExtArgs>
     _count?: boolean | IdeaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type IdeaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7061,6 +8083,9 @@ export namespace Prisma {
       stackItems: Prisma.$IdeaStackItemPayload<ExtArgs>[]
       swipeEvents: Prisma.$SwipeEventPayload<ExtArgs>[]
       favorites: Prisma.$FavoritePayload<ExtArgs>[]
+      tags: Prisma.$IdeaTagPayload<ExtArgs>[]
+      interactions: Prisma.$IdeaInteractionPayload<ExtArgs>[]
+      impressions: Prisma.$RecommendationImpressionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7469,6 +8494,9 @@ export namespace Prisma {
     stackItems<T extends Idea$stackItemsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$stackItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaStackItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     swipeEvents<T extends Idea$swipeEventsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$swipeEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SwipeEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     favorites<T extends Idea$favoritesArgs<ExtArgs> = {}>(args?: Subset<T, Idea$favoritesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FavoritePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tags<T extends Idea$tagsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$tagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    interactions<T extends Idea$interactionsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$interactionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    impressions<T extends Idea$impressionsArgs<ExtArgs> = {}>(args?: Subset<T, Idea$impressionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8011,6 +9039,78 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FavoriteScalarFieldEnum | FavoriteScalarFieldEnum[]
+  }
+
+  /**
+   * Idea.tags
+   */
+  export type Idea$tagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    where?: IdeaTagWhereInput
+    orderBy?: IdeaTagOrderByWithRelationInput | IdeaTagOrderByWithRelationInput[]
+    cursor?: IdeaTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdeaTagScalarFieldEnum | IdeaTagScalarFieldEnum[]
+  }
+
+  /**
+   * Idea.interactions
+   */
+  export type Idea$interactionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    where?: IdeaInteractionWhereInput
+    orderBy?: IdeaInteractionOrderByWithRelationInput | IdeaInteractionOrderByWithRelationInput[]
+    cursor?: IdeaInteractionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdeaInteractionScalarFieldEnum | IdeaInteractionScalarFieldEnum[]
+  }
+
+  /**
+   * Idea.impressions
+   */
+  export type Idea$impressionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    where?: RecommendationImpressionWhereInput
+    orderBy?: RecommendationImpressionOrderByWithRelationInput | RecommendationImpressionOrderByWithRelationInput[]
+    cursor?: RecommendationImpressionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RecommendationImpressionScalarFieldEnum | RecommendationImpressionScalarFieldEnum[]
   }
 
   /**
@@ -9128,6 +10228,9180 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: IdeaChunkEmbeddingInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Tag
+   */
+
+  export type AggregateTag = {
+    _count: TagCountAggregateOutputType | null
+    _min: TagMinAggregateOutputType | null
+    _max: TagMaxAggregateOutputType | null
+  }
+
+  export type TagMinAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    label: string | null
+    parentTagId: string | null
+    status: $Enums.TagStatus | null
+    canonicalTagId: string | null
+    source: $Enums.TagSource | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagMaxAggregateOutputType = {
+    id: string | null
+    slug: string | null
+    label: string | null
+    parentTagId: string | null
+    status: $Enums.TagStatus | null
+    canonicalTagId: string | null
+    source: $Enums.TagSource | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagCountAggregateOutputType = {
+    id: number
+    slug: number
+    label: number
+    embedding: number
+    parentTagId: number
+    status: number
+    canonicalTagId: number
+    source: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TagMinAggregateInputType = {
+    id?: true
+    slug?: true
+    label?: true
+    parentTagId?: true
+    status?: true
+    canonicalTagId?: true
+    source?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagMaxAggregateInputType = {
+    id?: true
+    slug?: true
+    label?: true
+    parentTagId?: true
+    status?: true
+    canonicalTagId?: true
+    source?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagCountAggregateInputType = {
+    id?: true
+    slug?: true
+    label?: true
+    embedding?: true
+    parentTagId?: true
+    status?: true
+    canonicalTagId?: true
+    source?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tag to aggregate.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tags
+    **/
+    _count?: true | TagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TagMaxAggregateInputType
+  }
+
+  export type GetTagAggregateType<T extends TagAggregateArgs> = {
+        [P in keyof T & keyof AggregateTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTag[P]>
+      : GetScalarType<T[P], AggregateTag[P]>
+  }
+
+
+
+
+  export type TagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithAggregationInput | TagOrderByWithAggregationInput[]
+    by: TagScalarFieldEnum[] | TagScalarFieldEnum
+    having?: TagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TagCountAggregateInputType | true
+    _min?: TagMinAggregateInputType
+    _max?: TagMaxAggregateInputType
+  }
+
+  export type TagGroupByOutputType = {
+    id: string
+    slug: string
+    label: string
+    embedding: JsonValue | null
+    parentTagId: string | null
+    status: $Enums.TagStatus
+    canonicalTagId: string | null
+    source: $Enums.TagSource
+    createdAt: Date
+    updatedAt: Date
+    _count: TagCountAggregateOutputType | null
+    _min: TagMinAggregateOutputType | null
+    _max: TagMaxAggregateOutputType | null
+  }
+
+  type GetTagGroupByPayload<T extends TagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TagGroupByOutputType[P]>
+            : GetScalarType<T[P], TagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    label?: boolean
+    embedding?: boolean
+    parentTagId?: boolean
+    status?: boolean
+    canonicalTagId?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parentTag?: boolean | Tag$parentTagArgs<ExtArgs>
+    childTags?: boolean | Tag$childTagsArgs<ExtArgs>
+    canonicalTag?: boolean | Tag$canonicalTagArgs<ExtArgs>
+    canonicalOf?: boolean | Tag$canonicalOfArgs<ExtArgs>
+    aliasRecords?: boolean | Tag$aliasRecordsArgs<ExtArgs>
+    similarityAsA?: boolean | Tag$similarityAsAArgs<ExtArgs>
+    similarityAsB?: boolean | Tag$similarityAsBArgs<ExtArgs>
+    ideaTags?: boolean | Tag$ideaTagsArgs<ExtArgs>
+    userPreferences?: boolean | Tag$userPreferencesArgs<ExtArgs>
+    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    label?: boolean
+    embedding?: boolean
+    parentTagId?: boolean
+    status?: boolean
+    canonicalTagId?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parentTag?: boolean | Tag$parentTagArgs<ExtArgs>
+    canonicalTag?: boolean | Tag$canonicalTagArgs<ExtArgs>
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    slug?: boolean
+    label?: boolean
+    embedding?: boolean
+    parentTagId?: boolean
+    status?: boolean
+    canonicalTagId?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    parentTag?: boolean | Tag$parentTagArgs<ExtArgs>
+    canonicalTag?: boolean | Tag$canonicalTagArgs<ExtArgs>
+  }, ExtArgs["result"]["tag"]>
+
+  export type TagSelectScalar = {
+    id?: boolean
+    slug?: boolean
+    label?: boolean
+    embedding?: boolean
+    parentTagId?: boolean
+    status?: boolean
+    canonicalTagId?: boolean
+    source?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "slug" | "label" | "embedding" | "parentTagId" | "status" | "canonicalTagId" | "source" | "createdAt" | "updatedAt", ExtArgs["result"]["tag"]>
+  export type TagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parentTag?: boolean | Tag$parentTagArgs<ExtArgs>
+    childTags?: boolean | Tag$childTagsArgs<ExtArgs>
+    canonicalTag?: boolean | Tag$canonicalTagArgs<ExtArgs>
+    canonicalOf?: boolean | Tag$canonicalOfArgs<ExtArgs>
+    aliasRecords?: boolean | Tag$aliasRecordsArgs<ExtArgs>
+    similarityAsA?: boolean | Tag$similarityAsAArgs<ExtArgs>
+    similarityAsB?: boolean | Tag$similarityAsBArgs<ExtArgs>
+    ideaTags?: boolean | Tag$ideaTagsArgs<ExtArgs>
+    userPreferences?: boolean | Tag$userPreferencesArgs<ExtArgs>
+    _count?: boolean | TagCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parentTag?: boolean | Tag$parentTagArgs<ExtArgs>
+    canonicalTag?: boolean | Tag$canonicalTagArgs<ExtArgs>
+  }
+  export type TagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    parentTag?: boolean | Tag$parentTagArgs<ExtArgs>
+    canonicalTag?: boolean | Tag$canonicalTagArgs<ExtArgs>
+  }
+
+  export type $TagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Tag"
+    objects: {
+      parentTag: Prisma.$TagPayload<ExtArgs> | null
+      childTags: Prisma.$TagPayload<ExtArgs>[]
+      canonicalTag: Prisma.$TagPayload<ExtArgs> | null
+      canonicalOf: Prisma.$TagPayload<ExtArgs>[]
+      aliasRecords: Prisma.$TagAliasPayload<ExtArgs>[]
+      similarityAsA: Prisma.$TagSimilarityPayload<ExtArgs>[]
+      similarityAsB: Prisma.$TagSimilarityPayload<ExtArgs>[]
+      ideaTags: Prisma.$IdeaTagPayload<ExtArgs>[]
+      userPreferences: Prisma.$UserTagPreferencePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      slug: string
+      label: string
+      embedding: Prisma.JsonValue | null
+      parentTagId: string | null
+      status: $Enums.TagStatus
+      canonicalTagId: string | null
+      source: $Enums.TagSource
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["tag"]>
+    composites: {}
+  }
+
+  type TagGetPayload<S extends boolean | null | undefined | TagDefaultArgs> = $Result.GetResult<Prisma.$TagPayload, S>
+
+  type TagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TagCountAggregateInputType | true
+    }
+
+  export interface TagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Tag'], meta: { name: 'Tag' } }
+    /**
+     * Find zero or one Tag that matches the filter.
+     * @param {TagFindUniqueArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TagFindUniqueArgs>(args: SelectSubset<T, TagFindUniqueArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Tag that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TagFindUniqueOrThrowArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TagFindUniqueOrThrowArgs>(args: SelectSubset<T, TagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindFirstArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TagFindFirstArgs>(args?: SelectSubset<T, TagFindFirstArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindFirstOrThrowArgs} args - Arguments to find a Tag
+     * @example
+     * // Get one Tag
+     * const tag = await prisma.tag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TagFindFirstOrThrowArgs>(args?: SelectSubset<T, TagFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Tags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tags
+     * const tags = await prisma.tag.findMany()
+     * 
+     * // Get first 10 Tags
+     * const tags = await prisma.tag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tagWithIdOnly = await prisma.tag.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TagFindManyArgs>(args?: SelectSubset<T, TagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Tag.
+     * @param {TagCreateArgs} args - Arguments to create a Tag.
+     * @example
+     * // Create one Tag
+     * const Tag = await prisma.tag.create({
+     *   data: {
+     *     // ... data to create a Tag
+     *   }
+     * })
+     * 
+     */
+    create<T extends TagCreateArgs>(args: SelectSubset<T, TagCreateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Tags.
+     * @param {TagCreateManyArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tag = await prisma.tag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TagCreateManyArgs>(args?: SelectSubset<T, TagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tags and returns the data saved in the database.
+     * @param {TagCreateManyAndReturnArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tag = await prisma.tag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TagCreateManyAndReturnArgs>(args?: SelectSubset<T, TagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Tag.
+     * @param {TagDeleteArgs} args - Arguments to delete one Tag.
+     * @example
+     * // Delete one Tag
+     * const Tag = await prisma.tag.delete({
+     *   where: {
+     *     // ... filter to delete one Tag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TagDeleteArgs>(args: SelectSubset<T, TagDeleteArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Tag.
+     * @param {TagUpdateArgs} args - Arguments to update one Tag.
+     * @example
+     * // Update one Tag
+     * const tag = await prisma.tag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TagUpdateArgs>(args: SelectSubset<T, TagUpdateArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Tags.
+     * @param {TagDeleteManyArgs} args - Arguments to filter Tags to delete.
+     * @example
+     * // Delete a few Tags
+     * const { count } = await prisma.tag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TagDeleteManyArgs>(args?: SelectSubset<T, TagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tags
+     * const tag = await prisma.tag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TagUpdateManyArgs>(args: SelectSubset<T, TagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tags and returns the data updated in the database.
+     * @param {TagUpdateManyAndReturnArgs} args - Arguments to update many Tags.
+     * @example
+     * // Update many Tags
+     * const tag = await prisma.tag.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tags and only return the `id`
+     * const tagWithIdOnly = await prisma.tag.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TagUpdateManyAndReturnArgs>(args: SelectSubset<T, TagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Tag.
+     * @param {TagUpsertArgs} args - Arguments to update or create a Tag.
+     * @example
+     * // Update or create a Tag
+     * const tag = await prisma.tag.upsert({
+     *   create: {
+     *     // ... data to create a Tag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Tag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TagUpsertArgs>(args: SelectSubset<T, TagUpsertArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagCountArgs} args - Arguments to filter Tags to count.
+     * @example
+     * // Count the number of Tags
+     * const count = await prisma.tag.count({
+     *   where: {
+     *     // ... the filter for the Tags we want to count
+     *   }
+     * })
+    **/
+    count<T extends TagCountArgs>(
+      args?: Subset<T, TagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Tag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TagAggregateArgs>(args: Subset<T, TagAggregateArgs>): Prisma.PrismaPromise<GetTagAggregateType<T>>
+
+    /**
+     * Group by Tag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TagGroupByArgs['orderBy'] }
+        : { orderBy?: TagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Tag model
+   */
+  readonly fields: TagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Tag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    parentTag<T extends Tag$parentTagArgs<ExtArgs> = {}>(args?: Subset<T, Tag$parentTagArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    childTags<T extends Tag$childTagsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$childTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    canonicalTag<T extends Tag$canonicalTagArgs<ExtArgs> = {}>(args?: Subset<T, Tag$canonicalTagArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    canonicalOf<T extends Tag$canonicalOfArgs<ExtArgs> = {}>(args?: Subset<T, Tag$canonicalOfArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    aliasRecords<T extends Tag$aliasRecordsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$aliasRecordsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    similarityAsA<T extends Tag$similarityAsAArgs<ExtArgs> = {}>(args?: Subset<T, Tag$similarityAsAArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    similarityAsB<T extends Tag$similarityAsBArgs<ExtArgs> = {}>(args?: Subset<T, Tag$similarityAsBArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ideaTags<T extends Tag$ideaTagsArgs<ExtArgs> = {}>(args?: Subset<T, Tag$ideaTagsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    userPreferences<T extends Tag$userPreferencesArgs<ExtArgs> = {}>(args?: Subset<T, Tag$userPreferencesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Tag model
+   */
+  interface TagFieldRefs {
+    readonly id: FieldRef<"Tag", 'String'>
+    readonly slug: FieldRef<"Tag", 'String'>
+    readonly label: FieldRef<"Tag", 'String'>
+    readonly embedding: FieldRef<"Tag", 'Json'>
+    readonly parentTagId: FieldRef<"Tag", 'String'>
+    readonly status: FieldRef<"Tag", 'TagStatus'>
+    readonly canonicalTagId: FieldRef<"Tag", 'String'>
+    readonly source: FieldRef<"Tag", 'TagSource'>
+    readonly createdAt: FieldRef<"Tag", 'DateTime'>
+    readonly updatedAt: FieldRef<"Tag", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Tag findUnique
+   */
+  export type TagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag findUniqueOrThrow
+   */
+  export type TagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag findFirst
+   */
+  export type TagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag findFirstOrThrow
+   */
+  export type TagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tag to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag findMany
+   */
+  export type TagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where?: TagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tags.
+     */
+    cursor?: TagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag create
+   */
+  export type TagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Tag.
+     */
+    data: XOR<TagCreateInput, TagUncheckedCreateInput>
+  }
+
+  /**
+   * Tag createMany
+   */
+  export type TagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagCreateManyInput | TagCreateManyInput[]
+  }
+
+  /**
+   * Tag createManyAndReturn
+   */
+  export type TagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagCreateManyInput | TagCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Tag update
+   */
+  export type TagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Tag.
+     */
+    data: XOR<TagUpdateInput, TagUncheckedUpdateInput>
+    /**
+     * Choose, which Tag to update.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag updateMany
+   */
+  export type TagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tags.
+     */
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
+    /**
+     * Filter which Tags to update
+     */
+    where?: TagWhereInput
+    /**
+     * Limit how many Tags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tag updateManyAndReturn
+   */
+  export type TagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * The data used to update Tags.
+     */
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyInput>
+    /**
+     * Filter which Tags to update
+     */
+    where?: TagWhereInput
+    /**
+     * Limit how many Tags to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Tag upsert
+   */
+  export type TagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Tag to update in case it exists.
+     */
+    where: TagWhereUniqueInput
+    /**
+     * In case the Tag found by the `where` argument doesn't exist, create a new Tag with this data.
+     */
+    create: XOR<TagCreateInput, TagUncheckedCreateInput>
+    /**
+     * In case the Tag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TagUpdateInput, TagUncheckedUpdateInput>
+  }
+
+  /**
+   * Tag delete
+   */
+  export type TagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    /**
+     * Filter which Tag to delete.
+     */
+    where: TagWhereUniqueInput
+  }
+
+  /**
+   * Tag deleteMany
+   */
+  export type TagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tags to delete
+     */
+    where?: TagWhereInput
+    /**
+     * Limit how many Tags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tag.parentTag
+   */
+  export type Tag$parentTagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+  }
+
+  /**
+   * Tag.childTags
+   */
+  export type Tag$childTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    cursor?: TagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag.canonicalTag
+   */
+  export type Tag$canonicalTagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+  }
+
+  /**
+   * Tag.canonicalOf
+   */
+  export type Tag$canonicalOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+    where?: TagWhereInput
+    orderBy?: TagOrderByWithRelationInput | TagOrderByWithRelationInput[]
+    cursor?: TagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagScalarFieldEnum | TagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag.aliasRecords
+   */
+  export type Tag$aliasRecordsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    where?: TagAliasWhereInput
+    orderBy?: TagAliasOrderByWithRelationInput | TagAliasOrderByWithRelationInput[]
+    cursor?: TagAliasWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagAliasScalarFieldEnum | TagAliasScalarFieldEnum[]
+  }
+
+  /**
+   * Tag.similarityAsA
+   */
+  export type Tag$similarityAsAArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    where?: TagSimilarityWhereInput
+    orderBy?: TagSimilarityOrderByWithRelationInput | TagSimilarityOrderByWithRelationInput[]
+    cursor?: TagSimilarityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagSimilarityScalarFieldEnum | TagSimilarityScalarFieldEnum[]
+  }
+
+  /**
+   * Tag.similarityAsB
+   */
+  export type Tag$similarityAsBArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    where?: TagSimilarityWhereInput
+    orderBy?: TagSimilarityOrderByWithRelationInput | TagSimilarityOrderByWithRelationInput[]
+    cursor?: TagSimilarityWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TagSimilarityScalarFieldEnum | TagSimilarityScalarFieldEnum[]
+  }
+
+  /**
+   * Tag.ideaTags
+   */
+  export type Tag$ideaTagsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    where?: IdeaTagWhereInput
+    orderBy?: IdeaTagOrderByWithRelationInput | IdeaTagOrderByWithRelationInput[]
+    cursor?: IdeaTagWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IdeaTagScalarFieldEnum | IdeaTagScalarFieldEnum[]
+  }
+
+  /**
+   * Tag.userPreferences
+   */
+  export type Tag$userPreferencesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    where?: UserTagPreferenceWhereInput
+    orderBy?: UserTagPreferenceOrderByWithRelationInput | UserTagPreferenceOrderByWithRelationInput[]
+    cursor?: UserTagPreferenceWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserTagPreferenceScalarFieldEnum | UserTagPreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * Tag without action
+   */
+  export type TagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tag
+     */
+    select?: TagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tag
+     */
+    omit?: TagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TagAlias
+   */
+
+  export type AggregateTagAlias = {
+    _count: TagAliasCountAggregateOutputType | null
+    _min: TagAliasMinAggregateOutputType | null
+    _max: TagAliasMaxAggregateOutputType | null
+  }
+
+  export type TagAliasMinAggregateOutputType = {
+    id: string | null
+    alias: string | null
+    tagId: string | null
+    createdAt: Date | null
+  }
+
+  export type TagAliasMaxAggregateOutputType = {
+    id: string | null
+    alias: string | null
+    tagId: string | null
+    createdAt: Date | null
+  }
+
+  export type TagAliasCountAggregateOutputType = {
+    id: number
+    alias: number
+    tagId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TagAliasMinAggregateInputType = {
+    id?: true
+    alias?: true
+    tagId?: true
+    createdAt?: true
+  }
+
+  export type TagAliasMaxAggregateInputType = {
+    id?: true
+    alias?: true
+    tagId?: true
+    createdAt?: true
+  }
+
+  export type TagAliasCountAggregateInputType = {
+    id?: true
+    alias?: true
+    tagId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TagAliasAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TagAlias to aggregate.
+     */
+    where?: TagAliasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagAliases to fetch.
+     */
+    orderBy?: TagAliasOrderByWithRelationInput | TagAliasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TagAliasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagAliases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagAliases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TagAliases
+    **/
+    _count?: true | TagAliasCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TagAliasMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TagAliasMaxAggregateInputType
+  }
+
+  export type GetTagAliasAggregateType<T extends TagAliasAggregateArgs> = {
+        [P in keyof T & keyof AggregateTagAlias]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTagAlias[P]>
+      : GetScalarType<T[P], AggregateTagAlias[P]>
+  }
+
+
+
+
+  export type TagAliasGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagAliasWhereInput
+    orderBy?: TagAliasOrderByWithAggregationInput | TagAliasOrderByWithAggregationInput[]
+    by: TagAliasScalarFieldEnum[] | TagAliasScalarFieldEnum
+    having?: TagAliasScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TagAliasCountAggregateInputType | true
+    _min?: TagAliasMinAggregateInputType
+    _max?: TagAliasMaxAggregateInputType
+  }
+
+  export type TagAliasGroupByOutputType = {
+    id: string
+    alias: string
+    tagId: string
+    createdAt: Date
+    _count: TagAliasCountAggregateOutputType | null
+    _min: TagAliasMinAggregateOutputType | null
+    _max: TagAliasMaxAggregateOutputType | null
+  }
+
+  type GetTagAliasGroupByPayload<T extends TagAliasGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TagAliasGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TagAliasGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TagAliasGroupByOutputType[P]>
+            : GetScalarType<T[P], TagAliasGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TagAliasSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    alias?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tagAlias"]>
+
+  export type TagAliasSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    alias?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tagAlias"]>
+
+  export type TagAliasSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    alias?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tagAlias"]>
+
+  export type TagAliasSelectScalar = {
+    id?: boolean
+    alias?: boolean
+    tagId?: boolean
+    createdAt?: boolean
+  }
+
+  export type TagAliasOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "alias" | "tagId" | "createdAt", ExtArgs["result"]["tagAlias"]>
+  export type TagAliasInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type TagAliasIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type TagAliasIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+
+  export type $TagAliasPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TagAlias"
+    objects: {
+      tag: Prisma.$TagPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      alias: string
+      tagId: string
+      createdAt: Date
+    }, ExtArgs["result"]["tagAlias"]>
+    composites: {}
+  }
+
+  type TagAliasGetPayload<S extends boolean | null | undefined | TagAliasDefaultArgs> = $Result.GetResult<Prisma.$TagAliasPayload, S>
+
+  type TagAliasCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TagAliasFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TagAliasCountAggregateInputType | true
+    }
+
+  export interface TagAliasDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TagAlias'], meta: { name: 'TagAlias' } }
+    /**
+     * Find zero or one TagAlias that matches the filter.
+     * @param {TagAliasFindUniqueArgs} args - Arguments to find a TagAlias
+     * @example
+     * // Get one TagAlias
+     * const tagAlias = await prisma.tagAlias.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TagAliasFindUniqueArgs>(args: SelectSubset<T, TagAliasFindUniqueArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TagAlias that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TagAliasFindUniqueOrThrowArgs} args - Arguments to find a TagAlias
+     * @example
+     * // Get one TagAlias
+     * const tagAlias = await prisma.tagAlias.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TagAliasFindUniqueOrThrowArgs>(args: SelectSubset<T, TagAliasFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TagAlias that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAliasFindFirstArgs} args - Arguments to find a TagAlias
+     * @example
+     * // Get one TagAlias
+     * const tagAlias = await prisma.tagAlias.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TagAliasFindFirstArgs>(args?: SelectSubset<T, TagAliasFindFirstArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TagAlias that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAliasFindFirstOrThrowArgs} args - Arguments to find a TagAlias
+     * @example
+     * // Get one TagAlias
+     * const tagAlias = await prisma.tagAlias.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TagAliasFindFirstOrThrowArgs>(args?: SelectSubset<T, TagAliasFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TagAliases that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAliasFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TagAliases
+     * const tagAliases = await prisma.tagAlias.findMany()
+     * 
+     * // Get first 10 TagAliases
+     * const tagAliases = await prisma.tagAlias.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tagAliasWithIdOnly = await prisma.tagAlias.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TagAliasFindManyArgs>(args?: SelectSubset<T, TagAliasFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TagAlias.
+     * @param {TagAliasCreateArgs} args - Arguments to create a TagAlias.
+     * @example
+     * // Create one TagAlias
+     * const TagAlias = await prisma.tagAlias.create({
+     *   data: {
+     *     // ... data to create a TagAlias
+     *   }
+     * })
+     * 
+     */
+    create<T extends TagAliasCreateArgs>(args: SelectSubset<T, TagAliasCreateArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TagAliases.
+     * @param {TagAliasCreateManyArgs} args - Arguments to create many TagAliases.
+     * @example
+     * // Create many TagAliases
+     * const tagAlias = await prisma.tagAlias.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TagAliasCreateManyArgs>(args?: SelectSubset<T, TagAliasCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TagAliases and returns the data saved in the database.
+     * @param {TagAliasCreateManyAndReturnArgs} args - Arguments to create many TagAliases.
+     * @example
+     * // Create many TagAliases
+     * const tagAlias = await prisma.tagAlias.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TagAliases and only return the `id`
+     * const tagAliasWithIdOnly = await prisma.tagAlias.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TagAliasCreateManyAndReturnArgs>(args?: SelectSubset<T, TagAliasCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TagAlias.
+     * @param {TagAliasDeleteArgs} args - Arguments to delete one TagAlias.
+     * @example
+     * // Delete one TagAlias
+     * const TagAlias = await prisma.tagAlias.delete({
+     *   where: {
+     *     // ... filter to delete one TagAlias
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TagAliasDeleteArgs>(args: SelectSubset<T, TagAliasDeleteArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TagAlias.
+     * @param {TagAliasUpdateArgs} args - Arguments to update one TagAlias.
+     * @example
+     * // Update one TagAlias
+     * const tagAlias = await prisma.tagAlias.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TagAliasUpdateArgs>(args: SelectSubset<T, TagAliasUpdateArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TagAliases.
+     * @param {TagAliasDeleteManyArgs} args - Arguments to filter TagAliases to delete.
+     * @example
+     * // Delete a few TagAliases
+     * const { count } = await prisma.tagAlias.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TagAliasDeleteManyArgs>(args?: SelectSubset<T, TagAliasDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TagAliases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAliasUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TagAliases
+     * const tagAlias = await prisma.tagAlias.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TagAliasUpdateManyArgs>(args: SelectSubset<T, TagAliasUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TagAliases and returns the data updated in the database.
+     * @param {TagAliasUpdateManyAndReturnArgs} args - Arguments to update many TagAliases.
+     * @example
+     * // Update many TagAliases
+     * const tagAlias = await prisma.tagAlias.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TagAliases and only return the `id`
+     * const tagAliasWithIdOnly = await prisma.tagAlias.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TagAliasUpdateManyAndReturnArgs>(args: SelectSubset<T, TagAliasUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TagAlias.
+     * @param {TagAliasUpsertArgs} args - Arguments to update or create a TagAlias.
+     * @example
+     * // Update or create a TagAlias
+     * const tagAlias = await prisma.tagAlias.upsert({
+     *   create: {
+     *     // ... data to create a TagAlias
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TagAlias we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TagAliasUpsertArgs>(args: SelectSubset<T, TagAliasUpsertArgs<ExtArgs>>): Prisma__TagAliasClient<$Result.GetResult<Prisma.$TagAliasPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TagAliases.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAliasCountArgs} args - Arguments to filter TagAliases to count.
+     * @example
+     * // Count the number of TagAliases
+     * const count = await prisma.tagAlias.count({
+     *   where: {
+     *     // ... the filter for the TagAliases we want to count
+     *   }
+     * })
+    **/
+    count<T extends TagAliasCountArgs>(
+      args?: Subset<T, TagAliasCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TagAliasCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TagAlias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAliasAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TagAliasAggregateArgs>(args: Subset<T, TagAliasAggregateArgs>): Prisma.PrismaPromise<GetTagAliasAggregateType<T>>
+
+    /**
+     * Group by TagAlias.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagAliasGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TagAliasGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TagAliasGroupByArgs['orderBy'] }
+        : { orderBy?: TagAliasGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TagAliasGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagAliasGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TagAlias model
+   */
+  readonly fields: TagAliasFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TagAlias.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TagAliasClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TagAlias model
+   */
+  interface TagAliasFieldRefs {
+    readonly id: FieldRef<"TagAlias", 'String'>
+    readonly alias: FieldRef<"TagAlias", 'String'>
+    readonly tagId: FieldRef<"TagAlias", 'String'>
+    readonly createdAt: FieldRef<"TagAlias", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TagAlias findUnique
+   */
+  export type TagAliasFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * Filter, which TagAlias to fetch.
+     */
+    where: TagAliasWhereUniqueInput
+  }
+
+  /**
+   * TagAlias findUniqueOrThrow
+   */
+  export type TagAliasFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * Filter, which TagAlias to fetch.
+     */
+    where: TagAliasWhereUniqueInput
+  }
+
+  /**
+   * TagAlias findFirst
+   */
+  export type TagAliasFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * Filter, which TagAlias to fetch.
+     */
+    where?: TagAliasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagAliases to fetch.
+     */
+    orderBy?: TagAliasOrderByWithRelationInput | TagAliasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TagAliases.
+     */
+    cursor?: TagAliasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagAliases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagAliases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TagAliases.
+     */
+    distinct?: TagAliasScalarFieldEnum | TagAliasScalarFieldEnum[]
+  }
+
+  /**
+   * TagAlias findFirstOrThrow
+   */
+  export type TagAliasFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * Filter, which TagAlias to fetch.
+     */
+    where?: TagAliasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagAliases to fetch.
+     */
+    orderBy?: TagAliasOrderByWithRelationInput | TagAliasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TagAliases.
+     */
+    cursor?: TagAliasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagAliases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagAliases.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TagAliases.
+     */
+    distinct?: TagAliasScalarFieldEnum | TagAliasScalarFieldEnum[]
+  }
+
+  /**
+   * TagAlias findMany
+   */
+  export type TagAliasFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * Filter, which TagAliases to fetch.
+     */
+    where?: TagAliasWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagAliases to fetch.
+     */
+    orderBy?: TagAliasOrderByWithRelationInput | TagAliasOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TagAliases.
+     */
+    cursor?: TagAliasWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagAliases from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagAliases.
+     */
+    skip?: number
+    distinct?: TagAliasScalarFieldEnum | TagAliasScalarFieldEnum[]
+  }
+
+  /**
+   * TagAlias create
+   */
+  export type TagAliasCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TagAlias.
+     */
+    data: XOR<TagAliasCreateInput, TagAliasUncheckedCreateInput>
+  }
+
+  /**
+   * TagAlias createMany
+   */
+  export type TagAliasCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TagAliases.
+     */
+    data: TagAliasCreateManyInput | TagAliasCreateManyInput[]
+  }
+
+  /**
+   * TagAlias createManyAndReturn
+   */
+  export type TagAliasCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * The data used to create many TagAliases.
+     */
+    data: TagAliasCreateManyInput | TagAliasCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TagAlias update
+   */
+  export type TagAliasUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TagAlias.
+     */
+    data: XOR<TagAliasUpdateInput, TagAliasUncheckedUpdateInput>
+    /**
+     * Choose, which TagAlias to update.
+     */
+    where: TagAliasWhereUniqueInput
+  }
+
+  /**
+   * TagAlias updateMany
+   */
+  export type TagAliasUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TagAliases.
+     */
+    data: XOR<TagAliasUpdateManyMutationInput, TagAliasUncheckedUpdateManyInput>
+    /**
+     * Filter which TagAliases to update
+     */
+    where?: TagAliasWhereInput
+    /**
+     * Limit how many TagAliases to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TagAlias updateManyAndReturn
+   */
+  export type TagAliasUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * The data used to update TagAliases.
+     */
+    data: XOR<TagAliasUpdateManyMutationInput, TagAliasUncheckedUpdateManyInput>
+    /**
+     * Filter which TagAliases to update
+     */
+    where?: TagAliasWhereInput
+    /**
+     * Limit how many TagAliases to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TagAlias upsert
+   */
+  export type TagAliasUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TagAlias to update in case it exists.
+     */
+    where: TagAliasWhereUniqueInput
+    /**
+     * In case the TagAlias found by the `where` argument doesn't exist, create a new TagAlias with this data.
+     */
+    create: XOR<TagAliasCreateInput, TagAliasUncheckedCreateInput>
+    /**
+     * In case the TagAlias was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TagAliasUpdateInput, TagAliasUncheckedUpdateInput>
+  }
+
+  /**
+   * TagAlias delete
+   */
+  export type TagAliasDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+    /**
+     * Filter which TagAlias to delete.
+     */
+    where: TagAliasWhereUniqueInput
+  }
+
+  /**
+   * TagAlias deleteMany
+   */
+  export type TagAliasDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TagAliases to delete
+     */
+    where?: TagAliasWhereInput
+    /**
+     * Limit how many TagAliases to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TagAlias without action
+   */
+  export type TagAliasDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagAlias
+     */
+    select?: TagAliasSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagAlias
+     */
+    omit?: TagAliasOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagAliasInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TagSimilarity
+   */
+
+  export type AggregateTagSimilarity = {
+    _count: TagSimilarityCountAggregateOutputType | null
+    _avg: TagSimilarityAvgAggregateOutputType | null
+    _sum: TagSimilaritySumAggregateOutputType | null
+    _min: TagSimilarityMinAggregateOutputType | null
+    _max: TagSimilarityMaxAggregateOutputType | null
+  }
+
+  export type TagSimilarityAvgAggregateOutputType = {
+    similarity: number | null
+  }
+
+  export type TagSimilaritySumAggregateOutputType = {
+    similarity: number | null
+  }
+
+  export type TagSimilarityMinAggregateOutputType = {
+    id: string | null
+    tagAId: string | null
+    tagBId: string | null
+    similarity: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagSimilarityMaxAggregateOutputType = {
+    id: string | null
+    tagAId: string | null
+    tagBId: string | null
+    similarity: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagSimilarityCountAggregateOutputType = {
+    id: number
+    tagAId: number
+    tagBId: number
+    similarity: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TagSimilarityAvgAggregateInputType = {
+    similarity?: true
+  }
+
+  export type TagSimilaritySumAggregateInputType = {
+    similarity?: true
+  }
+
+  export type TagSimilarityMinAggregateInputType = {
+    id?: true
+    tagAId?: true
+    tagBId?: true
+    similarity?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagSimilarityMaxAggregateInputType = {
+    id?: true
+    tagAId?: true
+    tagBId?: true
+    similarity?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagSimilarityCountAggregateInputType = {
+    id?: true
+    tagAId?: true
+    tagBId?: true
+    similarity?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TagSimilarityAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TagSimilarity to aggregate.
+     */
+    where?: TagSimilarityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagSimilarities to fetch.
+     */
+    orderBy?: TagSimilarityOrderByWithRelationInput | TagSimilarityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TagSimilarityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagSimilarities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagSimilarities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TagSimilarities
+    **/
+    _count?: true | TagSimilarityCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TagSimilarityAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TagSimilaritySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TagSimilarityMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TagSimilarityMaxAggregateInputType
+  }
+
+  export type GetTagSimilarityAggregateType<T extends TagSimilarityAggregateArgs> = {
+        [P in keyof T & keyof AggregateTagSimilarity]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTagSimilarity[P]>
+      : GetScalarType<T[P], AggregateTagSimilarity[P]>
+  }
+
+
+
+
+  export type TagSimilarityGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagSimilarityWhereInput
+    orderBy?: TagSimilarityOrderByWithAggregationInput | TagSimilarityOrderByWithAggregationInput[]
+    by: TagSimilarityScalarFieldEnum[] | TagSimilarityScalarFieldEnum
+    having?: TagSimilarityScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TagSimilarityCountAggregateInputType | true
+    _avg?: TagSimilarityAvgAggregateInputType
+    _sum?: TagSimilaritySumAggregateInputType
+    _min?: TagSimilarityMinAggregateInputType
+    _max?: TagSimilarityMaxAggregateInputType
+  }
+
+  export type TagSimilarityGroupByOutputType = {
+    id: string
+    tagAId: string
+    tagBId: string
+    similarity: number
+    createdAt: Date
+    updatedAt: Date
+    _count: TagSimilarityCountAggregateOutputType | null
+    _avg: TagSimilarityAvgAggregateOutputType | null
+    _sum: TagSimilaritySumAggregateOutputType | null
+    _min: TagSimilarityMinAggregateOutputType | null
+    _max: TagSimilarityMaxAggregateOutputType | null
+  }
+
+  type GetTagSimilarityGroupByPayload<T extends TagSimilarityGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TagSimilarityGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TagSimilarityGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TagSimilarityGroupByOutputType[P]>
+            : GetScalarType<T[P], TagSimilarityGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TagSimilaritySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tagAId?: boolean
+    tagBId?: boolean
+    similarity?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tagA?: boolean | TagDefaultArgs<ExtArgs>
+    tagB?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tagSimilarity"]>
+
+  export type TagSimilaritySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tagAId?: boolean
+    tagBId?: boolean
+    similarity?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tagA?: boolean | TagDefaultArgs<ExtArgs>
+    tagB?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tagSimilarity"]>
+
+  export type TagSimilaritySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tagAId?: boolean
+    tagBId?: boolean
+    similarity?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    tagA?: boolean | TagDefaultArgs<ExtArgs>
+    tagB?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tagSimilarity"]>
+
+  export type TagSimilaritySelectScalar = {
+    id?: boolean
+    tagAId?: boolean
+    tagBId?: boolean
+    similarity?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TagSimilarityOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tagAId" | "tagBId" | "similarity" | "createdAt" | "updatedAt", ExtArgs["result"]["tagSimilarity"]>
+  export type TagSimilarityInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tagA?: boolean | TagDefaultArgs<ExtArgs>
+    tagB?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type TagSimilarityIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tagA?: boolean | TagDefaultArgs<ExtArgs>
+    tagB?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type TagSimilarityIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tagA?: boolean | TagDefaultArgs<ExtArgs>
+    tagB?: boolean | TagDefaultArgs<ExtArgs>
+  }
+
+  export type $TagSimilarityPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TagSimilarity"
+    objects: {
+      tagA: Prisma.$TagPayload<ExtArgs>
+      tagB: Prisma.$TagPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tagAId: string
+      tagBId: string
+      similarity: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["tagSimilarity"]>
+    composites: {}
+  }
+
+  type TagSimilarityGetPayload<S extends boolean | null | undefined | TagSimilarityDefaultArgs> = $Result.GetResult<Prisma.$TagSimilarityPayload, S>
+
+  type TagSimilarityCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TagSimilarityFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TagSimilarityCountAggregateInputType | true
+    }
+
+  export interface TagSimilarityDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TagSimilarity'], meta: { name: 'TagSimilarity' } }
+    /**
+     * Find zero or one TagSimilarity that matches the filter.
+     * @param {TagSimilarityFindUniqueArgs} args - Arguments to find a TagSimilarity
+     * @example
+     * // Get one TagSimilarity
+     * const tagSimilarity = await prisma.tagSimilarity.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TagSimilarityFindUniqueArgs>(args: SelectSubset<T, TagSimilarityFindUniqueArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TagSimilarity that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TagSimilarityFindUniqueOrThrowArgs} args - Arguments to find a TagSimilarity
+     * @example
+     * // Get one TagSimilarity
+     * const tagSimilarity = await prisma.tagSimilarity.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TagSimilarityFindUniqueOrThrowArgs>(args: SelectSubset<T, TagSimilarityFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TagSimilarity that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagSimilarityFindFirstArgs} args - Arguments to find a TagSimilarity
+     * @example
+     * // Get one TagSimilarity
+     * const tagSimilarity = await prisma.tagSimilarity.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TagSimilarityFindFirstArgs>(args?: SelectSubset<T, TagSimilarityFindFirstArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TagSimilarity that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagSimilarityFindFirstOrThrowArgs} args - Arguments to find a TagSimilarity
+     * @example
+     * // Get one TagSimilarity
+     * const tagSimilarity = await prisma.tagSimilarity.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TagSimilarityFindFirstOrThrowArgs>(args?: SelectSubset<T, TagSimilarityFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TagSimilarities that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagSimilarityFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TagSimilarities
+     * const tagSimilarities = await prisma.tagSimilarity.findMany()
+     * 
+     * // Get first 10 TagSimilarities
+     * const tagSimilarities = await prisma.tagSimilarity.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tagSimilarityWithIdOnly = await prisma.tagSimilarity.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TagSimilarityFindManyArgs>(args?: SelectSubset<T, TagSimilarityFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TagSimilarity.
+     * @param {TagSimilarityCreateArgs} args - Arguments to create a TagSimilarity.
+     * @example
+     * // Create one TagSimilarity
+     * const TagSimilarity = await prisma.tagSimilarity.create({
+     *   data: {
+     *     // ... data to create a TagSimilarity
+     *   }
+     * })
+     * 
+     */
+    create<T extends TagSimilarityCreateArgs>(args: SelectSubset<T, TagSimilarityCreateArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TagSimilarities.
+     * @param {TagSimilarityCreateManyArgs} args - Arguments to create many TagSimilarities.
+     * @example
+     * // Create many TagSimilarities
+     * const tagSimilarity = await prisma.tagSimilarity.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TagSimilarityCreateManyArgs>(args?: SelectSubset<T, TagSimilarityCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TagSimilarities and returns the data saved in the database.
+     * @param {TagSimilarityCreateManyAndReturnArgs} args - Arguments to create many TagSimilarities.
+     * @example
+     * // Create many TagSimilarities
+     * const tagSimilarity = await prisma.tagSimilarity.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TagSimilarities and only return the `id`
+     * const tagSimilarityWithIdOnly = await prisma.tagSimilarity.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TagSimilarityCreateManyAndReturnArgs>(args?: SelectSubset<T, TagSimilarityCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TagSimilarity.
+     * @param {TagSimilarityDeleteArgs} args - Arguments to delete one TagSimilarity.
+     * @example
+     * // Delete one TagSimilarity
+     * const TagSimilarity = await prisma.tagSimilarity.delete({
+     *   where: {
+     *     // ... filter to delete one TagSimilarity
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TagSimilarityDeleteArgs>(args: SelectSubset<T, TagSimilarityDeleteArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TagSimilarity.
+     * @param {TagSimilarityUpdateArgs} args - Arguments to update one TagSimilarity.
+     * @example
+     * // Update one TagSimilarity
+     * const tagSimilarity = await prisma.tagSimilarity.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TagSimilarityUpdateArgs>(args: SelectSubset<T, TagSimilarityUpdateArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TagSimilarities.
+     * @param {TagSimilarityDeleteManyArgs} args - Arguments to filter TagSimilarities to delete.
+     * @example
+     * // Delete a few TagSimilarities
+     * const { count } = await prisma.tagSimilarity.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TagSimilarityDeleteManyArgs>(args?: SelectSubset<T, TagSimilarityDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TagSimilarities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagSimilarityUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TagSimilarities
+     * const tagSimilarity = await prisma.tagSimilarity.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TagSimilarityUpdateManyArgs>(args: SelectSubset<T, TagSimilarityUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TagSimilarities and returns the data updated in the database.
+     * @param {TagSimilarityUpdateManyAndReturnArgs} args - Arguments to update many TagSimilarities.
+     * @example
+     * // Update many TagSimilarities
+     * const tagSimilarity = await prisma.tagSimilarity.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TagSimilarities and only return the `id`
+     * const tagSimilarityWithIdOnly = await prisma.tagSimilarity.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TagSimilarityUpdateManyAndReturnArgs>(args: SelectSubset<T, TagSimilarityUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TagSimilarity.
+     * @param {TagSimilarityUpsertArgs} args - Arguments to update or create a TagSimilarity.
+     * @example
+     * // Update or create a TagSimilarity
+     * const tagSimilarity = await prisma.tagSimilarity.upsert({
+     *   create: {
+     *     // ... data to create a TagSimilarity
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TagSimilarity we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TagSimilarityUpsertArgs>(args: SelectSubset<T, TagSimilarityUpsertArgs<ExtArgs>>): Prisma__TagSimilarityClient<$Result.GetResult<Prisma.$TagSimilarityPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TagSimilarities.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagSimilarityCountArgs} args - Arguments to filter TagSimilarities to count.
+     * @example
+     * // Count the number of TagSimilarities
+     * const count = await prisma.tagSimilarity.count({
+     *   where: {
+     *     // ... the filter for the TagSimilarities we want to count
+     *   }
+     * })
+    **/
+    count<T extends TagSimilarityCountArgs>(
+      args?: Subset<T, TagSimilarityCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TagSimilarityCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TagSimilarity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagSimilarityAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TagSimilarityAggregateArgs>(args: Subset<T, TagSimilarityAggregateArgs>): Prisma.PrismaPromise<GetTagSimilarityAggregateType<T>>
+
+    /**
+     * Group by TagSimilarity.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagSimilarityGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TagSimilarityGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TagSimilarityGroupByArgs['orderBy'] }
+        : { orderBy?: TagSimilarityGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TagSimilarityGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagSimilarityGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TagSimilarity model
+   */
+  readonly fields: TagSimilarityFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TagSimilarity.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TagSimilarityClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    tagA<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tagB<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TagSimilarity model
+   */
+  interface TagSimilarityFieldRefs {
+    readonly id: FieldRef<"TagSimilarity", 'String'>
+    readonly tagAId: FieldRef<"TagSimilarity", 'String'>
+    readonly tagBId: FieldRef<"TagSimilarity", 'String'>
+    readonly similarity: FieldRef<"TagSimilarity", 'Float'>
+    readonly createdAt: FieldRef<"TagSimilarity", 'DateTime'>
+    readonly updatedAt: FieldRef<"TagSimilarity", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TagSimilarity findUnique
+   */
+  export type TagSimilarityFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * Filter, which TagSimilarity to fetch.
+     */
+    where: TagSimilarityWhereUniqueInput
+  }
+
+  /**
+   * TagSimilarity findUniqueOrThrow
+   */
+  export type TagSimilarityFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * Filter, which TagSimilarity to fetch.
+     */
+    where: TagSimilarityWhereUniqueInput
+  }
+
+  /**
+   * TagSimilarity findFirst
+   */
+  export type TagSimilarityFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * Filter, which TagSimilarity to fetch.
+     */
+    where?: TagSimilarityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagSimilarities to fetch.
+     */
+    orderBy?: TagSimilarityOrderByWithRelationInput | TagSimilarityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TagSimilarities.
+     */
+    cursor?: TagSimilarityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagSimilarities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagSimilarities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TagSimilarities.
+     */
+    distinct?: TagSimilarityScalarFieldEnum | TagSimilarityScalarFieldEnum[]
+  }
+
+  /**
+   * TagSimilarity findFirstOrThrow
+   */
+  export type TagSimilarityFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * Filter, which TagSimilarity to fetch.
+     */
+    where?: TagSimilarityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagSimilarities to fetch.
+     */
+    orderBy?: TagSimilarityOrderByWithRelationInput | TagSimilarityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TagSimilarities.
+     */
+    cursor?: TagSimilarityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagSimilarities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagSimilarities.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TagSimilarities.
+     */
+    distinct?: TagSimilarityScalarFieldEnum | TagSimilarityScalarFieldEnum[]
+  }
+
+  /**
+   * TagSimilarity findMany
+   */
+  export type TagSimilarityFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * Filter, which TagSimilarities to fetch.
+     */
+    where?: TagSimilarityWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TagSimilarities to fetch.
+     */
+    orderBy?: TagSimilarityOrderByWithRelationInput | TagSimilarityOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TagSimilarities.
+     */
+    cursor?: TagSimilarityWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TagSimilarities from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TagSimilarities.
+     */
+    skip?: number
+    distinct?: TagSimilarityScalarFieldEnum | TagSimilarityScalarFieldEnum[]
+  }
+
+  /**
+   * TagSimilarity create
+   */
+  export type TagSimilarityCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TagSimilarity.
+     */
+    data: XOR<TagSimilarityCreateInput, TagSimilarityUncheckedCreateInput>
+  }
+
+  /**
+   * TagSimilarity createMany
+   */
+  export type TagSimilarityCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TagSimilarities.
+     */
+    data: TagSimilarityCreateManyInput | TagSimilarityCreateManyInput[]
+  }
+
+  /**
+   * TagSimilarity createManyAndReturn
+   */
+  export type TagSimilarityCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * The data used to create many TagSimilarities.
+     */
+    data: TagSimilarityCreateManyInput | TagSimilarityCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TagSimilarity update
+   */
+  export type TagSimilarityUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TagSimilarity.
+     */
+    data: XOR<TagSimilarityUpdateInput, TagSimilarityUncheckedUpdateInput>
+    /**
+     * Choose, which TagSimilarity to update.
+     */
+    where: TagSimilarityWhereUniqueInput
+  }
+
+  /**
+   * TagSimilarity updateMany
+   */
+  export type TagSimilarityUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TagSimilarities.
+     */
+    data: XOR<TagSimilarityUpdateManyMutationInput, TagSimilarityUncheckedUpdateManyInput>
+    /**
+     * Filter which TagSimilarities to update
+     */
+    where?: TagSimilarityWhereInput
+    /**
+     * Limit how many TagSimilarities to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TagSimilarity updateManyAndReturn
+   */
+  export type TagSimilarityUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * The data used to update TagSimilarities.
+     */
+    data: XOR<TagSimilarityUpdateManyMutationInput, TagSimilarityUncheckedUpdateManyInput>
+    /**
+     * Filter which TagSimilarities to update
+     */
+    where?: TagSimilarityWhereInput
+    /**
+     * Limit how many TagSimilarities to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TagSimilarity upsert
+   */
+  export type TagSimilarityUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TagSimilarity to update in case it exists.
+     */
+    where: TagSimilarityWhereUniqueInput
+    /**
+     * In case the TagSimilarity found by the `where` argument doesn't exist, create a new TagSimilarity with this data.
+     */
+    create: XOR<TagSimilarityCreateInput, TagSimilarityUncheckedCreateInput>
+    /**
+     * In case the TagSimilarity was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TagSimilarityUpdateInput, TagSimilarityUncheckedUpdateInput>
+  }
+
+  /**
+   * TagSimilarity delete
+   */
+  export type TagSimilarityDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+    /**
+     * Filter which TagSimilarity to delete.
+     */
+    where: TagSimilarityWhereUniqueInput
+  }
+
+  /**
+   * TagSimilarity deleteMany
+   */
+  export type TagSimilarityDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TagSimilarities to delete
+     */
+    where?: TagSimilarityWhereInput
+    /**
+     * Limit how many TagSimilarities to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TagSimilarity without action
+   */
+  export type TagSimilarityDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagSimilarity
+     */
+    select?: TagSimilaritySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TagSimilarity
+     */
+    omit?: TagSimilarityOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagSimilarityInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model IdeaTag
+   */
+
+  export type AggregateIdeaTag = {
+    _count: IdeaTagCountAggregateOutputType | null
+    _avg: IdeaTagAvgAggregateOutputType | null
+    _sum: IdeaTagSumAggregateOutputType | null
+    _min: IdeaTagMinAggregateOutputType | null
+    _max: IdeaTagMaxAggregateOutputType | null
+  }
+
+  export type IdeaTagAvgAggregateOutputType = {
+    weight: number | null
+    sourceConfidence: number | null
+  }
+
+  export type IdeaTagSumAggregateOutputType = {
+    weight: number | null
+    sourceConfidence: number | null
+  }
+
+  export type IdeaTagMinAggregateOutputType = {
+    id: string | null
+    ideaId: string | null
+    tagId: string | null
+    weight: number | null
+    sourceConfidence: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IdeaTagMaxAggregateOutputType = {
+    id: string | null
+    ideaId: string | null
+    tagId: string | null
+    weight: number | null
+    sourceConfidence: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IdeaTagCountAggregateOutputType = {
+    id: number
+    ideaId: number
+    tagId: number
+    weight: number
+    sourceConfidence: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type IdeaTagAvgAggregateInputType = {
+    weight?: true
+    sourceConfidence?: true
+  }
+
+  export type IdeaTagSumAggregateInputType = {
+    weight?: true
+    sourceConfidence?: true
+  }
+
+  export type IdeaTagMinAggregateInputType = {
+    id?: true
+    ideaId?: true
+    tagId?: true
+    weight?: true
+    sourceConfidence?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IdeaTagMaxAggregateInputType = {
+    id?: true
+    ideaId?: true
+    tagId?: true
+    weight?: true
+    sourceConfidence?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IdeaTagCountAggregateInputType = {
+    id?: true
+    ideaId?: true
+    tagId?: true
+    weight?: true
+    sourceConfidence?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type IdeaTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IdeaTag to aggregate.
+     */
+    where?: IdeaTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaTags to fetch.
+     */
+    orderBy?: IdeaTagOrderByWithRelationInput | IdeaTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IdeaTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IdeaTags
+    **/
+    _count?: true | IdeaTagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: IdeaTagAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: IdeaTagSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IdeaTagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IdeaTagMaxAggregateInputType
+  }
+
+  export type GetIdeaTagAggregateType<T extends IdeaTagAggregateArgs> = {
+        [P in keyof T & keyof AggregateIdeaTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIdeaTag[P]>
+      : GetScalarType<T[P], AggregateIdeaTag[P]>
+  }
+
+
+
+
+  export type IdeaTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdeaTagWhereInput
+    orderBy?: IdeaTagOrderByWithAggregationInput | IdeaTagOrderByWithAggregationInput[]
+    by: IdeaTagScalarFieldEnum[] | IdeaTagScalarFieldEnum
+    having?: IdeaTagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IdeaTagCountAggregateInputType | true
+    _avg?: IdeaTagAvgAggregateInputType
+    _sum?: IdeaTagSumAggregateInputType
+    _min?: IdeaTagMinAggregateInputType
+    _max?: IdeaTagMaxAggregateInputType
+  }
+
+  export type IdeaTagGroupByOutputType = {
+    id: string
+    ideaId: string
+    tagId: string
+    weight: number
+    sourceConfidence: number
+    createdAt: Date
+    updatedAt: Date
+    _count: IdeaTagCountAggregateOutputType | null
+    _avg: IdeaTagAvgAggregateOutputType | null
+    _sum: IdeaTagSumAggregateOutputType | null
+    _min: IdeaTagMinAggregateOutputType | null
+    _max: IdeaTagMaxAggregateOutputType | null
+  }
+
+  type GetIdeaTagGroupByPayload<T extends IdeaTagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IdeaTagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IdeaTagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IdeaTagGroupByOutputType[P]>
+            : GetScalarType<T[P], IdeaTagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IdeaTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ideaId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    sourceConfidence?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ideaTag"]>
+
+  export type IdeaTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ideaId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    sourceConfidence?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ideaTag"]>
+
+  export type IdeaTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    ideaId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    sourceConfidence?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ideaTag"]>
+
+  export type IdeaTagSelectScalar = {
+    id?: boolean
+    ideaId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    sourceConfidence?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type IdeaTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "ideaId" | "tagId" | "weight" | "sourceConfidence" | "createdAt" | "updatedAt", ExtArgs["result"]["ideaTag"]>
+  export type IdeaTagInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type IdeaTagIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type IdeaTagIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+
+  export type $IdeaTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IdeaTag"
+    objects: {
+      idea: Prisma.$IdeaPayload<ExtArgs>
+      tag: Prisma.$TagPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      ideaId: string
+      tagId: string
+      weight: number
+      sourceConfidence: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["ideaTag"]>
+    composites: {}
+  }
+
+  type IdeaTagGetPayload<S extends boolean | null | undefined | IdeaTagDefaultArgs> = $Result.GetResult<Prisma.$IdeaTagPayload, S>
+
+  type IdeaTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IdeaTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IdeaTagCountAggregateInputType | true
+    }
+
+  export interface IdeaTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IdeaTag'], meta: { name: 'IdeaTag' } }
+    /**
+     * Find zero or one IdeaTag that matches the filter.
+     * @param {IdeaTagFindUniqueArgs} args - Arguments to find a IdeaTag
+     * @example
+     * // Get one IdeaTag
+     * const ideaTag = await prisma.ideaTag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IdeaTagFindUniqueArgs>(args: SelectSubset<T, IdeaTagFindUniqueArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IdeaTag that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IdeaTagFindUniqueOrThrowArgs} args - Arguments to find a IdeaTag
+     * @example
+     * // Get one IdeaTag
+     * const ideaTag = await prisma.ideaTag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IdeaTagFindUniqueOrThrowArgs>(args: SelectSubset<T, IdeaTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IdeaTag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaTagFindFirstArgs} args - Arguments to find a IdeaTag
+     * @example
+     * // Get one IdeaTag
+     * const ideaTag = await prisma.ideaTag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IdeaTagFindFirstArgs>(args?: SelectSubset<T, IdeaTagFindFirstArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IdeaTag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaTagFindFirstOrThrowArgs} args - Arguments to find a IdeaTag
+     * @example
+     * // Get one IdeaTag
+     * const ideaTag = await prisma.ideaTag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IdeaTagFindFirstOrThrowArgs>(args?: SelectSubset<T, IdeaTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IdeaTags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaTagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IdeaTags
+     * const ideaTags = await prisma.ideaTag.findMany()
+     * 
+     * // Get first 10 IdeaTags
+     * const ideaTags = await prisma.ideaTag.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ideaTagWithIdOnly = await prisma.ideaTag.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IdeaTagFindManyArgs>(args?: SelectSubset<T, IdeaTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IdeaTag.
+     * @param {IdeaTagCreateArgs} args - Arguments to create a IdeaTag.
+     * @example
+     * // Create one IdeaTag
+     * const IdeaTag = await prisma.ideaTag.create({
+     *   data: {
+     *     // ... data to create a IdeaTag
+     *   }
+     * })
+     * 
+     */
+    create<T extends IdeaTagCreateArgs>(args: SelectSubset<T, IdeaTagCreateArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IdeaTags.
+     * @param {IdeaTagCreateManyArgs} args - Arguments to create many IdeaTags.
+     * @example
+     * // Create many IdeaTags
+     * const ideaTag = await prisma.ideaTag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IdeaTagCreateManyArgs>(args?: SelectSubset<T, IdeaTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IdeaTags and returns the data saved in the database.
+     * @param {IdeaTagCreateManyAndReturnArgs} args - Arguments to create many IdeaTags.
+     * @example
+     * // Create many IdeaTags
+     * const ideaTag = await prisma.ideaTag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IdeaTags and only return the `id`
+     * const ideaTagWithIdOnly = await prisma.ideaTag.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IdeaTagCreateManyAndReturnArgs>(args?: SelectSubset<T, IdeaTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a IdeaTag.
+     * @param {IdeaTagDeleteArgs} args - Arguments to delete one IdeaTag.
+     * @example
+     * // Delete one IdeaTag
+     * const IdeaTag = await prisma.ideaTag.delete({
+     *   where: {
+     *     // ... filter to delete one IdeaTag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IdeaTagDeleteArgs>(args: SelectSubset<T, IdeaTagDeleteArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IdeaTag.
+     * @param {IdeaTagUpdateArgs} args - Arguments to update one IdeaTag.
+     * @example
+     * // Update one IdeaTag
+     * const ideaTag = await prisma.ideaTag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IdeaTagUpdateArgs>(args: SelectSubset<T, IdeaTagUpdateArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IdeaTags.
+     * @param {IdeaTagDeleteManyArgs} args - Arguments to filter IdeaTags to delete.
+     * @example
+     * // Delete a few IdeaTags
+     * const { count } = await prisma.ideaTag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IdeaTagDeleteManyArgs>(args?: SelectSubset<T, IdeaTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IdeaTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaTagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IdeaTags
+     * const ideaTag = await prisma.ideaTag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IdeaTagUpdateManyArgs>(args: SelectSubset<T, IdeaTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IdeaTags and returns the data updated in the database.
+     * @param {IdeaTagUpdateManyAndReturnArgs} args - Arguments to update many IdeaTags.
+     * @example
+     * // Update many IdeaTags
+     * const ideaTag = await prisma.ideaTag.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IdeaTags and only return the `id`
+     * const ideaTagWithIdOnly = await prisma.ideaTag.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IdeaTagUpdateManyAndReturnArgs>(args: SelectSubset<T, IdeaTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one IdeaTag.
+     * @param {IdeaTagUpsertArgs} args - Arguments to update or create a IdeaTag.
+     * @example
+     * // Update or create a IdeaTag
+     * const ideaTag = await prisma.ideaTag.upsert({
+     *   create: {
+     *     // ... data to create a IdeaTag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IdeaTag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IdeaTagUpsertArgs>(args: SelectSubset<T, IdeaTagUpsertArgs<ExtArgs>>): Prisma__IdeaTagClient<$Result.GetResult<Prisma.$IdeaTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IdeaTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaTagCountArgs} args - Arguments to filter IdeaTags to count.
+     * @example
+     * // Count the number of IdeaTags
+     * const count = await prisma.ideaTag.count({
+     *   where: {
+     *     // ... the filter for the IdeaTags we want to count
+     *   }
+     * })
+    **/
+    count<T extends IdeaTagCountArgs>(
+      args?: Subset<T, IdeaTagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IdeaTagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IdeaTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IdeaTagAggregateArgs>(args: Subset<T, IdeaTagAggregateArgs>): Prisma.PrismaPromise<GetIdeaTagAggregateType<T>>
+
+    /**
+     * Group by IdeaTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaTagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IdeaTagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IdeaTagGroupByArgs['orderBy'] }
+        : { orderBy?: IdeaTagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IdeaTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIdeaTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IdeaTag model
+   */
+  readonly fields: IdeaTagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IdeaTag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IdeaTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    idea<T extends IdeaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IdeaDefaultArgs<ExtArgs>>): Prisma__IdeaClient<$Result.GetResult<Prisma.$IdeaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IdeaTag model
+   */
+  interface IdeaTagFieldRefs {
+    readonly id: FieldRef<"IdeaTag", 'String'>
+    readonly ideaId: FieldRef<"IdeaTag", 'String'>
+    readonly tagId: FieldRef<"IdeaTag", 'String'>
+    readonly weight: FieldRef<"IdeaTag", 'Float'>
+    readonly sourceConfidence: FieldRef<"IdeaTag", 'Float'>
+    readonly createdAt: FieldRef<"IdeaTag", 'DateTime'>
+    readonly updatedAt: FieldRef<"IdeaTag", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IdeaTag findUnique
+   */
+  export type IdeaTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaTag to fetch.
+     */
+    where: IdeaTagWhereUniqueInput
+  }
+
+  /**
+   * IdeaTag findUniqueOrThrow
+   */
+  export type IdeaTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaTag to fetch.
+     */
+    where: IdeaTagWhereUniqueInput
+  }
+
+  /**
+   * IdeaTag findFirst
+   */
+  export type IdeaTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaTag to fetch.
+     */
+    where?: IdeaTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaTags to fetch.
+     */
+    orderBy?: IdeaTagOrderByWithRelationInput | IdeaTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IdeaTags.
+     */
+    cursor?: IdeaTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IdeaTags.
+     */
+    distinct?: IdeaTagScalarFieldEnum | IdeaTagScalarFieldEnum[]
+  }
+
+  /**
+   * IdeaTag findFirstOrThrow
+   */
+  export type IdeaTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaTag to fetch.
+     */
+    where?: IdeaTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaTags to fetch.
+     */
+    orderBy?: IdeaTagOrderByWithRelationInput | IdeaTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IdeaTags.
+     */
+    cursor?: IdeaTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IdeaTags.
+     */
+    distinct?: IdeaTagScalarFieldEnum | IdeaTagScalarFieldEnum[]
+  }
+
+  /**
+   * IdeaTag findMany
+   */
+  export type IdeaTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaTags to fetch.
+     */
+    where?: IdeaTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaTags to fetch.
+     */
+    orderBy?: IdeaTagOrderByWithRelationInput | IdeaTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IdeaTags.
+     */
+    cursor?: IdeaTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaTags.
+     */
+    skip?: number
+    distinct?: IdeaTagScalarFieldEnum | IdeaTagScalarFieldEnum[]
+  }
+
+  /**
+   * IdeaTag create
+   */
+  export type IdeaTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * The data needed to create a IdeaTag.
+     */
+    data: XOR<IdeaTagCreateInput, IdeaTagUncheckedCreateInput>
+  }
+
+  /**
+   * IdeaTag createMany
+   */
+  export type IdeaTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IdeaTags.
+     */
+    data: IdeaTagCreateManyInput | IdeaTagCreateManyInput[]
+  }
+
+  /**
+   * IdeaTag createManyAndReturn
+   */
+  export type IdeaTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * The data used to create many IdeaTags.
+     */
+    data: IdeaTagCreateManyInput | IdeaTagCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IdeaTag update
+   */
+  export type IdeaTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * The data needed to update a IdeaTag.
+     */
+    data: XOR<IdeaTagUpdateInput, IdeaTagUncheckedUpdateInput>
+    /**
+     * Choose, which IdeaTag to update.
+     */
+    where: IdeaTagWhereUniqueInput
+  }
+
+  /**
+   * IdeaTag updateMany
+   */
+  export type IdeaTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IdeaTags.
+     */
+    data: XOR<IdeaTagUpdateManyMutationInput, IdeaTagUncheckedUpdateManyInput>
+    /**
+     * Filter which IdeaTags to update
+     */
+    where?: IdeaTagWhereInput
+    /**
+     * Limit how many IdeaTags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IdeaTag updateManyAndReturn
+   */
+  export type IdeaTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * The data used to update IdeaTags.
+     */
+    data: XOR<IdeaTagUpdateManyMutationInput, IdeaTagUncheckedUpdateManyInput>
+    /**
+     * Filter which IdeaTags to update
+     */
+    where?: IdeaTagWhereInput
+    /**
+     * Limit how many IdeaTags to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IdeaTag upsert
+   */
+  export type IdeaTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * The filter to search for the IdeaTag to update in case it exists.
+     */
+    where: IdeaTagWhereUniqueInput
+    /**
+     * In case the IdeaTag found by the `where` argument doesn't exist, create a new IdeaTag with this data.
+     */
+    create: XOR<IdeaTagCreateInput, IdeaTagUncheckedCreateInput>
+    /**
+     * In case the IdeaTag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IdeaTagUpdateInput, IdeaTagUncheckedUpdateInput>
+  }
+
+  /**
+   * IdeaTag delete
+   */
+  export type IdeaTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+    /**
+     * Filter which IdeaTag to delete.
+     */
+    where: IdeaTagWhereUniqueInput
+  }
+
+  /**
+   * IdeaTag deleteMany
+   */
+  export type IdeaTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IdeaTags to delete
+     */
+    where?: IdeaTagWhereInput
+    /**
+     * Limit how many IdeaTags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IdeaTag without action
+   */
+  export type IdeaTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaTag
+     */
+    select?: IdeaTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaTag
+     */
+    omit?: IdeaTagOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaTagInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserTagPreference
+   */
+
+  export type AggregateUserTagPreference = {
+    _count: UserTagPreferenceCountAggregateOutputType | null
+    _avg: UserTagPreferenceAvgAggregateOutputType | null
+    _sum: UserTagPreferenceSumAggregateOutputType | null
+    _min: UserTagPreferenceMinAggregateOutputType | null
+    _max: UserTagPreferenceMaxAggregateOutputType | null
+  }
+
+  export type UserTagPreferenceAvgAggregateOutputType = {
+    weight: number | null
+    explicitWeight: number | null
+    implicitWeight: number | null
+  }
+
+  export type UserTagPreferenceSumAggregateOutputType = {
+    weight: number | null
+    explicitWeight: number | null
+    implicitWeight: number | null
+  }
+
+  export type UserTagPreferenceMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tagId: string | null
+    weight: number | null
+    explicitWeight: number | null
+    implicitWeight: number | null
+    lastReinforcedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserTagPreferenceMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    tagId: string | null
+    weight: number | null
+    explicitWeight: number | null
+    implicitWeight: number | null
+    lastReinforcedAt: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserTagPreferenceCountAggregateOutputType = {
+    id: number
+    userId: number
+    tagId: number
+    weight: number
+    explicitWeight: number
+    implicitWeight: number
+    lastReinforcedAt: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserTagPreferenceAvgAggregateInputType = {
+    weight?: true
+    explicitWeight?: true
+    implicitWeight?: true
+  }
+
+  export type UserTagPreferenceSumAggregateInputType = {
+    weight?: true
+    explicitWeight?: true
+    implicitWeight?: true
+  }
+
+  export type UserTagPreferenceMinAggregateInputType = {
+    id?: true
+    userId?: true
+    tagId?: true
+    weight?: true
+    explicitWeight?: true
+    implicitWeight?: true
+    lastReinforcedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserTagPreferenceMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    tagId?: true
+    weight?: true
+    explicitWeight?: true
+    implicitWeight?: true
+    lastReinforcedAt?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserTagPreferenceCountAggregateInputType = {
+    id?: true
+    userId?: true
+    tagId?: true
+    weight?: true
+    explicitWeight?: true
+    implicitWeight?: true
+    lastReinforcedAt?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserTagPreferenceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserTagPreference to aggregate.
+     */
+    where?: UserTagPreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTagPreferences to fetch.
+     */
+    orderBy?: UserTagPreferenceOrderByWithRelationInput | UserTagPreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserTagPreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTagPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTagPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserTagPreferences
+    **/
+    _count?: true | UserTagPreferenceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UserTagPreferenceAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserTagPreferenceSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserTagPreferenceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserTagPreferenceMaxAggregateInputType
+  }
+
+  export type GetUserTagPreferenceAggregateType<T extends UserTagPreferenceAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserTagPreference]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserTagPreference[P]>
+      : GetScalarType<T[P], AggregateUserTagPreference[P]>
+  }
+
+
+
+
+  export type UserTagPreferenceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserTagPreferenceWhereInput
+    orderBy?: UserTagPreferenceOrderByWithAggregationInput | UserTagPreferenceOrderByWithAggregationInput[]
+    by: UserTagPreferenceScalarFieldEnum[] | UserTagPreferenceScalarFieldEnum
+    having?: UserTagPreferenceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserTagPreferenceCountAggregateInputType | true
+    _avg?: UserTagPreferenceAvgAggregateInputType
+    _sum?: UserTagPreferenceSumAggregateInputType
+    _min?: UserTagPreferenceMinAggregateInputType
+    _max?: UserTagPreferenceMaxAggregateInputType
+  }
+
+  export type UserTagPreferenceGroupByOutputType = {
+    id: string
+    userId: string
+    tagId: string
+    weight: number
+    explicitWeight: number
+    implicitWeight: number
+    lastReinforcedAt: Date
+    createdAt: Date
+    updatedAt: Date
+    _count: UserTagPreferenceCountAggregateOutputType | null
+    _avg: UserTagPreferenceAvgAggregateOutputType | null
+    _sum: UserTagPreferenceSumAggregateOutputType | null
+    _min: UserTagPreferenceMinAggregateOutputType | null
+    _max: UserTagPreferenceMaxAggregateOutputType | null
+  }
+
+  type GetUserTagPreferenceGroupByPayload<T extends UserTagPreferenceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserTagPreferenceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserTagPreferenceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserTagPreferenceGroupByOutputType[P]>
+            : GetScalarType<T[P], UserTagPreferenceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserTagPreferenceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    explicitWeight?: boolean
+    implicitWeight?: boolean
+    lastReinforcedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userTagPreference"]>
+
+  export type UserTagPreferenceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    explicitWeight?: boolean
+    implicitWeight?: boolean
+    lastReinforcedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userTagPreference"]>
+
+  export type UserTagPreferenceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    explicitWeight?: boolean
+    implicitWeight?: boolean
+    lastReinforcedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userTagPreference"]>
+
+  export type UserTagPreferenceSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    tagId?: boolean
+    weight?: boolean
+    explicitWeight?: boolean
+    implicitWeight?: boolean
+    lastReinforcedAt?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserTagPreferenceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "tagId" | "weight" | "explicitWeight" | "implicitWeight" | "lastReinforcedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["userTagPreference"]>
+  export type UserTagPreferenceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type UserTagPreferenceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+  export type UserTagPreferenceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    tag?: boolean | TagDefaultArgs<ExtArgs>
+  }
+
+  export type $UserTagPreferencePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserTagPreference"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      tag: Prisma.$TagPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      tagId: string
+      weight: number
+      explicitWeight: number
+      implicitWeight: number
+      lastReinforcedAt: Date
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userTagPreference"]>
+    composites: {}
+  }
+
+  type UserTagPreferenceGetPayload<S extends boolean | null | undefined | UserTagPreferenceDefaultArgs> = $Result.GetResult<Prisma.$UserTagPreferencePayload, S>
+
+  type UserTagPreferenceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserTagPreferenceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserTagPreferenceCountAggregateInputType | true
+    }
+
+  export interface UserTagPreferenceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserTagPreference'], meta: { name: 'UserTagPreference' } }
+    /**
+     * Find zero or one UserTagPreference that matches the filter.
+     * @param {UserTagPreferenceFindUniqueArgs} args - Arguments to find a UserTagPreference
+     * @example
+     * // Get one UserTagPreference
+     * const userTagPreference = await prisma.userTagPreference.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserTagPreferenceFindUniqueArgs>(args: SelectSubset<T, UserTagPreferenceFindUniqueArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserTagPreference that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserTagPreferenceFindUniqueOrThrowArgs} args - Arguments to find a UserTagPreference
+     * @example
+     * // Get one UserTagPreference
+     * const userTagPreference = await prisma.userTagPreference.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserTagPreferenceFindUniqueOrThrowArgs>(args: SelectSubset<T, UserTagPreferenceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserTagPreference that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTagPreferenceFindFirstArgs} args - Arguments to find a UserTagPreference
+     * @example
+     * // Get one UserTagPreference
+     * const userTagPreference = await prisma.userTagPreference.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserTagPreferenceFindFirstArgs>(args?: SelectSubset<T, UserTagPreferenceFindFirstArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserTagPreference that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTagPreferenceFindFirstOrThrowArgs} args - Arguments to find a UserTagPreference
+     * @example
+     * // Get one UserTagPreference
+     * const userTagPreference = await prisma.userTagPreference.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserTagPreferenceFindFirstOrThrowArgs>(args?: SelectSubset<T, UserTagPreferenceFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserTagPreferences that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTagPreferenceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserTagPreferences
+     * const userTagPreferences = await prisma.userTagPreference.findMany()
+     * 
+     * // Get first 10 UserTagPreferences
+     * const userTagPreferences = await prisma.userTagPreference.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userTagPreferenceWithIdOnly = await prisma.userTagPreference.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserTagPreferenceFindManyArgs>(args?: SelectSubset<T, UserTagPreferenceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserTagPreference.
+     * @param {UserTagPreferenceCreateArgs} args - Arguments to create a UserTagPreference.
+     * @example
+     * // Create one UserTagPreference
+     * const UserTagPreference = await prisma.userTagPreference.create({
+     *   data: {
+     *     // ... data to create a UserTagPreference
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserTagPreferenceCreateArgs>(args: SelectSubset<T, UserTagPreferenceCreateArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserTagPreferences.
+     * @param {UserTagPreferenceCreateManyArgs} args - Arguments to create many UserTagPreferences.
+     * @example
+     * // Create many UserTagPreferences
+     * const userTagPreference = await prisma.userTagPreference.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserTagPreferenceCreateManyArgs>(args?: SelectSubset<T, UserTagPreferenceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserTagPreferences and returns the data saved in the database.
+     * @param {UserTagPreferenceCreateManyAndReturnArgs} args - Arguments to create many UserTagPreferences.
+     * @example
+     * // Create many UserTagPreferences
+     * const userTagPreference = await prisma.userTagPreference.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserTagPreferences and only return the `id`
+     * const userTagPreferenceWithIdOnly = await prisma.userTagPreference.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserTagPreferenceCreateManyAndReturnArgs>(args?: SelectSubset<T, UserTagPreferenceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserTagPreference.
+     * @param {UserTagPreferenceDeleteArgs} args - Arguments to delete one UserTagPreference.
+     * @example
+     * // Delete one UserTagPreference
+     * const UserTagPreference = await prisma.userTagPreference.delete({
+     *   where: {
+     *     // ... filter to delete one UserTagPreference
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserTagPreferenceDeleteArgs>(args: SelectSubset<T, UserTagPreferenceDeleteArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserTagPreference.
+     * @param {UserTagPreferenceUpdateArgs} args - Arguments to update one UserTagPreference.
+     * @example
+     * // Update one UserTagPreference
+     * const userTagPreference = await prisma.userTagPreference.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserTagPreferenceUpdateArgs>(args: SelectSubset<T, UserTagPreferenceUpdateArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserTagPreferences.
+     * @param {UserTagPreferenceDeleteManyArgs} args - Arguments to filter UserTagPreferences to delete.
+     * @example
+     * // Delete a few UserTagPreferences
+     * const { count } = await prisma.userTagPreference.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserTagPreferenceDeleteManyArgs>(args?: SelectSubset<T, UserTagPreferenceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserTagPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTagPreferenceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserTagPreferences
+     * const userTagPreference = await prisma.userTagPreference.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserTagPreferenceUpdateManyArgs>(args: SelectSubset<T, UserTagPreferenceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserTagPreferences and returns the data updated in the database.
+     * @param {UserTagPreferenceUpdateManyAndReturnArgs} args - Arguments to update many UserTagPreferences.
+     * @example
+     * // Update many UserTagPreferences
+     * const userTagPreference = await prisma.userTagPreference.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserTagPreferences and only return the `id`
+     * const userTagPreferenceWithIdOnly = await prisma.userTagPreference.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserTagPreferenceUpdateManyAndReturnArgs>(args: SelectSubset<T, UserTagPreferenceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserTagPreference.
+     * @param {UserTagPreferenceUpsertArgs} args - Arguments to update or create a UserTagPreference.
+     * @example
+     * // Update or create a UserTagPreference
+     * const userTagPreference = await prisma.userTagPreference.upsert({
+     *   create: {
+     *     // ... data to create a UserTagPreference
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserTagPreference we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserTagPreferenceUpsertArgs>(args: SelectSubset<T, UserTagPreferenceUpsertArgs<ExtArgs>>): Prisma__UserTagPreferenceClient<$Result.GetResult<Prisma.$UserTagPreferencePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserTagPreferences.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTagPreferenceCountArgs} args - Arguments to filter UserTagPreferences to count.
+     * @example
+     * // Count the number of UserTagPreferences
+     * const count = await prisma.userTagPreference.count({
+     *   where: {
+     *     // ... the filter for the UserTagPreferences we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserTagPreferenceCountArgs>(
+      args?: Subset<T, UserTagPreferenceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserTagPreferenceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserTagPreference.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTagPreferenceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserTagPreferenceAggregateArgs>(args: Subset<T, UserTagPreferenceAggregateArgs>): Prisma.PrismaPromise<GetUserTagPreferenceAggregateType<T>>
+
+    /**
+     * Group by UserTagPreference.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserTagPreferenceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserTagPreferenceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserTagPreferenceGroupByArgs['orderBy'] }
+        : { orderBy?: UserTagPreferenceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserTagPreferenceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserTagPreferenceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserTagPreference model
+   */
+  readonly fields: UserTagPreferenceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserTagPreference.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserTagPreferenceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tag<T extends TagDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TagDefaultArgs<ExtArgs>>): Prisma__TagClient<$Result.GetResult<Prisma.$TagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserTagPreference model
+   */
+  interface UserTagPreferenceFieldRefs {
+    readonly id: FieldRef<"UserTagPreference", 'String'>
+    readonly userId: FieldRef<"UserTagPreference", 'String'>
+    readonly tagId: FieldRef<"UserTagPreference", 'String'>
+    readonly weight: FieldRef<"UserTagPreference", 'Float'>
+    readonly explicitWeight: FieldRef<"UserTagPreference", 'Float'>
+    readonly implicitWeight: FieldRef<"UserTagPreference", 'Float'>
+    readonly lastReinforcedAt: FieldRef<"UserTagPreference", 'DateTime'>
+    readonly createdAt: FieldRef<"UserTagPreference", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserTagPreference", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserTagPreference findUnique
+   */
+  export type UserTagPreferenceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTagPreference to fetch.
+     */
+    where: UserTagPreferenceWhereUniqueInput
+  }
+
+  /**
+   * UserTagPreference findUniqueOrThrow
+   */
+  export type UserTagPreferenceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTagPreference to fetch.
+     */
+    where: UserTagPreferenceWhereUniqueInput
+  }
+
+  /**
+   * UserTagPreference findFirst
+   */
+  export type UserTagPreferenceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTagPreference to fetch.
+     */
+    where?: UserTagPreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTagPreferences to fetch.
+     */
+    orderBy?: UserTagPreferenceOrderByWithRelationInput | UserTagPreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserTagPreferences.
+     */
+    cursor?: UserTagPreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTagPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTagPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserTagPreferences.
+     */
+    distinct?: UserTagPreferenceScalarFieldEnum | UserTagPreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * UserTagPreference findFirstOrThrow
+   */
+  export type UserTagPreferenceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTagPreference to fetch.
+     */
+    where?: UserTagPreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTagPreferences to fetch.
+     */
+    orderBy?: UserTagPreferenceOrderByWithRelationInput | UserTagPreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserTagPreferences.
+     */
+    cursor?: UserTagPreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTagPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTagPreferences.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserTagPreferences.
+     */
+    distinct?: UserTagPreferenceScalarFieldEnum | UserTagPreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * UserTagPreference findMany
+   */
+  export type UserTagPreferenceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * Filter, which UserTagPreferences to fetch.
+     */
+    where?: UserTagPreferenceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserTagPreferences to fetch.
+     */
+    orderBy?: UserTagPreferenceOrderByWithRelationInput | UserTagPreferenceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserTagPreferences.
+     */
+    cursor?: UserTagPreferenceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserTagPreferences from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserTagPreferences.
+     */
+    skip?: number
+    distinct?: UserTagPreferenceScalarFieldEnum | UserTagPreferenceScalarFieldEnum[]
+  }
+
+  /**
+   * UserTagPreference create
+   */
+  export type UserTagPreferenceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserTagPreference.
+     */
+    data: XOR<UserTagPreferenceCreateInput, UserTagPreferenceUncheckedCreateInput>
+  }
+
+  /**
+   * UserTagPreference createMany
+   */
+  export type UserTagPreferenceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserTagPreferences.
+     */
+    data: UserTagPreferenceCreateManyInput | UserTagPreferenceCreateManyInput[]
+  }
+
+  /**
+   * UserTagPreference createManyAndReturn
+   */
+  export type UserTagPreferenceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserTagPreferences.
+     */
+    data: UserTagPreferenceCreateManyInput | UserTagPreferenceCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserTagPreference update
+   */
+  export type UserTagPreferenceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserTagPreference.
+     */
+    data: XOR<UserTagPreferenceUpdateInput, UserTagPreferenceUncheckedUpdateInput>
+    /**
+     * Choose, which UserTagPreference to update.
+     */
+    where: UserTagPreferenceWhereUniqueInput
+  }
+
+  /**
+   * UserTagPreference updateMany
+   */
+  export type UserTagPreferenceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserTagPreferences.
+     */
+    data: XOR<UserTagPreferenceUpdateManyMutationInput, UserTagPreferenceUncheckedUpdateManyInput>
+    /**
+     * Filter which UserTagPreferences to update
+     */
+    where?: UserTagPreferenceWhereInput
+    /**
+     * Limit how many UserTagPreferences to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserTagPreference updateManyAndReturn
+   */
+  export type UserTagPreferenceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * The data used to update UserTagPreferences.
+     */
+    data: XOR<UserTagPreferenceUpdateManyMutationInput, UserTagPreferenceUncheckedUpdateManyInput>
+    /**
+     * Filter which UserTagPreferences to update
+     */
+    where?: UserTagPreferenceWhereInput
+    /**
+     * Limit how many UserTagPreferences to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserTagPreference upsert
+   */
+  export type UserTagPreferenceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserTagPreference to update in case it exists.
+     */
+    where: UserTagPreferenceWhereUniqueInput
+    /**
+     * In case the UserTagPreference found by the `where` argument doesn't exist, create a new UserTagPreference with this data.
+     */
+    create: XOR<UserTagPreferenceCreateInput, UserTagPreferenceUncheckedCreateInput>
+    /**
+     * In case the UserTagPreference was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserTagPreferenceUpdateInput, UserTagPreferenceUncheckedUpdateInput>
+  }
+
+  /**
+   * UserTagPreference delete
+   */
+  export type UserTagPreferenceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+    /**
+     * Filter which UserTagPreference to delete.
+     */
+    where: UserTagPreferenceWhereUniqueInput
+  }
+
+  /**
+   * UserTagPreference deleteMany
+   */
+  export type UserTagPreferenceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserTagPreferences to delete
+     */
+    where?: UserTagPreferenceWhereInput
+    /**
+     * Limit how many UserTagPreferences to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserTagPreference without action
+   */
+  export type UserTagPreferenceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserTagPreference
+     */
+    select?: UserTagPreferenceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserTagPreference
+     */
+    omit?: UserTagPreferenceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserTagPreferenceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model UserInterestProfile
+   */
+
+  export type AggregateUserInterestProfile = {
+    _count: UserInterestProfileCountAggregateOutputType | null
+    _min: UserInterestProfileMinAggregateOutputType | null
+    _max: UserInterestProfileMaxAggregateOutputType | null
+  }
+
+  export type UserInterestProfileMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserInterestProfileMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UserInterestProfileCountAggregateOutputType = {
+    id: number
+    userId: number
+    latentVector: number
+    positiveCentroid: number
+    negativeCentroid: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UserInterestProfileMinAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserInterestProfileMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UserInterestProfileCountAggregateInputType = {
+    id?: true
+    userId?: true
+    latentVector?: true
+    positiveCentroid?: true
+    negativeCentroid?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UserInterestProfileAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserInterestProfile to aggregate.
+     */
+    where?: UserInterestProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserInterestProfiles to fetch.
+     */
+    orderBy?: UserInterestProfileOrderByWithRelationInput | UserInterestProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UserInterestProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserInterestProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserInterestProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned UserInterestProfiles
+    **/
+    _count?: true | UserInterestProfileCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UserInterestProfileMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UserInterestProfileMaxAggregateInputType
+  }
+
+  export type GetUserInterestProfileAggregateType<T extends UserInterestProfileAggregateArgs> = {
+        [P in keyof T & keyof AggregateUserInterestProfile]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUserInterestProfile[P]>
+      : GetScalarType<T[P], AggregateUserInterestProfile[P]>
+  }
+
+
+
+
+  export type UserInterestProfileGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserInterestProfileWhereInput
+    orderBy?: UserInterestProfileOrderByWithAggregationInput | UserInterestProfileOrderByWithAggregationInput[]
+    by: UserInterestProfileScalarFieldEnum[] | UserInterestProfileScalarFieldEnum
+    having?: UserInterestProfileScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UserInterestProfileCountAggregateInputType | true
+    _min?: UserInterestProfileMinAggregateInputType
+    _max?: UserInterestProfileMaxAggregateInputType
+  }
+
+  export type UserInterestProfileGroupByOutputType = {
+    id: string
+    userId: string
+    latentVector: JsonValue
+    positiveCentroid: JsonValue | null
+    negativeCentroid: JsonValue | null
+    createdAt: Date
+    updatedAt: Date
+    _count: UserInterestProfileCountAggregateOutputType | null
+    _min: UserInterestProfileMinAggregateOutputType | null
+    _max: UserInterestProfileMaxAggregateOutputType | null
+  }
+
+  type GetUserInterestProfileGroupByPayload<T extends UserInterestProfileGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UserInterestProfileGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UserInterestProfileGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UserInterestProfileGroupByOutputType[P]>
+            : GetScalarType<T[P], UserInterestProfileGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UserInterestProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    latentVector?: boolean
+    positiveCentroid?: boolean
+    negativeCentroid?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userInterestProfile"]>
+
+  export type UserInterestProfileSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    latentVector?: boolean
+    positiveCentroid?: boolean
+    negativeCentroid?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userInterestProfile"]>
+
+  export type UserInterestProfileSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    latentVector?: boolean
+    positiveCentroid?: boolean
+    negativeCentroid?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["userInterestProfile"]>
+
+  export type UserInterestProfileSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    latentVector?: boolean
+    positiveCentroid?: boolean
+    negativeCentroid?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type UserInterestProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "latentVector" | "positiveCentroid" | "negativeCentroid" | "createdAt" | "updatedAt", ExtArgs["result"]["userInterestProfile"]>
+  export type UserInterestProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserInterestProfileIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type UserInterestProfileIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $UserInterestProfilePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "UserInterestProfile"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      latentVector: Prisma.JsonValue
+      positiveCentroid: Prisma.JsonValue | null
+      negativeCentroid: Prisma.JsonValue | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["userInterestProfile"]>
+    composites: {}
+  }
+
+  type UserInterestProfileGetPayload<S extends boolean | null | undefined | UserInterestProfileDefaultArgs> = $Result.GetResult<Prisma.$UserInterestProfilePayload, S>
+
+  type UserInterestProfileCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<UserInterestProfileFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: UserInterestProfileCountAggregateInputType | true
+    }
+
+  export interface UserInterestProfileDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['UserInterestProfile'], meta: { name: 'UserInterestProfile' } }
+    /**
+     * Find zero or one UserInterestProfile that matches the filter.
+     * @param {UserInterestProfileFindUniqueArgs} args - Arguments to find a UserInterestProfile
+     * @example
+     * // Get one UserInterestProfile
+     * const userInterestProfile = await prisma.userInterestProfile.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UserInterestProfileFindUniqueArgs>(args: SelectSubset<T, UserInterestProfileFindUniqueArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one UserInterestProfile that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {UserInterestProfileFindUniqueOrThrowArgs} args - Arguments to find a UserInterestProfile
+     * @example
+     * // Get one UserInterestProfile
+     * const userInterestProfile = await prisma.userInterestProfile.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UserInterestProfileFindUniqueOrThrowArgs>(args: SelectSubset<T, UserInterestProfileFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserInterestProfile that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserInterestProfileFindFirstArgs} args - Arguments to find a UserInterestProfile
+     * @example
+     * // Get one UserInterestProfile
+     * const userInterestProfile = await prisma.userInterestProfile.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UserInterestProfileFindFirstArgs>(args?: SelectSubset<T, UserInterestProfileFindFirstArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first UserInterestProfile that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserInterestProfileFindFirstOrThrowArgs} args - Arguments to find a UserInterestProfile
+     * @example
+     * // Get one UserInterestProfile
+     * const userInterestProfile = await prisma.userInterestProfile.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UserInterestProfileFindFirstOrThrowArgs>(args?: SelectSubset<T, UserInterestProfileFindFirstOrThrowArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more UserInterestProfiles that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserInterestProfileFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all UserInterestProfiles
+     * const userInterestProfiles = await prisma.userInterestProfile.findMany()
+     * 
+     * // Get first 10 UserInterestProfiles
+     * const userInterestProfiles = await prisma.userInterestProfile.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const userInterestProfileWithIdOnly = await prisma.userInterestProfile.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UserInterestProfileFindManyArgs>(args?: SelectSubset<T, UserInterestProfileFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a UserInterestProfile.
+     * @param {UserInterestProfileCreateArgs} args - Arguments to create a UserInterestProfile.
+     * @example
+     * // Create one UserInterestProfile
+     * const UserInterestProfile = await prisma.userInterestProfile.create({
+     *   data: {
+     *     // ... data to create a UserInterestProfile
+     *   }
+     * })
+     * 
+     */
+    create<T extends UserInterestProfileCreateArgs>(args: SelectSubset<T, UserInterestProfileCreateArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many UserInterestProfiles.
+     * @param {UserInterestProfileCreateManyArgs} args - Arguments to create many UserInterestProfiles.
+     * @example
+     * // Create many UserInterestProfiles
+     * const userInterestProfile = await prisma.userInterestProfile.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UserInterestProfileCreateManyArgs>(args?: SelectSubset<T, UserInterestProfileCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many UserInterestProfiles and returns the data saved in the database.
+     * @param {UserInterestProfileCreateManyAndReturnArgs} args - Arguments to create many UserInterestProfiles.
+     * @example
+     * // Create many UserInterestProfiles
+     * const userInterestProfile = await prisma.userInterestProfile.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many UserInterestProfiles and only return the `id`
+     * const userInterestProfileWithIdOnly = await prisma.userInterestProfile.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends UserInterestProfileCreateManyAndReturnArgs>(args?: SelectSubset<T, UserInterestProfileCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a UserInterestProfile.
+     * @param {UserInterestProfileDeleteArgs} args - Arguments to delete one UserInterestProfile.
+     * @example
+     * // Delete one UserInterestProfile
+     * const UserInterestProfile = await prisma.userInterestProfile.delete({
+     *   where: {
+     *     // ... filter to delete one UserInterestProfile
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UserInterestProfileDeleteArgs>(args: SelectSubset<T, UserInterestProfileDeleteArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one UserInterestProfile.
+     * @param {UserInterestProfileUpdateArgs} args - Arguments to update one UserInterestProfile.
+     * @example
+     * // Update one UserInterestProfile
+     * const userInterestProfile = await prisma.userInterestProfile.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UserInterestProfileUpdateArgs>(args: SelectSubset<T, UserInterestProfileUpdateArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more UserInterestProfiles.
+     * @param {UserInterestProfileDeleteManyArgs} args - Arguments to filter UserInterestProfiles to delete.
+     * @example
+     * // Delete a few UserInterestProfiles
+     * const { count } = await prisma.userInterestProfile.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UserInterestProfileDeleteManyArgs>(args?: SelectSubset<T, UserInterestProfileDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserInterestProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserInterestProfileUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many UserInterestProfiles
+     * const userInterestProfile = await prisma.userInterestProfile.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UserInterestProfileUpdateManyArgs>(args: SelectSubset<T, UserInterestProfileUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more UserInterestProfiles and returns the data updated in the database.
+     * @param {UserInterestProfileUpdateManyAndReturnArgs} args - Arguments to update many UserInterestProfiles.
+     * @example
+     * // Update many UserInterestProfiles
+     * const userInterestProfile = await prisma.userInterestProfile.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more UserInterestProfiles and only return the `id`
+     * const userInterestProfileWithIdOnly = await prisma.userInterestProfile.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends UserInterestProfileUpdateManyAndReturnArgs>(args: SelectSubset<T, UserInterestProfileUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one UserInterestProfile.
+     * @param {UserInterestProfileUpsertArgs} args - Arguments to update or create a UserInterestProfile.
+     * @example
+     * // Update or create a UserInterestProfile
+     * const userInterestProfile = await prisma.userInterestProfile.upsert({
+     *   create: {
+     *     // ... data to create a UserInterestProfile
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the UserInterestProfile we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UserInterestProfileUpsertArgs>(args: SelectSubset<T, UserInterestProfileUpsertArgs<ExtArgs>>): Prisma__UserInterestProfileClient<$Result.GetResult<Prisma.$UserInterestProfilePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of UserInterestProfiles.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserInterestProfileCountArgs} args - Arguments to filter UserInterestProfiles to count.
+     * @example
+     * // Count the number of UserInterestProfiles
+     * const count = await prisma.userInterestProfile.count({
+     *   where: {
+     *     // ... the filter for the UserInterestProfiles we want to count
+     *   }
+     * })
+    **/
+    count<T extends UserInterestProfileCountArgs>(
+      args?: Subset<T, UserInterestProfileCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UserInterestProfileCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a UserInterestProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserInterestProfileAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UserInterestProfileAggregateArgs>(args: Subset<T, UserInterestProfileAggregateArgs>): Prisma.PrismaPromise<GetUserInterestProfileAggregateType<T>>
+
+    /**
+     * Group by UserInterestProfile.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UserInterestProfileGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UserInterestProfileGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UserInterestProfileGroupByArgs['orderBy'] }
+        : { orderBy?: UserInterestProfileGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UserInterestProfileGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUserInterestProfileGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the UserInterestProfile model
+   */
+  readonly fields: UserInterestProfileFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for UserInterestProfile.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UserInterestProfileClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the UserInterestProfile model
+   */
+  interface UserInterestProfileFieldRefs {
+    readonly id: FieldRef<"UserInterestProfile", 'String'>
+    readonly userId: FieldRef<"UserInterestProfile", 'String'>
+    readonly latentVector: FieldRef<"UserInterestProfile", 'Json'>
+    readonly positiveCentroid: FieldRef<"UserInterestProfile", 'Json'>
+    readonly negativeCentroid: FieldRef<"UserInterestProfile", 'Json'>
+    readonly createdAt: FieldRef<"UserInterestProfile", 'DateTime'>
+    readonly updatedAt: FieldRef<"UserInterestProfile", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * UserInterestProfile findUnique
+   */
+  export type UserInterestProfileFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which UserInterestProfile to fetch.
+     */
+    where: UserInterestProfileWhereUniqueInput
+  }
+
+  /**
+   * UserInterestProfile findUniqueOrThrow
+   */
+  export type UserInterestProfileFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which UserInterestProfile to fetch.
+     */
+    where: UserInterestProfileWhereUniqueInput
+  }
+
+  /**
+   * UserInterestProfile findFirst
+   */
+  export type UserInterestProfileFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which UserInterestProfile to fetch.
+     */
+    where?: UserInterestProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserInterestProfiles to fetch.
+     */
+    orderBy?: UserInterestProfileOrderByWithRelationInput | UserInterestProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserInterestProfiles.
+     */
+    cursor?: UserInterestProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserInterestProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserInterestProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserInterestProfiles.
+     */
+    distinct?: UserInterestProfileScalarFieldEnum | UserInterestProfileScalarFieldEnum[]
+  }
+
+  /**
+   * UserInterestProfile findFirstOrThrow
+   */
+  export type UserInterestProfileFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which UserInterestProfile to fetch.
+     */
+    where?: UserInterestProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserInterestProfiles to fetch.
+     */
+    orderBy?: UserInterestProfileOrderByWithRelationInput | UserInterestProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for UserInterestProfiles.
+     */
+    cursor?: UserInterestProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserInterestProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserInterestProfiles.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of UserInterestProfiles.
+     */
+    distinct?: UserInterestProfileScalarFieldEnum | UserInterestProfileScalarFieldEnum[]
+  }
+
+  /**
+   * UserInterestProfile findMany
+   */
+  export type UserInterestProfileFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * Filter, which UserInterestProfiles to fetch.
+     */
+    where?: UserInterestProfileWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of UserInterestProfiles to fetch.
+     */
+    orderBy?: UserInterestProfileOrderByWithRelationInput | UserInterestProfileOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing UserInterestProfiles.
+     */
+    cursor?: UserInterestProfileWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` UserInterestProfiles from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` UserInterestProfiles.
+     */
+    skip?: number
+    distinct?: UserInterestProfileScalarFieldEnum | UserInterestProfileScalarFieldEnum[]
+  }
+
+  /**
+   * UserInterestProfile create
+   */
+  export type UserInterestProfileCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to create a UserInterestProfile.
+     */
+    data: XOR<UserInterestProfileCreateInput, UserInterestProfileUncheckedCreateInput>
+  }
+
+  /**
+   * UserInterestProfile createMany
+   */
+  export type UserInterestProfileCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many UserInterestProfiles.
+     */
+    data: UserInterestProfileCreateManyInput | UserInterestProfileCreateManyInput[]
+  }
+
+  /**
+   * UserInterestProfile createManyAndReturn
+   */
+  export type UserInterestProfileCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * The data used to create many UserInterestProfiles.
+     */
+    data: UserInterestProfileCreateManyInput | UserInterestProfileCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserInterestProfile update
+   */
+  export type UserInterestProfileUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * The data needed to update a UserInterestProfile.
+     */
+    data: XOR<UserInterestProfileUpdateInput, UserInterestProfileUncheckedUpdateInput>
+    /**
+     * Choose, which UserInterestProfile to update.
+     */
+    where: UserInterestProfileWhereUniqueInput
+  }
+
+  /**
+   * UserInterestProfile updateMany
+   */
+  export type UserInterestProfileUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update UserInterestProfiles.
+     */
+    data: XOR<UserInterestProfileUpdateManyMutationInput, UserInterestProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which UserInterestProfiles to update
+     */
+    where?: UserInterestProfileWhereInput
+    /**
+     * Limit how many UserInterestProfiles to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserInterestProfile updateManyAndReturn
+   */
+  export type UserInterestProfileUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * The data used to update UserInterestProfiles.
+     */
+    data: XOR<UserInterestProfileUpdateManyMutationInput, UserInterestProfileUncheckedUpdateManyInput>
+    /**
+     * Filter which UserInterestProfiles to update
+     */
+    where?: UserInterestProfileWhereInput
+    /**
+     * Limit how many UserInterestProfiles to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * UserInterestProfile upsert
+   */
+  export type UserInterestProfileUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * The filter to search for the UserInterestProfile to update in case it exists.
+     */
+    where: UserInterestProfileWhereUniqueInput
+    /**
+     * In case the UserInterestProfile found by the `where` argument doesn't exist, create a new UserInterestProfile with this data.
+     */
+    create: XOR<UserInterestProfileCreateInput, UserInterestProfileUncheckedCreateInput>
+    /**
+     * In case the UserInterestProfile was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UserInterestProfileUpdateInput, UserInterestProfileUncheckedUpdateInput>
+  }
+
+  /**
+   * UserInterestProfile delete
+   */
+  export type UserInterestProfileDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+    /**
+     * Filter which UserInterestProfile to delete.
+     */
+    where: UserInterestProfileWhereUniqueInput
+  }
+
+  /**
+   * UserInterestProfile deleteMany
+   */
+  export type UserInterestProfileDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which UserInterestProfiles to delete
+     */
+    where?: UserInterestProfileWhereInput
+    /**
+     * Limit how many UserInterestProfiles to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * UserInterestProfile without action
+   */
+  export type UserInterestProfileDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the UserInterestProfile
+     */
+    select?: UserInterestProfileSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the UserInterestProfile
+     */
+    omit?: UserInterestProfileOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInterestProfileInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model IdeaInteraction
+   */
+
+  export type AggregateIdeaInteraction = {
+    _count: IdeaInteractionCountAggregateOutputType | null
+    _avg: IdeaInteractionAvgAggregateOutputType | null
+    _sum: IdeaInteractionSumAggregateOutputType | null
+    _min: IdeaInteractionMinAggregateOutputType | null
+    _max: IdeaInteractionMaxAggregateOutputType | null
+  }
+
+  export type IdeaInteractionAvgAggregateOutputType = {
+    reward: number | null
+    dwellTimeMs: number | null
+  }
+
+  export type IdeaInteractionSumAggregateOutputType = {
+    reward: number | null
+    dwellTimeMs: number | null
+  }
+
+  export type IdeaInteractionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    ideaId: string | null
+    interactionType: $Enums.InteractionType | null
+    reward: number | null
+    dwellTimeMs: number | null
+    createdAt: Date | null
+  }
+
+  export type IdeaInteractionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    ideaId: string | null
+    interactionType: $Enums.InteractionType | null
+    reward: number | null
+    dwellTimeMs: number | null
+    createdAt: Date | null
+  }
+
+  export type IdeaInteractionCountAggregateOutputType = {
+    id: number
+    userId: number
+    ideaId: number
+    interactionType: number
+    reward: number
+    dwellTimeMs: number
+    context: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type IdeaInteractionAvgAggregateInputType = {
+    reward?: true
+    dwellTimeMs?: true
+  }
+
+  export type IdeaInteractionSumAggregateInputType = {
+    reward?: true
+    dwellTimeMs?: true
+  }
+
+  export type IdeaInteractionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    ideaId?: true
+    interactionType?: true
+    reward?: true
+    dwellTimeMs?: true
+    createdAt?: true
+  }
+
+  export type IdeaInteractionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    ideaId?: true
+    interactionType?: true
+    reward?: true
+    dwellTimeMs?: true
+    createdAt?: true
+  }
+
+  export type IdeaInteractionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    ideaId?: true
+    interactionType?: true
+    reward?: true
+    dwellTimeMs?: true
+    context?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type IdeaInteractionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IdeaInteraction to aggregate.
+     */
+    where?: IdeaInteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaInteractions to fetch.
+     */
+    orderBy?: IdeaInteractionOrderByWithRelationInput | IdeaInteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IdeaInteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaInteractions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaInteractions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IdeaInteractions
+    **/
+    _count?: true | IdeaInteractionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: IdeaInteractionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: IdeaInteractionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IdeaInteractionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IdeaInteractionMaxAggregateInputType
+  }
+
+  export type GetIdeaInteractionAggregateType<T extends IdeaInteractionAggregateArgs> = {
+        [P in keyof T & keyof AggregateIdeaInteraction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIdeaInteraction[P]>
+      : GetScalarType<T[P], AggregateIdeaInteraction[P]>
+  }
+
+
+
+
+  export type IdeaInteractionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IdeaInteractionWhereInput
+    orderBy?: IdeaInteractionOrderByWithAggregationInput | IdeaInteractionOrderByWithAggregationInput[]
+    by: IdeaInteractionScalarFieldEnum[] | IdeaInteractionScalarFieldEnum
+    having?: IdeaInteractionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IdeaInteractionCountAggregateInputType | true
+    _avg?: IdeaInteractionAvgAggregateInputType
+    _sum?: IdeaInteractionSumAggregateInputType
+    _min?: IdeaInteractionMinAggregateInputType
+    _max?: IdeaInteractionMaxAggregateInputType
+  }
+
+  export type IdeaInteractionGroupByOutputType = {
+    id: string
+    userId: string
+    ideaId: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs: number | null
+    context: JsonValue | null
+    createdAt: Date
+    _count: IdeaInteractionCountAggregateOutputType | null
+    _avg: IdeaInteractionAvgAggregateOutputType | null
+    _sum: IdeaInteractionSumAggregateOutputType | null
+    _min: IdeaInteractionMinAggregateOutputType | null
+    _max: IdeaInteractionMaxAggregateOutputType | null
+  }
+
+  type GetIdeaInteractionGroupByPayload<T extends IdeaInteractionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IdeaInteractionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IdeaInteractionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IdeaInteractionGroupByOutputType[P]>
+            : GetScalarType<T[P], IdeaInteractionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IdeaInteractionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    interactionType?: boolean
+    reward?: boolean
+    dwellTimeMs?: boolean
+    context?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ideaInteraction"]>
+
+  export type IdeaInteractionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    interactionType?: boolean
+    reward?: boolean
+    dwellTimeMs?: boolean
+    context?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ideaInteraction"]>
+
+  export type IdeaInteractionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    interactionType?: boolean
+    reward?: boolean
+    dwellTimeMs?: boolean
+    context?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["ideaInteraction"]>
+
+  export type IdeaInteractionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    interactionType?: boolean
+    reward?: boolean
+    dwellTimeMs?: boolean
+    context?: boolean
+    createdAt?: boolean
+  }
+
+  export type IdeaInteractionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "ideaId" | "interactionType" | "reward" | "dwellTimeMs" | "context" | "createdAt", ExtArgs["result"]["ideaInteraction"]>
+  export type IdeaInteractionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+  export type IdeaInteractionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+  export type IdeaInteractionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+
+  export type $IdeaInteractionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IdeaInteraction"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      idea: Prisma.$IdeaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      ideaId: string
+      interactionType: $Enums.InteractionType
+      reward: number
+      dwellTimeMs: number | null
+      context: Prisma.JsonValue | null
+      createdAt: Date
+    }, ExtArgs["result"]["ideaInteraction"]>
+    composites: {}
+  }
+
+  type IdeaInteractionGetPayload<S extends boolean | null | undefined | IdeaInteractionDefaultArgs> = $Result.GetResult<Prisma.$IdeaInteractionPayload, S>
+
+  type IdeaInteractionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IdeaInteractionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IdeaInteractionCountAggregateInputType | true
+    }
+
+  export interface IdeaInteractionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IdeaInteraction'], meta: { name: 'IdeaInteraction' } }
+    /**
+     * Find zero or one IdeaInteraction that matches the filter.
+     * @param {IdeaInteractionFindUniqueArgs} args - Arguments to find a IdeaInteraction
+     * @example
+     * // Get one IdeaInteraction
+     * const ideaInteraction = await prisma.ideaInteraction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IdeaInteractionFindUniqueArgs>(args: SelectSubset<T, IdeaInteractionFindUniqueArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IdeaInteraction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IdeaInteractionFindUniqueOrThrowArgs} args - Arguments to find a IdeaInteraction
+     * @example
+     * // Get one IdeaInteraction
+     * const ideaInteraction = await prisma.ideaInteraction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IdeaInteractionFindUniqueOrThrowArgs>(args: SelectSubset<T, IdeaInteractionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IdeaInteraction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaInteractionFindFirstArgs} args - Arguments to find a IdeaInteraction
+     * @example
+     * // Get one IdeaInteraction
+     * const ideaInteraction = await prisma.ideaInteraction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IdeaInteractionFindFirstArgs>(args?: SelectSubset<T, IdeaInteractionFindFirstArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IdeaInteraction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaInteractionFindFirstOrThrowArgs} args - Arguments to find a IdeaInteraction
+     * @example
+     * // Get one IdeaInteraction
+     * const ideaInteraction = await prisma.ideaInteraction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IdeaInteractionFindFirstOrThrowArgs>(args?: SelectSubset<T, IdeaInteractionFindFirstOrThrowArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IdeaInteractions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaInteractionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IdeaInteractions
+     * const ideaInteractions = await prisma.ideaInteraction.findMany()
+     * 
+     * // Get first 10 IdeaInteractions
+     * const ideaInteractions = await prisma.ideaInteraction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const ideaInteractionWithIdOnly = await prisma.ideaInteraction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IdeaInteractionFindManyArgs>(args?: SelectSubset<T, IdeaInteractionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IdeaInteraction.
+     * @param {IdeaInteractionCreateArgs} args - Arguments to create a IdeaInteraction.
+     * @example
+     * // Create one IdeaInteraction
+     * const IdeaInteraction = await prisma.ideaInteraction.create({
+     *   data: {
+     *     // ... data to create a IdeaInteraction
+     *   }
+     * })
+     * 
+     */
+    create<T extends IdeaInteractionCreateArgs>(args: SelectSubset<T, IdeaInteractionCreateArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IdeaInteractions.
+     * @param {IdeaInteractionCreateManyArgs} args - Arguments to create many IdeaInteractions.
+     * @example
+     * // Create many IdeaInteractions
+     * const ideaInteraction = await prisma.ideaInteraction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IdeaInteractionCreateManyArgs>(args?: SelectSubset<T, IdeaInteractionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IdeaInteractions and returns the data saved in the database.
+     * @param {IdeaInteractionCreateManyAndReturnArgs} args - Arguments to create many IdeaInteractions.
+     * @example
+     * // Create many IdeaInteractions
+     * const ideaInteraction = await prisma.ideaInteraction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IdeaInteractions and only return the `id`
+     * const ideaInteractionWithIdOnly = await prisma.ideaInteraction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IdeaInteractionCreateManyAndReturnArgs>(args?: SelectSubset<T, IdeaInteractionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a IdeaInteraction.
+     * @param {IdeaInteractionDeleteArgs} args - Arguments to delete one IdeaInteraction.
+     * @example
+     * // Delete one IdeaInteraction
+     * const IdeaInteraction = await prisma.ideaInteraction.delete({
+     *   where: {
+     *     // ... filter to delete one IdeaInteraction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IdeaInteractionDeleteArgs>(args: SelectSubset<T, IdeaInteractionDeleteArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IdeaInteraction.
+     * @param {IdeaInteractionUpdateArgs} args - Arguments to update one IdeaInteraction.
+     * @example
+     * // Update one IdeaInteraction
+     * const ideaInteraction = await prisma.ideaInteraction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IdeaInteractionUpdateArgs>(args: SelectSubset<T, IdeaInteractionUpdateArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IdeaInteractions.
+     * @param {IdeaInteractionDeleteManyArgs} args - Arguments to filter IdeaInteractions to delete.
+     * @example
+     * // Delete a few IdeaInteractions
+     * const { count } = await prisma.ideaInteraction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IdeaInteractionDeleteManyArgs>(args?: SelectSubset<T, IdeaInteractionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IdeaInteractions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaInteractionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IdeaInteractions
+     * const ideaInteraction = await prisma.ideaInteraction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IdeaInteractionUpdateManyArgs>(args: SelectSubset<T, IdeaInteractionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IdeaInteractions and returns the data updated in the database.
+     * @param {IdeaInteractionUpdateManyAndReturnArgs} args - Arguments to update many IdeaInteractions.
+     * @example
+     * // Update many IdeaInteractions
+     * const ideaInteraction = await prisma.ideaInteraction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IdeaInteractions and only return the `id`
+     * const ideaInteractionWithIdOnly = await prisma.ideaInteraction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IdeaInteractionUpdateManyAndReturnArgs>(args: SelectSubset<T, IdeaInteractionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one IdeaInteraction.
+     * @param {IdeaInteractionUpsertArgs} args - Arguments to update or create a IdeaInteraction.
+     * @example
+     * // Update or create a IdeaInteraction
+     * const ideaInteraction = await prisma.ideaInteraction.upsert({
+     *   create: {
+     *     // ... data to create a IdeaInteraction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IdeaInteraction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IdeaInteractionUpsertArgs>(args: SelectSubset<T, IdeaInteractionUpsertArgs<ExtArgs>>): Prisma__IdeaInteractionClient<$Result.GetResult<Prisma.$IdeaInteractionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IdeaInteractions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaInteractionCountArgs} args - Arguments to filter IdeaInteractions to count.
+     * @example
+     * // Count the number of IdeaInteractions
+     * const count = await prisma.ideaInteraction.count({
+     *   where: {
+     *     // ... the filter for the IdeaInteractions we want to count
+     *   }
+     * })
+    **/
+    count<T extends IdeaInteractionCountArgs>(
+      args?: Subset<T, IdeaInteractionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IdeaInteractionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IdeaInteraction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaInteractionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IdeaInteractionAggregateArgs>(args: Subset<T, IdeaInteractionAggregateArgs>): Prisma.PrismaPromise<GetIdeaInteractionAggregateType<T>>
+
+    /**
+     * Group by IdeaInteraction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IdeaInteractionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IdeaInteractionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IdeaInteractionGroupByArgs['orderBy'] }
+        : { orderBy?: IdeaInteractionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IdeaInteractionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIdeaInteractionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IdeaInteraction model
+   */
+  readonly fields: IdeaInteractionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IdeaInteraction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IdeaInteractionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    idea<T extends IdeaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IdeaDefaultArgs<ExtArgs>>): Prisma__IdeaClient<$Result.GetResult<Prisma.$IdeaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IdeaInteraction model
+   */
+  interface IdeaInteractionFieldRefs {
+    readonly id: FieldRef<"IdeaInteraction", 'String'>
+    readonly userId: FieldRef<"IdeaInteraction", 'String'>
+    readonly ideaId: FieldRef<"IdeaInteraction", 'String'>
+    readonly interactionType: FieldRef<"IdeaInteraction", 'InteractionType'>
+    readonly reward: FieldRef<"IdeaInteraction", 'Float'>
+    readonly dwellTimeMs: FieldRef<"IdeaInteraction", 'Int'>
+    readonly context: FieldRef<"IdeaInteraction", 'Json'>
+    readonly createdAt: FieldRef<"IdeaInteraction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IdeaInteraction findUnique
+   */
+  export type IdeaInteractionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaInteraction to fetch.
+     */
+    where: IdeaInteractionWhereUniqueInput
+  }
+
+  /**
+   * IdeaInteraction findUniqueOrThrow
+   */
+  export type IdeaInteractionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaInteraction to fetch.
+     */
+    where: IdeaInteractionWhereUniqueInput
+  }
+
+  /**
+   * IdeaInteraction findFirst
+   */
+  export type IdeaInteractionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaInteraction to fetch.
+     */
+    where?: IdeaInteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaInteractions to fetch.
+     */
+    orderBy?: IdeaInteractionOrderByWithRelationInput | IdeaInteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IdeaInteractions.
+     */
+    cursor?: IdeaInteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaInteractions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaInteractions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IdeaInteractions.
+     */
+    distinct?: IdeaInteractionScalarFieldEnum | IdeaInteractionScalarFieldEnum[]
+  }
+
+  /**
+   * IdeaInteraction findFirstOrThrow
+   */
+  export type IdeaInteractionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaInteraction to fetch.
+     */
+    where?: IdeaInteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaInteractions to fetch.
+     */
+    orderBy?: IdeaInteractionOrderByWithRelationInput | IdeaInteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IdeaInteractions.
+     */
+    cursor?: IdeaInteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaInteractions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaInteractions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IdeaInteractions.
+     */
+    distinct?: IdeaInteractionScalarFieldEnum | IdeaInteractionScalarFieldEnum[]
+  }
+
+  /**
+   * IdeaInteraction findMany
+   */
+  export type IdeaInteractionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * Filter, which IdeaInteractions to fetch.
+     */
+    where?: IdeaInteractionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IdeaInteractions to fetch.
+     */
+    orderBy?: IdeaInteractionOrderByWithRelationInput | IdeaInteractionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IdeaInteractions.
+     */
+    cursor?: IdeaInteractionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IdeaInteractions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IdeaInteractions.
+     */
+    skip?: number
+    distinct?: IdeaInteractionScalarFieldEnum | IdeaInteractionScalarFieldEnum[]
+  }
+
+  /**
+   * IdeaInteraction create
+   */
+  export type IdeaInteractionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a IdeaInteraction.
+     */
+    data: XOR<IdeaInteractionCreateInput, IdeaInteractionUncheckedCreateInput>
+  }
+
+  /**
+   * IdeaInteraction createMany
+   */
+  export type IdeaInteractionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IdeaInteractions.
+     */
+    data: IdeaInteractionCreateManyInput | IdeaInteractionCreateManyInput[]
+  }
+
+  /**
+   * IdeaInteraction createManyAndReturn
+   */
+  export type IdeaInteractionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * The data used to create many IdeaInteractions.
+     */
+    data: IdeaInteractionCreateManyInput | IdeaInteractionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IdeaInteraction update
+   */
+  export type IdeaInteractionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a IdeaInteraction.
+     */
+    data: XOR<IdeaInteractionUpdateInput, IdeaInteractionUncheckedUpdateInput>
+    /**
+     * Choose, which IdeaInteraction to update.
+     */
+    where: IdeaInteractionWhereUniqueInput
+  }
+
+  /**
+   * IdeaInteraction updateMany
+   */
+  export type IdeaInteractionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IdeaInteractions.
+     */
+    data: XOR<IdeaInteractionUpdateManyMutationInput, IdeaInteractionUncheckedUpdateManyInput>
+    /**
+     * Filter which IdeaInteractions to update
+     */
+    where?: IdeaInteractionWhereInput
+    /**
+     * Limit how many IdeaInteractions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IdeaInteraction updateManyAndReturn
+   */
+  export type IdeaInteractionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * The data used to update IdeaInteractions.
+     */
+    data: XOR<IdeaInteractionUpdateManyMutationInput, IdeaInteractionUncheckedUpdateManyInput>
+    /**
+     * Filter which IdeaInteractions to update
+     */
+    where?: IdeaInteractionWhereInput
+    /**
+     * Limit how many IdeaInteractions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * IdeaInteraction upsert
+   */
+  export type IdeaInteractionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the IdeaInteraction to update in case it exists.
+     */
+    where: IdeaInteractionWhereUniqueInput
+    /**
+     * In case the IdeaInteraction found by the `where` argument doesn't exist, create a new IdeaInteraction with this data.
+     */
+    create: XOR<IdeaInteractionCreateInput, IdeaInteractionUncheckedCreateInput>
+    /**
+     * In case the IdeaInteraction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IdeaInteractionUpdateInput, IdeaInteractionUncheckedUpdateInput>
+  }
+
+  /**
+   * IdeaInteraction delete
+   */
+  export type IdeaInteractionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+    /**
+     * Filter which IdeaInteraction to delete.
+     */
+    where: IdeaInteractionWhereUniqueInput
+  }
+
+  /**
+   * IdeaInteraction deleteMany
+   */
+  export type IdeaInteractionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IdeaInteractions to delete
+     */
+    where?: IdeaInteractionWhereInput
+    /**
+     * Limit how many IdeaInteractions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IdeaInteraction without action
+   */
+  export type IdeaInteractionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IdeaInteraction
+     */
+    select?: IdeaInteractionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IdeaInteraction
+     */
+    omit?: IdeaInteractionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IdeaInteractionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model RecommendationImpression
+   */
+
+  export type AggregateRecommendationImpression = {
+    _count: RecommendationImpressionCountAggregateOutputType | null
+    _avg: RecommendationImpressionAvgAggregateOutputType | null
+    _sum: RecommendationImpressionSumAggregateOutputType | null
+    _min: RecommendationImpressionMinAggregateOutputType | null
+    _max: RecommendationImpressionMaxAggregateOutputType | null
+  }
+
+  export type RecommendationImpressionAvgAggregateOutputType = {
+    rank: number | null
+    explicitScore: number | null
+    latentScore: number | null
+    explorationScore: number | null
+    finalScore: number | null
+  }
+
+  export type RecommendationImpressionSumAggregateOutputType = {
+    rank: number | null
+    explicitScore: number | null
+    latentScore: number | null
+    explorationScore: number | null
+    finalScore: number | null
+  }
+
+  export type RecommendationImpressionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    ideaId: string | null
+    rank: number | null
+    explicitScore: number | null
+    latentScore: number | null
+    explorationScore: number | null
+    finalScore: number | null
+    createdAt: Date | null
+  }
+
+  export type RecommendationImpressionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    ideaId: string | null
+    rank: number | null
+    explicitScore: number | null
+    latentScore: number | null
+    explorationScore: number | null
+    finalScore: number | null
+    createdAt: Date | null
+  }
+
+  export type RecommendationImpressionCountAggregateOutputType = {
+    id: number
+    userId: number
+    ideaId: number
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type RecommendationImpressionAvgAggregateInputType = {
+    rank?: true
+    explicitScore?: true
+    latentScore?: true
+    explorationScore?: true
+    finalScore?: true
+  }
+
+  export type RecommendationImpressionSumAggregateInputType = {
+    rank?: true
+    explicitScore?: true
+    latentScore?: true
+    explorationScore?: true
+    finalScore?: true
+  }
+
+  export type RecommendationImpressionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    ideaId?: true
+    rank?: true
+    explicitScore?: true
+    latentScore?: true
+    explorationScore?: true
+    finalScore?: true
+    createdAt?: true
+  }
+
+  export type RecommendationImpressionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    ideaId?: true
+    rank?: true
+    explicitScore?: true
+    latentScore?: true
+    explorationScore?: true
+    finalScore?: true
+    createdAt?: true
+  }
+
+  export type RecommendationImpressionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    ideaId?: true
+    rank?: true
+    explicitScore?: true
+    latentScore?: true
+    explorationScore?: true
+    finalScore?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type RecommendationImpressionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RecommendationImpression to aggregate.
+     */
+    where?: RecommendationImpressionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RecommendationImpressions to fetch.
+     */
+    orderBy?: RecommendationImpressionOrderByWithRelationInput | RecommendationImpressionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RecommendationImpressionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RecommendationImpressions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RecommendationImpressions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RecommendationImpressions
+    **/
+    _count?: true | RecommendationImpressionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RecommendationImpressionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RecommendationImpressionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RecommendationImpressionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RecommendationImpressionMaxAggregateInputType
+  }
+
+  export type GetRecommendationImpressionAggregateType<T extends RecommendationImpressionAggregateArgs> = {
+        [P in keyof T & keyof AggregateRecommendationImpression]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRecommendationImpression[P]>
+      : GetScalarType<T[P], AggregateRecommendationImpression[P]>
+  }
+
+
+
+
+  export type RecommendationImpressionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RecommendationImpressionWhereInput
+    orderBy?: RecommendationImpressionOrderByWithAggregationInput | RecommendationImpressionOrderByWithAggregationInput[]
+    by: RecommendationImpressionScalarFieldEnum[] | RecommendationImpressionScalarFieldEnum
+    having?: RecommendationImpressionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RecommendationImpressionCountAggregateInputType | true
+    _avg?: RecommendationImpressionAvgAggregateInputType
+    _sum?: RecommendationImpressionSumAggregateInputType
+    _min?: RecommendationImpressionMinAggregateInputType
+    _max?: RecommendationImpressionMaxAggregateInputType
+  }
+
+  export type RecommendationImpressionGroupByOutputType = {
+    id: string
+    userId: string
+    ideaId: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt: Date
+    _count: RecommendationImpressionCountAggregateOutputType | null
+    _avg: RecommendationImpressionAvgAggregateOutputType | null
+    _sum: RecommendationImpressionSumAggregateOutputType | null
+    _min: RecommendationImpressionMinAggregateOutputType | null
+    _max: RecommendationImpressionMaxAggregateOutputType | null
+  }
+
+  type GetRecommendationImpressionGroupByPayload<T extends RecommendationImpressionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RecommendationImpressionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RecommendationImpressionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RecommendationImpressionGroupByOutputType[P]>
+            : GetScalarType<T[P], RecommendationImpressionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RecommendationImpressionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    rank?: boolean
+    explicitScore?: boolean
+    latentScore?: boolean
+    explorationScore?: boolean
+    finalScore?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recommendationImpression"]>
+
+  export type RecommendationImpressionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    rank?: boolean
+    explicitScore?: boolean
+    latentScore?: boolean
+    explorationScore?: boolean
+    finalScore?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recommendationImpression"]>
+
+  export type RecommendationImpressionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    rank?: boolean
+    explicitScore?: boolean
+    latentScore?: boolean
+    explorationScore?: boolean
+    finalScore?: boolean
+    createdAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["recommendationImpression"]>
+
+  export type RecommendationImpressionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    ideaId?: boolean
+    rank?: boolean
+    explicitScore?: boolean
+    latentScore?: boolean
+    explorationScore?: boolean
+    finalScore?: boolean
+    createdAt?: boolean
+  }
+
+  export type RecommendationImpressionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "ideaId" | "rank" | "explicitScore" | "latentScore" | "explorationScore" | "finalScore" | "createdAt", ExtArgs["result"]["recommendationImpression"]>
+  export type RecommendationImpressionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+  export type RecommendationImpressionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+  export type RecommendationImpressionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+    idea?: boolean | IdeaDefaultArgs<ExtArgs>
+  }
+
+  export type $RecommendationImpressionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RecommendationImpression"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+      idea: Prisma.$IdeaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      ideaId: string
+      rank: number
+      explicitScore: number
+      latentScore: number
+      explorationScore: number
+      finalScore: number
+      createdAt: Date
+    }, ExtArgs["result"]["recommendationImpression"]>
+    composites: {}
+  }
+
+  type RecommendationImpressionGetPayload<S extends boolean | null | undefined | RecommendationImpressionDefaultArgs> = $Result.GetResult<Prisma.$RecommendationImpressionPayload, S>
+
+  type RecommendationImpressionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RecommendationImpressionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RecommendationImpressionCountAggregateInputType | true
+    }
+
+  export interface RecommendationImpressionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RecommendationImpression'], meta: { name: 'RecommendationImpression' } }
+    /**
+     * Find zero or one RecommendationImpression that matches the filter.
+     * @param {RecommendationImpressionFindUniqueArgs} args - Arguments to find a RecommendationImpression
+     * @example
+     * // Get one RecommendationImpression
+     * const recommendationImpression = await prisma.recommendationImpression.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RecommendationImpressionFindUniqueArgs>(args: SelectSubset<T, RecommendationImpressionFindUniqueArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RecommendationImpression that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RecommendationImpressionFindUniqueOrThrowArgs} args - Arguments to find a RecommendationImpression
+     * @example
+     * // Get one RecommendationImpression
+     * const recommendationImpression = await prisma.recommendationImpression.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RecommendationImpressionFindUniqueOrThrowArgs>(args: SelectSubset<T, RecommendationImpressionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RecommendationImpression that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationImpressionFindFirstArgs} args - Arguments to find a RecommendationImpression
+     * @example
+     * // Get one RecommendationImpression
+     * const recommendationImpression = await prisma.recommendationImpression.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RecommendationImpressionFindFirstArgs>(args?: SelectSubset<T, RecommendationImpressionFindFirstArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RecommendationImpression that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationImpressionFindFirstOrThrowArgs} args - Arguments to find a RecommendationImpression
+     * @example
+     * // Get one RecommendationImpression
+     * const recommendationImpression = await prisma.recommendationImpression.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RecommendationImpressionFindFirstOrThrowArgs>(args?: SelectSubset<T, RecommendationImpressionFindFirstOrThrowArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RecommendationImpressions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationImpressionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RecommendationImpressions
+     * const recommendationImpressions = await prisma.recommendationImpression.findMany()
+     * 
+     * // Get first 10 RecommendationImpressions
+     * const recommendationImpressions = await prisma.recommendationImpression.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const recommendationImpressionWithIdOnly = await prisma.recommendationImpression.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RecommendationImpressionFindManyArgs>(args?: SelectSubset<T, RecommendationImpressionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RecommendationImpression.
+     * @param {RecommendationImpressionCreateArgs} args - Arguments to create a RecommendationImpression.
+     * @example
+     * // Create one RecommendationImpression
+     * const RecommendationImpression = await prisma.recommendationImpression.create({
+     *   data: {
+     *     // ... data to create a RecommendationImpression
+     *   }
+     * })
+     * 
+     */
+    create<T extends RecommendationImpressionCreateArgs>(args: SelectSubset<T, RecommendationImpressionCreateArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RecommendationImpressions.
+     * @param {RecommendationImpressionCreateManyArgs} args - Arguments to create many RecommendationImpressions.
+     * @example
+     * // Create many RecommendationImpressions
+     * const recommendationImpression = await prisma.recommendationImpression.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RecommendationImpressionCreateManyArgs>(args?: SelectSubset<T, RecommendationImpressionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RecommendationImpressions and returns the data saved in the database.
+     * @param {RecommendationImpressionCreateManyAndReturnArgs} args - Arguments to create many RecommendationImpressions.
+     * @example
+     * // Create many RecommendationImpressions
+     * const recommendationImpression = await prisma.recommendationImpression.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RecommendationImpressions and only return the `id`
+     * const recommendationImpressionWithIdOnly = await prisma.recommendationImpression.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RecommendationImpressionCreateManyAndReturnArgs>(args?: SelectSubset<T, RecommendationImpressionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RecommendationImpression.
+     * @param {RecommendationImpressionDeleteArgs} args - Arguments to delete one RecommendationImpression.
+     * @example
+     * // Delete one RecommendationImpression
+     * const RecommendationImpression = await prisma.recommendationImpression.delete({
+     *   where: {
+     *     // ... filter to delete one RecommendationImpression
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RecommendationImpressionDeleteArgs>(args: SelectSubset<T, RecommendationImpressionDeleteArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RecommendationImpression.
+     * @param {RecommendationImpressionUpdateArgs} args - Arguments to update one RecommendationImpression.
+     * @example
+     * // Update one RecommendationImpression
+     * const recommendationImpression = await prisma.recommendationImpression.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RecommendationImpressionUpdateArgs>(args: SelectSubset<T, RecommendationImpressionUpdateArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RecommendationImpressions.
+     * @param {RecommendationImpressionDeleteManyArgs} args - Arguments to filter RecommendationImpressions to delete.
+     * @example
+     * // Delete a few RecommendationImpressions
+     * const { count } = await prisma.recommendationImpression.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RecommendationImpressionDeleteManyArgs>(args?: SelectSubset<T, RecommendationImpressionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RecommendationImpressions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationImpressionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RecommendationImpressions
+     * const recommendationImpression = await prisma.recommendationImpression.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RecommendationImpressionUpdateManyArgs>(args: SelectSubset<T, RecommendationImpressionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RecommendationImpressions and returns the data updated in the database.
+     * @param {RecommendationImpressionUpdateManyAndReturnArgs} args - Arguments to update many RecommendationImpressions.
+     * @example
+     * // Update many RecommendationImpressions
+     * const recommendationImpression = await prisma.recommendationImpression.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RecommendationImpressions and only return the `id`
+     * const recommendationImpressionWithIdOnly = await prisma.recommendationImpression.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RecommendationImpressionUpdateManyAndReturnArgs>(args: SelectSubset<T, RecommendationImpressionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RecommendationImpression.
+     * @param {RecommendationImpressionUpsertArgs} args - Arguments to update or create a RecommendationImpression.
+     * @example
+     * // Update or create a RecommendationImpression
+     * const recommendationImpression = await prisma.recommendationImpression.upsert({
+     *   create: {
+     *     // ... data to create a RecommendationImpression
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RecommendationImpression we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RecommendationImpressionUpsertArgs>(args: SelectSubset<T, RecommendationImpressionUpsertArgs<ExtArgs>>): Prisma__RecommendationImpressionClient<$Result.GetResult<Prisma.$RecommendationImpressionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RecommendationImpressions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationImpressionCountArgs} args - Arguments to filter RecommendationImpressions to count.
+     * @example
+     * // Count the number of RecommendationImpressions
+     * const count = await prisma.recommendationImpression.count({
+     *   where: {
+     *     // ... the filter for the RecommendationImpressions we want to count
+     *   }
+     * })
+    **/
+    count<T extends RecommendationImpressionCountArgs>(
+      args?: Subset<T, RecommendationImpressionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RecommendationImpressionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RecommendationImpression.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationImpressionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RecommendationImpressionAggregateArgs>(args: Subset<T, RecommendationImpressionAggregateArgs>): Prisma.PrismaPromise<GetRecommendationImpressionAggregateType<T>>
+
+    /**
+     * Group by RecommendationImpression.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RecommendationImpressionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RecommendationImpressionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RecommendationImpressionGroupByArgs['orderBy'] }
+        : { orderBy?: RecommendationImpressionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RecommendationImpressionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRecommendationImpressionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RecommendationImpression model
+   */
+  readonly fields: RecommendationImpressionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RecommendationImpression.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RecommendationImpressionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    idea<T extends IdeaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IdeaDefaultArgs<ExtArgs>>): Prisma__IdeaClient<$Result.GetResult<Prisma.$IdeaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RecommendationImpression model
+   */
+  interface RecommendationImpressionFieldRefs {
+    readonly id: FieldRef<"RecommendationImpression", 'String'>
+    readonly userId: FieldRef<"RecommendationImpression", 'String'>
+    readonly ideaId: FieldRef<"RecommendationImpression", 'String'>
+    readonly rank: FieldRef<"RecommendationImpression", 'Int'>
+    readonly explicitScore: FieldRef<"RecommendationImpression", 'Float'>
+    readonly latentScore: FieldRef<"RecommendationImpression", 'Float'>
+    readonly explorationScore: FieldRef<"RecommendationImpression", 'Float'>
+    readonly finalScore: FieldRef<"RecommendationImpression", 'Float'>
+    readonly createdAt: FieldRef<"RecommendationImpression", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RecommendationImpression findUnique
+   */
+  export type RecommendationImpressionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * Filter, which RecommendationImpression to fetch.
+     */
+    where: RecommendationImpressionWhereUniqueInput
+  }
+
+  /**
+   * RecommendationImpression findUniqueOrThrow
+   */
+  export type RecommendationImpressionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * Filter, which RecommendationImpression to fetch.
+     */
+    where: RecommendationImpressionWhereUniqueInput
+  }
+
+  /**
+   * RecommendationImpression findFirst
+   */
+  export type RecommendationImpressionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * Filter, which RecommendationImpression to fetch.
+     */
+    where?: RecommendationImpressionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RecommendationImpressions to fetch.
+     */
+    orderBy?: RecommendationImpressionOrderByWithRelationInput | RecommendationImpressionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RecommendationImpressions.
+     */
+    cursor?: RecommendationImpressionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RecommendationImpressions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RecommendationImpressions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RecommendationImpressions.
+     */
+    distinct?: RecommendationImpressionScalarFieldEnum | RecommendationImpressionScalarFieldEnum[]
+  }
+
+  /**
+   * RecommendationImpression findFirstOrThrow
+   */
+  export type RecommendationImpressionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * Filter, which RecommendationImpression to fetch.
+     */
+    where?: RecommendationImpressionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RecommendationImpressions to fetch.
+     */
+    orderBy?: RecommendationImpressionOrderByWithRelationInput | RecommendationImpressionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RecommendationImpressions.
+     */
+    cursor?: RecommendationImpressionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RecommendationImpressions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RecommendationImpressions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RecommendationImpressions.
+     */
+    distinct?: RecommendationImpressionScalarFieldEnum | RecommendationImpressionScalarFieldEnum[]
+  }
+
+  /**
+   * RecommendationImpression findMany
+   */
+  export type RecommendationImpressionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * Filter, which RecommendationImpressions to fetch.
+     */
+    where?: RecommendationImpressionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RecommendationImpressions to fetch.
+     */
+    orderBy?: RecommendationImpressionOrderByWithRelationInput | RecommendationImpressionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RecommendationImpressions.
+     */
+    cursor?: RecommendationImpressionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RecommendationImpressions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RecommendationImpressions.
+     */
+    skip?: number
+    distinct?: RecommendationImpressionScalarFieldEnum | RecommendationImpressionScalarFieldEnum[]
+  }
+
+  /**
+   * RecommendationImpression create
+   */
+  export type RecommendationImpressionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RecommendationImpression.
+     */
+    data: XOR<RecommendationImpressionCreateInput, RecommendationImpressionUncheckedCreateInput>
+  }
+
+  /**
+   * RecommendationImpression createMany
+   */
+  export type RecommendationImpressionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RecommendationImpressions.
+     */
+    data: RecommendationImpressionCreateManyInput | RecommendationImpressionCreateManyInput[]
+  }
+
+  /**
+   * RecommendationImpression createManyAndReturn
+   */
+  export type RecommendationImpressionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * The data used to create many RecommendationImpressions.
+     */
+    data: RecommendationImpressionCreateManyInput | RecommendationImpressionCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RecommendationImpression update
+   */
+  export type RecommendationImpressionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RecommendationImpression.
+     */
+    data: XOR<RecommendationImpressionUpdateInput, RecommendationImpressionUncheckedUpdateInput>
+    /**
+     * Choose, which RecommendationImpression to update.
+     */
+    where: RecommendationImpressionWhereUniqueInput
+  }
+
+  /**
+   * RecommendationImpression updateMany
+   */
+  export type RecommendationImpressionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RecommendationImpressions.
+     */
+    data: XOR<RecommendationImpressionUpdateManyMutationInput, RecommendationImpressionUncheckedUpdateManyInput>
+    /**
+     * Filter which RecommendationImpressions to update
+     */
+    where?: RecommendationImpressionWhereInput
+    /**
+     * Limit how many RecommendationImpressions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RecommendationImpression updateManyAndReturn
+   */
+  export type RecommendationImpressionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * The data used to update RecommendationImpressions.
+     */
+    data: XOR<RecommendationImpressionUpdateManyMutationInput, RecommendationImpressionUncheckedUpdateManyInput>
+    /**
+     * Filter which RecommendationImpressions to update
+     */
+    where?: RecommendationImpressionWhereInput
+    /**
+     * Limit how many RecommendationImpressions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RecommendationImpression upsert
+   */
+  export type RecommendationImpressionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RecommendationImpression to update in case it exists.
+     */
+    where: RecommendationImpressionWhereUniqueInput
+    /**
+     * In case the RecommendationImpression found by the `where` argument doesn't exist, create a new RecommendationImpression with this data.
+     */
+    create: XOR<RecommendationImpressionCreateInput, RecommendationImpressionUncheckedCreateInput>
+    /**
+     * In case the RecommendationImpression was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RecommendationImpressionUpdateInput, RecommendationImpressionUncheckedUpdateInput>
+  }
+
+  /**
+   * RecommendationImpression delete
+   */
+  export type RecommendationImpressionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
+    /**
+     * Filter which RecommendationImpression to delete.
+     */
+    where: RecommendationImpressionWhereUniqueInput
+  }
+
+  /**
+   * RecommendationImpression deleteMany
+   */
+  export type RecommendationImpressionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RecommendationImpressions to delete
+     */
+    where?: RecommendationImpressionWhereInput
+    /**
+     * Limit how many RecommendationImpressions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RecommendationImpression without action
+   */
+  export type RecommendationImpressionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RecommendationImpression
+     */
+    select?: RecommendationImpressionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RecommendationImpression
+     */
+    omit?: RecommendationImpressionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RecommendationImpressionInclude<ExtArgs> | null
   }
 
 
@@ -17938,6 +28212,114 @@ export namespace Prisma {
   export type IdeaChunkEmbeddingScalarFieldEnum = (typeof IdeaChunkEmbeddingScalarFieldEnum)[keyof typeof IdeaChunkEmbeddingScalarFieldEnum]
 
 
+  export const TagScalarFieldEnum: {
+    id: 'id',
+    slug: 'slug',
+    label: 'label',
+    embedding: 'embedding',
+    parentTagId: 'parentTagId',
+    status: 'status',
+    canonicalTagId: 'canonicalTagId',
+    source: 'source',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TagScalarFieldEnum = (typeof TagScalarFieldEnum)[keyof typeof TagScalarFieldEnum]
+
+
+  export const TagAliasScalarFieldEnum: {
+    id: 'id',
+    alias: 'alias',
+    tagId: 'tagId',
+    createdAt: 'createdAt'
+  };
+
+  export type TagAliasScalarFieldEnum = (typeof TagAliasScalarFieldEnum)[keyof typeof TagAliasScalarFieldEnum]
+
+
+  export const TagSimilarityScalarFieldEnum: {
+    id: 'id',
+    tagAId: 'tagAId',
+    tagBId: 'tagBId',
+    similarity: 'similarity',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TagSimilarityScalarFieldEnum = (typeof TagSimilarityScalarFieldEnum)[keyof typeof TagSimilarityScalarFieldEnum]
+
+
+  export const IdeaTagScalarFieldEnum: {
+    id: 'id',
+    ideaId: 'ideaId',
+    tagId: 'tagId',
+    weight: 'weight',
+    sourceConfidence: 'sourceConfidence',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type IdeaTagScalarFieldEnum = (typeof IdeaTagScalarFieldEnum)[keyof typeof IdeaTagScalarFieldEnum]
+
+
+  export const UserTagPreferenceScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    tagId: 'tagId',
+    weight: 'weight',
+    explicitWeight: 'explicitWeight',
+    implicitWeight: 'implicitWeight',
+    lastReinforcedAt: 'lastReinforcedAt',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserTagPreferenceScalarFieldEnum = (typeof UserTagPreferenceScalarFieldEnum)[keyof typeof UserTagPreferenceScalarFieldEnum]
+
+
+  export const UserInterestProfileScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    latentVector: 'latentVector',
+    positiveCentroid: 'positiveCentroid',
+    negativeCentroid: 'negativeCentroid',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UserInterestProfileScalarFieldEnum = (typeof UserInterestProfileScalarFieldEnum)[keyof typeof UserInterestProfileScalarFieldEnum]
+
+
+  export const IdeaInteractionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    ideaId: 'ideaId',
+    interactionType: 'interactionType',
+    reward: 'reward',
+    dwellTimeMs: 'dwellTimeMs',
+    context: 'context',
+    createdAt: 'createdAt'
+  };
+
+  export type IdeaInteractionScalarFieldEnum = (typeof IdeaInteractionScalarFieldEnum)[keyof typeof IdeaInteractionScalarFieldEnum]
+
+
+  export const RecommendationImpressionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    ideaId: 'ideaId',
+    rank: 'rank',
+    explicitScore: 'explicitScore',
+    latentScore: 'latentScore',
+    explorationScore: 'explorationScore',
+    finalScore: 'finalScore',
+    createdAt: 'createdAt'
+  };
+
+  export type RecommendationImpressionScalarFieldEnum = (typeof RecommendationImpressionScalarFieldEnum)[keyof typeof RecommendationImpressionScalarFieldEnum]
+
+
   export const IdeaStackScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -18135,9 +28517,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'SwipeAction'
+   * Reference to a field of type 'TagStatus'
    */
-  export type EnumSwipeActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SwipeAction'>
+  export type EnumTagStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TagStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'TagSource'
+   */
+  export type EnumTagSourceFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TagSource'>
     
 
 
@@ -18145,6 +28534,20 @@ export namespace Prisma {
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+  /**
+   * Reference to a field of type 'InteractionType'
+   */
+  export type EnumInteractionTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InteractionType'>
+    
+
+
+  /**
+   * Reference to a field of type 'SwipeAction'
+   */
+  export type EnumSwipeActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SwipeAction'>
     
   /**
    * Deep Input Types
@@ -18227,6 +28630,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventListRelationFilter
     favorites?: FavoriteListRelationFilter
     preferenceLogs?: PreferenceUpdateLogListRelationFilter
+    tagPreferences?: UserTagPreferenceListRelationFilter
+    interestProfile?: XOR<UserInterestProfileNullableScalarRelationFilter, UserInterestProfileWhereInput> | null
+    interactions?: IdeaInteractionListRelationFilter
+    impressions?: RecommendationImpressionListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -18247,6 +28654,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventOrderByRelationAggregateInput
     favorites?: FavoriteOrderByRelationAggregateInput
     preferenceLogs?: PreferenceUpdateLogOrderByRelationAggregateInput
+    tagPreferences?: UserTagPreferenceOrderByRelationAggregateInput
+    interestProfile?: UserInterestProfileOrderByWithRelationInput
+    interactions?: IdeaInteractionOrderByRelationAggregateInput
+    impressions?: RecommendationImpressionOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -18270,6 +28681,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventListRelationFilter
     favorites?: FavoriteListRelationFilter
     preferenceLogs?: PreferenceUpdateLogListRelationFilter
+    tagPreferences?: UserTagPreferenceListRelationFilter
+    interestProfile?: XOR<UserInterestProfileNullableScalarRelationFilter, UserInterestProfileWhereInput> | null
+    interactions?: IdeaInteractionListRelationFilter
+    impressions?: RecommendationImpressionListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -18435,6 +28850,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemListRelationFilter
     swipeEvents?: SwipeEventListRelationFilter
     favorites?: FavoriteListRelationFilter
+    tags?: IdeaTagListRelationFilter
+    interactions?: IdeaInteractionListRelationFilter
+    impressions?: RecommendationImpressionListRelationFilter
   }
 
   export type IdeaOrderByWithRelationInput = {
@@ -18450,6 +28868,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemOrderByRelationAggregateInput
     swipeEvents?: SwipeEventOrderByRelationAggregateInput
     favorites?: FavoriteOrderByRelationAggregateInput
+    tags?: IdeaTagOrderByRelationAggregateInput
+    interactions?: IdeaInteractionOrderByRelationAggregateInput
+    impressions?: RecommendationImpressionOrderByRelationAggregateInput
   }
 
   export type IdeaWhereUniqueInput = Prisma.AtLeast<{
@@ -18468,6 +28889,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemListRelationFilter
     swipeEvents?: SwipeEventListRelationFilter
     favorites?: FavoriteListRelationFilter
+    tags?: IdeaTagListRelationFilter
+    interactions?: IdeaInteractionListRelationFilter
+    impressions?: RecommendationImpressionListRelationFilter
   }, "id">
 
   export type IdeaOrderByWithAggregationInput = {
@@ -18557,6 +28981,598 @@ export namespace Prisma {
     content?: StringWithAggregatesFilter<"IdeaChunkEmbedding"> | string
     vector?: JsonWithAggregatesFilter<"IdeaChunkEmbedding">
     createdAt?: DateTimeWithAggregatesFilter<"IdeaChunkEmbedding"> | Date | string
+  }
+
+  export type TagWhereInput = {
+    AND?: TagWhereInput | TagWhereInput[]
+    OR?: TagWhereInput[]
+    NOT?: TagWhereInput | TagWhereInput[]
+    id?: StringFilter<"Tag"> | string
+    slug?: StringFilter<"Tag"> | string
+    label?: StringFilter<"Tag"> | string
+    embedding?: JsonNullableFilter<"Tag">
+    parentTagId?: StringNullableFilter<"Tag"> | string | null
+    status?: EnumTagStatusFilter<"Tag"> | $Enums.TagStatus
+    canonicalTagId?: StringNullableFilter<"Tag"> | string | null
+    source?: EnumTagSourceFilter<"Tag"> | $Enums.TagSource
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+    parentTag?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
+    childTags?: TagListRelationFilter
+    canonicalTag?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
+    canonicalOf?: TagListRelationFilter
+    aliasRecords?: TagAliasListRelationFilter
+    similarityAsA?: TagSimilarityListRelationFilter
+    similarityAsB?: TagSimilarityListRelationFilter
+    ideaTags?: IdeaTagListRelationFilter
+    userPreferences?: UserTagPreferenceListRelationFilter
+  }
+
+  export type TagOrderByWithRelationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    label?: SortOrder
+    embedding?: SortOrderInput | SortOrder
+    parentTagId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    canonicalTagId?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    parentTag?: TagOrderByWithRelationInput
+    childTags?: TagOrderByRelationAggregateInput
+    canonicalTag?: TagOrderByWithRelationInput
+    canonicalOf?: TagOrderByRelationAggregateInput
+    aliasRecords?: TagAliasOrderByRelationAggregateInput
+    similarityAsA?: TagSimilarityOrderByRelationAggregateInput
+    similarityAsB?: TagSimilarityOrderByRelationAggregateInput
+    ideaTags?: IdeaTagOrderByRelationAggregateInput
+    userPreferences?: UserTagPreferenceOrderByRelationAggregateInput
+  }
+
+  export type TagWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    slug?: string
+    AND?: TagWhereInput | TagWhereInput[]
+    OR?: TagWhereInput[]
+    NOT?: TagWhereInput | TagWhereInput[]
+    label?: StringFilter<"Tag"> | string
+    embedding?: JsonNullableFilter<"Tag">
+    parentTagId?: StringNullableFilter<"Tag"> | string | null
+    status?: EnumTagStatusFilter<"Tag"> | $Enums.TagStatus
+    canonicalTagId?: StringNullableFilter<"Tag"> | string | null
+    source?: EnumTagSourceFilter<"Tag"> | $Enums.TagSource
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+    parentTag?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
+    childTags?: TagListRelationFilter
+    canonicalTag?: XOR<TagNullableScalarRelationFilter, TagWhereInput> | null
+    canonicalOf?: TagListRelationFilter
+    aliasRecords?: TagAliasListRelationFilter
+    similarityAsA?: TagSimilarityListRelationFilter
+    similarityAsB?: TagSimilarityListRelationFilter
+    ideaTags?: IdeaTagListRelationFilter
+    userPreferences?: UserTagPreferenceListRelationFilter
+  }, "id" | "slug">
+
+  export type TagOrderByWithAggregationInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    label?: SortOrder
+    embedding?: SortOrderInput | SortOrder
+    parentTagId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    canonicalTagId?: SortOrderInput | SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TagCountOrderByAggregateInput
+    _max?: TagMaxOrderByAggregateInput
+    _min?: TagMinOrderByAggregateInput
+  }
+
+  export type TagScalarWhereWithAggregatesInput = {
+    AND?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
+    OR?: TagScalarWhereWithAggregatesInput[]
+    NOT?: TagScalarWhereWithAggregatesInput | TagScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Tag"> | string
+    slug?: StringWithAggregatesFilter<"Tag"> | string
+    label?: StringWithAggregatesFilter<"Tag"> | string
+    embedding?: JsonNullableWithAggregatesFilter<"Tag">
+    parentTagId?: StringNullableWithAggregatesFilter<"Tag"> | string | null
+    status?: EnumTagStatusWithAggregatesFilter<"Tag"> | $Enums.TagStatus
+    canonicalTagId?: StringNullableWithAggregatesFilter<"Tag"> | string | null
+    source?: EnumTagSourceWithAggregatesFilter<"Tag"> | $Enums.TagSource
+    createdAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Tag"> | Date | string
+  }
+
+  export type TagAliasWhereInput = {
+    AND?: TagAliasWhereInput | TagAliasWhereInput[]
+    OR?: TagAliasWhereInput[]
+    NOT?: TagAliasWhereInput | TagAliasWhereInput[]
+    id?: StringFilter<"TagAlias"> | string
+    alias?: StringFilter<"TagAlias"> | string
+    tagId?: StringFilter<"TagAlias"> | string
+    createdAt?: DateTimeFilter<"TagAlias"> | Date | string
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }
+
+  export type TagAliasOrderByWithRelationInput = {
+    id?: SortOrder
+    alias?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+    tag?: TagOrderByWithRelationInput
+  }
+
+  export type TagAliasWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    alias?: string
+    AND?: TagAliasWhereInput | TagAliasWhereInput[]
+    OR?: TagAliasWhereInput[]
+    NOT?: TagAliasWhereInput | TagAliasWhereInput[]
+    tagId?: StringFilter<"TagAlias"> | string
+    createdAt?: DateTimeFilter<"TagAlias"> | Date | string
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }, "id" | "alias">
+
+  export type TagAliasOrderByWithAggregationInput = {
+    id?: SortOrder
+    alias?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+    _count?: TagAliasCountOrderByAggregateInput
+    _max?: TagAliasMaxOrderByAggregateInput
+    _min?: TagAliasMinOrderByAggregateInput
+  }
+
+  export type TagAliasScalarWhereWithAggregatesInput = {
+    AND?: TagAliasScalarWhereWithAggregatesInput | TagAliasScalarWhereWithAggregatesInput[]
+    OR?: TagAliasScalarWhereWithAggregatesInput[]
+    NOT?: TagAliasScalarWhereWithAggregatesInput | TagAliasScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TagAlias"> | string
+    alias?: StringWithAggregatesFilter<"TagAlias"> | string
+    tagId?: StringWithAggregatesFilter<"TagAlias"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"TagAlias"> | Date | string
+  }
+
+  export type TagSimilarityWhereInput = {
+    AND?: TagSimilarityWhereInput | TagSimilarityWhereInput[]
+    OR?: TagSimilarityWhereInput[]
+    NOT?: TagSimilarityWhereInput | TagSimilarityWhereInput[]
+    id?: StringFilter<"TagSimilarity"> | string
+    tagAId?: StringFilter<"TagSimilarity"> | string
+    tagBId?: StringFilter<"TagSimilarity"> | string
+    similarity?: FloatFilter<"TagSimilarity"> | number
+    createdAt?: DateTimeFilter<"TagSimilarity"> | Date | string
+    updatedAt?: DateTimeFilter<"TagSimilarity"> | Date | string
+    tagA?: XOR<TagScalarRelationFilter, TagWhereInput>
+    tagB?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }
+
+  export type TagSimilarityOrderByWithRelationInput = {
+    id?: SortOrder
+    tagAId?: SortOrder
+    tagBId?: SortOrder
+    similarity?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    tagA?: TagOrderByWithRelationInput
+    tagB?: TagOrderByWithRelationInput
+  }
+
+  export type TagSimilarityWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    tagAId_tagBId?: TagSimilarityTagAIdTagBIdCompoundUniqueInput
+    AND?: TagSimilarityWhereInput | TagSimilarityWhereInput[]
+    OR?: TagSimilarityWhereInput[]
+    NOT?: TagSimilarityWhereInput | TagSimilarityWhereInput[]
+    tagAId?: StringFilter<"TagSimilarity"> | string
+    tagBId?: StringFilter<"TagSimilarity"> | string
+    similarity?: FloatFilter<"TagSimilarity"> | number
+    createdAt?: DateTimeFilter<"TagSimilarity"> | Date | string
+    updatedAt?: DateTimeFilter<"TagSimilarity"> | Date | string
+    tagA?: XOR<TagScalarRelationFilter, TagWhereInput>
+    tagB?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }, "id" | "tagAId_tagBId">
+
+  export type TagSimilarityOrderByWithAggregationInput = {
+    id?: SortOrder
+    tagAId?: SortOrder
+    tagBId?: SortOrder
+    similarity?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TagSimilarityCountOrderByAggregateInput
+    _avg?: TagSimilarityAvgOrderByAggregateInput
+    _max?: TagSimilarityMaxOrderByAggregateInput
+    _min?: TagSimilarityMinOrderByAggregateInput
+    _sum?: TagSimilaritySumOrderByAggregateInput
+  }
+
+  export type TagSimilarityScalarWhereWithAggregatesInput = {
+    AND?: TagSimilarityScalarWhereWithAggregatesInput | TagSimilarityScalarWhereWithAggregatesInput[]
+    OR?: TagSimilarityScalarWhereWithAggregatesInput[]
+    NOT?: TagSimilarityScalarWhereWithAggregatesInput | TagSimilarityScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TagSimilarity"> | string
+    tagAId?: StringWithAggregatesFilter<"TagSimilarity"> | string
+    tagBId?: StringWithAggregatesFilter<"TagSimilarity"> | string
+    similarity?: FloatWithAggregatesFilter<"TagSimilarity"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"TagSimilarity"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"TagSimilarity"> | Date | string
+  }
+
+  export type IdeaTagWhereInput = {
+    AND?: IdeaTagWhereInput | IdeaTagWhereInput[]
+    OR?: IdeaTagWhereInput[]
+    NOT?: IdeaTagWhereInput | IdeaTagWhereInput[]
+    id?: StringFilter<"IdeaTag"> | string
+    ideaId?: StringFilter<"IdeaTag"> | string
+    tagId?: StringFilter<"IdeaTag"> | string
+    weight?: FloatFilter<"IdeaTag"> | number
+    sourceConfidence?: FloatFilter<"IdeaTag"> | number
+    createdAt?: DateTimeFilter<"IdeaTag"> | Date | string
+    updatedAt?: DateTimeFilter<"IdeaTag"> | Date | string
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }
+
+  export type IdeaTagOrderByWithRelationInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    sourceConfidence?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    idea?: IdeaOrderByWithRelationInput
+    tag?: TagOrderByWithRelationInput
+  }
+
+  export type IdeaTagWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    ideaId_tagId?: IdeaTagIdeaIdTagIdCompoundUniqueInput
+    AND?: IdeaTagWhereInput | IdeaTagWhereInput[]
+    OR?: IdeaTagWhereInput[]
+    NOT?: IdeaTagWhereInput | IdeaTagWhereInput[]
+    ideaId?: StringFilter<"IdeaTag"> | string
+    tagId?: StringFilter<"IdeaTag"> | string
+    weight?: FloatFilter<"IdeaTag"> | number
+    sourceConfidence?: FloatFilter<"IdeaTag"> | number
+    createdAt?: DateTimeFilter<"IdeaTag"> | Date | string
+    updatedAt?: DateTimeFilter<"IdeaTag"> | Date | string
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }, "id" | "ideaId_tagId">
+
+  export type IdeaTagOrderByWithAggregationInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    sourceConfidence?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: IdeaTagCountOrderByAggregateInput
+    _avg?: IdeaTagAvgOrderByAggregateInput
+    _max?: IdeaTagMaxOrderByAggregateInput
+    _min?: IdeaTagMinOrderByAggregateInput
+    _sum?: IdeaTagSumOrderByAggregateInput
+  }
+
+  export type IdeaTagScalarWhereWithAggregatesInput = {
+    AND?: IdeaTagScalarWhereWithAggregatesInput | IdeaTagScalarWhereWithAggregatesInput[]
+    OR?: IdeaTagScalarWhereWithAggregatesInput[]
+    NOT?: IdeaTagScalarWhereWithAggregatesInput | IdeaTagScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"IdeaTag"> | string
+    ideaId?: StringWithAggregatesFilter<"IdeaTag"> | string
+    tagId?: StringWithAggregatesFilter<"IdeaTag"> | string
+    weight?: FloatWithAggregatesFilter<"IdeaTag"> | number
+    sourceConfidence?: FloatWithAggregatesFilter<"IdeaTag"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"IdeaTag"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"IdeaTag"> | Date | string
+  }
+
+  export type UserTagPreferenceWhereInput = {
+    AND?: UserTagPreferenceWhereInput | UserTagPreferenceWhereInput[]
+    OR?: UserTagPreferenceWhereInput[]
+    NOT?: UserTagPreferenceWhereInput | UserTagPreferenceWhereInput[]
+    id?: StringFilter<"UserTagPreference"> | string
+    userId?: StringFilter<"UserTagPreference"> | string
+    tagId?: StringFilter<"UserTagPreference"> | string
+    weight?: FloatFilter<"UserTagPreference"> | number
+    explicitWeight?: FloatFilter<"UserTagPreference"> | number
+    implicitWeight?: FloatFilter<"UserTagPreference"> | number
+    lastReinforcedAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    createdAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    updatedAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }
+
+  export type UserTagPreferenceOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    explicitWeight?: SortOrder
+    implicitWeight?: SortOrder
+    lastReinforcedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    tag?: TagOrderByWithRelationInput
+  }
+
+  export type UserTagPreferenceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_tagId?: UserTagPreferenceUserIdTagIdCompoundUniqueInput
+    AND?: UserTagPreferenceWhereInput | UserTagPreferenceWhereInput[]
+    OR?: UserTagPreferenceWhereInput[]
+    NOT?: UserTagPreferenceWhereInput | UserTagPreferenceWhereInput[]
+    userId?: StringFilter<"UserTagPreference"> | string
+    tagId?: StringFilter<"UserTagPreference"> | string
+    weight?: FloatFilter<"UserTagPreference"> | number
+    explicitWeight?: FloatFilter<"UserTagPreference"> | number
+    implicitWeight?: FloatFilter<"UserTagPreference"> | number
+    lastReinforcedAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    createdAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    updatedAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    tag?: XOR<TagScalarRelationFilter, TagWhereInput>
+  }, "id" | "userId_tagId">
+
+  export type UserTagPreferenceOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    explicitWeight?: SortOrder
+    implicitWeight?: SortOrder
+    lastReinforcedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserTagPreferenceCountOrderByAggregateInput
+    _avg?: UserTagPreferenceAvgOrderByAggregateInput
+    _max?: UserTagPreferenceMaxOrderByAggregateInput
+    _min?: UserTagPreferenceMinOrderByAggregateInput
+    _sum?: UserTagPreferenceSumOrderByAggregateInput
+  }
+
+  export type UserTagPreferenceScalarWhereWithAggregatesInput = {
+    AND?: UserTagPreferenceScalarWhereWithAggregatesInput | UserTagPreferenceScalarWhereWithAggregatesInput[]
+    OR?: UserTagPreferenceScalarWhereWithAggregatesInput[]
+    NOT?: UserTagPreferenceScalarWhereWithAggregatesInput | UserTagPreferenceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserTagPreference"> | string
+    userId?: StringWithAggregatesFilter<"UserTagPreference"> | string
+    tagId?: StringWithAggregatesFilter<"UserTagPreference"> | string
+    weight?: FloatWithAggregatesFilter<"UserTagPreference"> | number
+    explicitWeight?: FloatWithAggregatesFilter<"UserTagPreference"> | number
+    implicitWeight?: FloatWithAggregatesFilter<"UserTagPreference"> | number
+    lastReinforcedAt?: DateTimeWithAggregatesFilter<"UserTagPreference"> | Date | string
+    createdAt?: DateTimeWithAggregatesFilter<"UserTagPreference"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserTagPreference"> | Date | string
+  }
+
+  export type UserInterestProfileWhereInput = {
+    AND?: UserInterestProfileWhereInput | UserInterestProfileWhereInput[]
+    OR?: UserInterestProfileWhereInput[]
+    NOT?: UserInterestProfileWhereInput | UserInterestProfileWhereInput[]
+    id?: StringFilter<"UserInterestProfile"> | string
+    userId?: StringFilter<"UserInterestProfile"> | string
+    latentVector?: JsonFilter<"UserInterestProfile">
+    positiveCentroid?: JsonNullableFilter<"UserInterestProfile">
+    negativeCentroid?: JsonNullableFilter<"UserInterestProfile">
+    createdAt?: DateTimeFilter<"UserInterestProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"UserInterestProfile"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type UserInterestProfileOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    latentVector?: SortOrder
+    positiveCentroid?: SortOrderInput | SortOrder
+    negativeCentroid?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type UserInterestProfileWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId?: string
+    AND?: UserInterestProfileWhereInput | UserInterestProfileWhereInput[]
+    OR?: UserInterestProfileWhereInput[]
+    NOT?: UserInterestProfileWhereInput | UserInterestProfileWhereInput[]
+    latentVector?: JsonFilter<"UserInterestProfile">
+    positiveCentroid?: JsonNullableFilter<"UserInterestProfile">
+    negativeCentroid?: JsonNullableFilter<"UserInterestProfile">
+    createdAt?: DateTimeFilter<"UserInterestProfile"> | Date | string
+    updatedAt?: DateTimeFilter<"UserInterestProfile"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId">
+
+  export type UserInterestProfileOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    latentVector?: SortOrder
+    positiveCentroid?: SortOrderInput | SortOrder
+    negativeCentroid?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UserInterestProfileCountOrderByAggregateInput
+    _max?: UserInterestProfileMaxOrderByAggregateInput
+    _min?: UserInterestProfileMinOrderByAggregateInput
+  }
+
+  export type UserInterestProfileScalarWhereWithAggregatesInput = {
+    AND?: UserInterestProfileScalarWhereWithAggregatesInput | UserInterestProfileScalarWhereWithAggregatesInput[]
+    OR?: UserInterestProfileScalarWhereWithAggregatesInput[]
+    NOT?: UserInterestProfileScalarWhereWithAggregatesInput | UserInterestProfileScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"UserInterestProfile"> | string
+    userId?: StringWithAggregatesFilter<"UserInterestProfile"> | string
+    latentVector?: JsonWithAggregatesFilter<"UserInterestProfile">
+    positiveCentroid?: JsonNullableWithAggregatesFilter<"UserInterestProfile">
+    negativeCentroid?: JsonNullableWithAggregatesFilter<"UserInterestProfile">
+    createdAt?: DateTimeWithAggregatesFilter<"UserInterestProfile"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"UserInterestProfile"> | Date | string
+  }
+
+  export type IdeaInteractionWhereInput = {
+    AND?: IdeaInteractionWhereInput | IdeaInteractionWhereInput[]
+    OR?: IdeaInteractionWhereInput[]
+    NOT?: IdeaInteractionWhereInput | IdeaInteractionWhereInput[]
+    id?: StringFilter<"IdeaInteraction"> | string
+    userId?: StringFilter<"IdeaInteraction"> | string
+    ideaId?: StringFilter<"IdeaInteraction"> | string
+    interactionType?: EnumInteractionTypeFilter<"IdeaInteraction"> | $Enums.InteractionType
+    reward?: FloatFilter<"IdeaInteraction"> | number
+    dwellTimeMs?: IntNullableFilter<"IdeaInteraction"> | number | null
+    context?: JsonNullableFilter<"IdeaInteraction">
+    createdAt?: DateTimeFilter<"IdeaInteraction"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+  }
+
+  export type IdeaInteractionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    interactionType?: SortOrder
+    reward?: SortOrder
+    dwellTimeMs?: SortOrderInput | SortOrder
+    context?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    idea?: IdeaOrderByWithRelationInput
+  }
+
+  export type IdeaInteractionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: IdeaInteractionWhereInput | IdeaInteractionWhereInput[]
+    OR?: IdeaInteractionWhereInput[]
+    NOT?: IdeaInteractionWhereInput | IdeaInteractionWhereInput[]
+    userId?: StringFilter<"IdeaInteraction"> | string
+    ideaId?: StringFilter<"IdeaInteraction"> | string
+    interactionType?: EnumInteractionTypeFilter<"IdeaInteraction"> | $Enums.InteractionType
+    reward?: FloatFilter<"IdeaInteraction"> | number
+    dwellTimeMs?: IntNullableFilter<"IdeaInteraction"> | number | null
+    context?: JsonNullableFilter<"IdeaInteraction">
+    createdAt?: DateTimeFilter<"IdeaInteraction"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+  }, "id">
+
+  export type IdeaInteractionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    interactionType?: SortOrder
+    reward?: SortOrder
+    dwellTimeMs?: SortOrderInput | SortOrder
+    context?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: IdeaInteractionCountOrderByAggregateInput
+    _avg?: IdeaInteractionAvgOrderByAggregateInput
+    _max?: IdeaInteractionMaxOrderByAggregateInput
+    _min?: IdeaInteractionMinOrderByAggregateInput
+    _sum?: IdeaInteractionSumOrderByAggregateInput
+  }
+
+  export type IdeaInteractionScalarWhereWithAggregatesInput = {
+    AND?: IdeaInteractionScalarWhereWithAggregatesInput | IdeaInteractionScalarWhereWithAggregatesInput[]
+    OR?: IdeaInteractionScalarWhereWithAggregatesInput[]
+    NOT?: IdeaInteractionScalarWhereWithAggregatesInput | IdeaInteractionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"IdeaInteraction"> | string
+    userId?: StringWithAggregatesFilter<"IdeaInteraction"> | string
+    ideaId?: StringWithAggregatesFilter<"IdeaInteraction"> | string
+    interactionType?: EnumInteractionTypeWithAggregatesFilter<"IdeaInteraction"> | $Enums.InteractionType
+    reward?: FloatWithAggregatesFilter<"IdeaInteraction"> | number
+    dwellTimeMs?: IntNullableWithAggregatesFilter<"IdeaInteraction"> | number | null
+    context?: JsonNullableWithAggregatesFilter<"IdeaInteraction">
+    createdAt?: DateTimeWithAggregatesFilter<"IdeaInteraction"> | Date | string
+  }
+
+  export type RecommendationImpressionWhereInput = {
+    AND?: RecommendationImpressionWhereInput | RecommendationImpressionWhereInput[]
+    OR?: RecommendationImpressionWhereInput[]
+    NOT?: RecommendationImpressionWhereInput | RecommendationImpressionWhereInput[]
+    id?: StringFilter<"RecommendationImpression"> | string
+    userId?: StringFilter<"RecommendationImpression"> | string
+    ideaId?: StringFilter<"RecommendationImpression"> | string
+    rank?: IntFilter<"RecommendationImpression"> | number
+    explicitScore?: FloatFilter<"RecommendationImpression"> | number
+    latentScore?: FloatFilter<"RecommendationImpression"> | number
+    explorationScore?: FloatFilter<"RecommendationImpression"> | number
+    finalScore?: FloatFilter<"RecommendationImpression"> | number
+    createdAt?: DateTimeFilter<"RecommendationImpression"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+  }
+
+  export type RecommendationImpressionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    rank?: SortOrder
+    explicitScore?: SortOrder
+    latentScore?: SortOrder
+    explorationScore?: SortOrder
+    finalScore?: SortOrder
+    createdAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+    idea?: IdeaOrderByWithRelationInput
+  }
+
+  export type RecommendationImpressionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RecommendationImpressionWhereInput | RecommendationImpressionWhereInput[]
+    OR?: RecommendationImpressionWhereInput[]
+    NOT?: RecommendationImpressionWhereInput | RecommendationImpressionWhereInput[]
+    userId?: StringFilter<"RecommendationImpression"> | string
+    ideaId?: StringFilter<"RecommendationImpression"> | string
+    rank?: IntFilter<"RecommendationImpression"> | number
+    explicitScore?: FloatFilter<"RecommendationImpression"> | number
+    latentScore?: FloatFilter<"RecommendationImpression"> | number
+    explorationScore?: FloatFilter<"RecommendationImpression"> | number
+    finalScore?: FloatFilter<"RecommendationImpression"> | number
+    createdAt?: DateTimeFilter<"RecommendationImpression"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+    idea?: XOR<IdeaScalarRelationFilter, IdeaWhereInput>
+  }, "id">
+
+  export type RecommendationImpressionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    rank?: SortOrder
+    explicitScore?: SortOrder
+    latentScore?: SortOrder
+    explorationScore?: SortOrder
+    finalScore?: SortOrder
+    createdAt?: SortOrder
+    _count?: RecommendationImpressionCountOrderByAggregateInput
+    _avg?: RecommendationImpressionAvgOrderByAggregateInput
+    _max?: RecommendationImpressionMaxOrderByAggregateInput
+    _min?: RecommendationImpressionMinOrderByAggregateInput
+    _sum?: RecommendationImpressionSumOrderByAggregateInput
+  }
+
+  export type RecommendationImpressionScalarWhereWithAggregatesInput = {
+    AND?: RecommendationImpressionScalarWhereWithAggregatesInput | RecommendationImpressionScalarWhereWithAggregatesInput[]
+    OR?: RecommendationImpressionScalarWhereWithAggregatesInput[]
+    NOT?: RecommendationImpressionScalarWhereWithAggregatesInput | RecommendationImpressionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RecommendationImpression"> | string
+    userId?: StringWithAggregatesFilter<"RecommendationImpression"> | string
+    ideaId?: StringWithAggregatesFilter<"RecommendationImpression"> | string
+    rank?: IntWithAggregatesFilter<"RecommendationImpression"> | number
+    explicitScore?: FloatWithAggregatesFilter<"RecommendationImpression"> | number
+    latentScore?: FloatWithAggregatesFilter<"RecommendationImpression"> | number
+    explorationScore?: FloatWithAggregatesFilter<"RecommendationImpression"> | number
+    finalScore?: FloatWithAggregatesFilter<"RecommendationImpression"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"RecommendationImpression"> | Date | string
   }
 
   export type IdeaStackWhereInput = {
@@ -19158,6 +30174,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -19178,6 +30198,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -19198,6 +30222,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -19218,6 +30246,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -19386,6 +30418,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUncheckedCreateInput = {
@@ -19400,6 +30435,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUpdateInput = {
@@ -19414,6 +30452,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateInput = {
@@ -19428,6 +30469,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaCreateManyInput = {
@@ -19518,6 +30562,608 @@ export namespace Prisma {
     chunkIndex?: IntFieldUpdateOperationsInput | number
     content?: StringFieldUpdateOperationsInput | string
     vector?: JsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagCreateInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagCreateManyInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagAliasCreateInput = {
+    id?: string
+    alias: string
+    createdAt?: Date | string
+    tag: TagCreateNestedOneWithoutAliasRecordsInput
+  }
+
+  export type TagAliasUncheckedCreateInput = {
+    id?: string
+    alias: string
+    tagId: string
+    createdAt?: Date | string
+  }
+
+  export type TagAliasUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tag?: TagUpdateOneRequiredWithoutAliasRecordsNestedInput
+  }
+
+  export type TagAliasUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagAliasCreateManyInput = {
+    id?: string
+    alias: string
+    tagId: string
+    createdAt?: Date | string
+  }
+
+  export type TagAliasUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagAliasUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagSimilarityCreateInput = {
+    id?: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tagA: TagCreateNestedOneWithoutSimilarityAsAInput
+    tagB: TagCreateNestedOneWithoutSimilarityAsBInput
+  }
+
+  export type TagSimilarityUncheckedCreateInput = {
+    id?: string
+    tagAId: string
+    tagBId: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagSimilarityUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tagA?: TagUpdateOneRequiredWithoutSimilarityAsANestedInput
+    tagB?: TagUpdateOneRequiredWithoutSimilarityAsBNestedInput
+  }
+
+  export type TagSimilarityUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagAId?: StringFieldUpdateOperationsInput | string
+    tagBId?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagSimilarityCreateManyInput = {
+    id?: string
+    tagAId: string
+    tagBId: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagSimilarityUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagSimilarityUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagAId?: StringFieldUpdateOperationsInput | string
+    tagBId?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaTagCreateInput = {
+    id?: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    idea: IdeaCreateNestedOneWithoutTagsInput
+    tag: TagCreateNestedOneWithoutIdeaTagsInput
+  }
+
+  export type IdeaTagUncheckedCreateInput = {
+    id?: string
+    ideaId: string
+    tagId: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IdeaTagUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    idea?: IdeaUpdateOneRequiredWithoutTagsNestedInput
+    tag?: TagUpdateOneRequiredWithoutIdeaTagsNestedInput
+  }
+
+  export type IdeaTagUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaTagCreateManyInput = {
+    id?: string
+    ideaId: string
+    tagId: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IdeaTagUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaTagUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserTagPreferenceCreateInput = {
+    id?: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutTagPreferencesInput
+    tag: TagCreateNestedOneWithoutUserPreferencesInput
+  }
+
+  export type UserTagPreferenceUncheckedCreateInput = {
+    id?: string
+    userId: string
+    tagId: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserTagPreferenceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTagPreferencesNestedInput
+    tag?: TagUpdateOneRequiredWithoutUserPreferencesNestedInput
+  }
+
+  export type UserTagPreferenceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserTagPreferenceCreateManyInput = {
+    id?: string
+    userId: string
+    tagId: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserTagPreferenceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserTagPreferenceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserInterestProfileCreateInput = {
+    id?: string
+    latentVector: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutInterestProfileInput
+  }
+
+  export type UserInterestProfileUncheckedCreateInput = {
+    id?: string
+    userId: string
+    latentVector: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserInterestProfileUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latentVector?: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInterestProfileNestedInput
+  }
+
+  export type UserInterestProfileUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    latentVector?: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserInterestProfileCreateManyInput = {
+    id?: string
+    userId: string
+    latentVector: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserInterestProfileUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latentVector?: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserInterestProfileUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    latentVector?: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionCreateInput = {
+    id?: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutInteractionsInput
+    idea: IdeaCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type IdeaInteractionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    ideaId: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type IdeaInteractionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInteractionsNestedInput
+    idea?: IdeaUpdateOneRequiredWithoutInteractionsNestedInput
+  }
+
+  export type IdeaInteractionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionCreateManyInput = {
+    id?: string
+    userId: string
+    ideaId: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type IdeaInteractionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationImpressionCreateInput = {
+    id?: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutImpressionsInput
+    idea: IdeaCreateNestedOneWithoutImpressionsInput
+  }
+
+  export type RecommendationImpressionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    ideaId: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt?: Date | string
+  }
+
+  export type RecommendationImpressionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutImpressionsNestedInput
+    idea?: IdeaUpdateOneRequiredWithoutImpressionsNestedInput
+  }
+
+  export type RecommendationImpressionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationImpressionCreateManyInput = {
+    id?: string
+    userId: string
+    ideaId: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt?: Date | string
+  }
+
+  export type RecommendationImpressionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationImpressionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20227,6 +31873,29 @@ export namespace Prisma {
     none?: PreferenceUpdateLogWhereInput
   }
 
+  export type UserTagPreferenceListRelationFilter = {
+    every?: UserTagPreferenceWhereInput
+    some?: UserTagPreferenceWhereInput
+    none?: UserTagPreferenceWhereInput
+  }
+
+  export type UserInterestProfileNullableScalarRelationFilter = {
+    is?: UserInterestProfileWhereInput | null
+    isNot?: UserInterestProfileWhereInput | null
+  }
+
+  export type IdeaInteractionListRelationFilter = {
+    every?: IdeaInteractionWhereInput
+    some?: IdeaInteractionWhereInput
+    none?: IdeaInteractionWhereInput
+  }
+
+  export type RecommendationImpressionListRelationFilter = {
+    every?: RecommendationImpressionWhereInput
+    some?: RecommendationImpressionWhereInput
+    none?: RecommendationImpressionWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -20261,6 +31930,18 @@ export namespace Prisma {
   }
 
   export type PreferenceUpdateLogOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserTagPreferenceOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IdeaInteractionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RecommendationImpressionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20429,11 +32110,21 @@ export namespace Prisma {
     none?: IdeaStackItemWhereInput
   }
 
+  export type IdeaTagListRelationFilter = {
+    every?: IdeaTagWhereInput
+    some?: IdeaTagWhereInput
+    none?: IdeaTagWhereInput
+  }
+
   export type IdeaChunkEmbeddingOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type IdeaStackItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IdeaTagOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -20574,6 +32265,464 @@ export namespace Prisma {
     _max?: NestedJsonFilter<$PrismaModel>
   }
 
+  export type EnumTagStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagStatus | EnumTagStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TagStatus[]
+    notIn?: $Enums.TagStatus[]
+    not?: NestedEnumTagStatusFilter<$PrismaModel> | $Enums.TagStatus
+  }
+
+  export type EnumTagSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagSource | EnumTagSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.TagSource[]
+    notIn?: $Enums.TagSource[]
+    not?: NestedEnumTagSourceFilter<$PrismaModel> | $Enums.TagSource
+  }
+
+  export type TagNullableScalarRelationFilter = {
+    is?: TagWhereInput | null
+    isNot?: TagWhereInput | null
+  }
+
+  export type TagListRelationFilter = {
+    every?: TagWhereInput
+    some?: TagWhereInput
+    none?: TagWhereInput
+  }
+
+  export type TagAliasListRelationFilter = {
+    every?: TagAliasWhereInput
+    some?: TagAliasWhereInput
+    none?: TagAliasWhereInput
+  }
+
+  export type TagSimilarityListRelationFilter = {
+    every?: TagSimilarityWhereInput
+    some?: TagSimilarityWhereInput
+    none?: TagSimilarityWhereInput
+  }
+
+  export type TagOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TagAliasOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TagSimilarityOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TagCountOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    label?: SortOrder
+    embedding?: SortOrder
+    parentTagId?: SortOrder
+    status?: SortOrder
+    canonicalTagId?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    label?: SortOrder
+    parentTagId?: SortOrder
+    status?: SortOrder
+    canonicalTagId?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagMinOrderByAggregateInput = {
+    id?: SortOrder
+    slug?: SortOrder
+    label?: SortOrder
+    parentTagId?: SortOrder
+    status?: SortOrder
+    canonicalTagId?: SortOrder
+    source?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumTagStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagStatus | EnumTagStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TagStatus[]
+    notIn?: $Enums.TagStatus[]
+    not?: NestedEnumTagStatusWithAggregatesFilter<$PrismaModel> | $Enums.TagStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTagStatusFilter<$PrismaModel>
+    _max?: NestedEnumTagStatusFilter<$PrismaModel>
+  }
+
+  export type EnumTagSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagSource | EnumTagSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.TagSource[]
+    notIn?: $Enums.TagSource[]
+    not?: NestedEnumTagSourceWithAggregatesFilter<$PrismaModel> | $Enums.TagSource
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTagSourceFilter<$PrismaModel>
+    _max?: NestedEnumTagSourceFilter<$PrismaModel>
+  }
+
+  export type TagScalarRelationFilter = {
+    is?: TagWhereInput
+    isNot?: TagWhereInput
+  }
+
+  export type TagAliasCountOrderByAggregateInput = {
+    id?: SortOrder
+    alias?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TagAliasMaxOrderByAggregateInput = {
+    id?: SortOrder
+    alias?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TagAliasMinOrderByAggregateInput = {
+    id?: SortOrder
+    alias?: SortOrder
+    tagId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type FloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type TagSimilarityTagAIdTagBIdCompoundUniqueInput = {
+    tagAId: string
+    tagBId: string
+  }
+
+  export type TagSimilarityCountOrderByAggregateInput = {
+    id?: SortOrder
+    tagAId?: SortOrder
+    tagBId?: SortOrder
+    similarity?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagSimilarityAvgOrderByAggregateInput = {
+    similarity?: SortOrder
+  }
+
+  export type TagSimilarityMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tagAId?: SortOrder
+    tagBId?: SortOrder
+    similarity?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagSimilarityMinOrderByAggregateInput = {
+    id?: SortOrder
+    tagAId?: SortOrder
+    tagBId?: SortOrder
+    similarity?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagSimilaritySumOrderByAggregateInput = {
+    similarity?: SortOrder
+  }
+
+  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[]
+    notIn?: number[]
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedFloatFilter<$PrismaModel>
+    _min?: NestedFloatFilter<$PrismaModel>
+    _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type IdeaTagIdeaIdTagIdCompoundUniqueInput = {
+    ideaId: string
+    tagId: string
+  }
+
+  export type IdeaTagCountOrderByAggregateInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    sourceConfidence?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IdeaTagAvgOrderByAggregateInput = {
+    weight?: SortOrder
+    sourceConfidence?: SortOrder
+  }
+
+  export type IdeaTagMaxOrderByAggregateInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    sourceConfidence?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IdeaTagMinOrderByAggregateInput = {
+    id?: SortOrder
+    ideaId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    sourceConfidence?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IdeaTagSumOrderByAggregateInput = {
+    weight?: SortOrder
+    sourceConfidence?: SortOrder
+  }
+
+  export type UserTagPreferenceUserIdTagIdCompoundUniqueInput = {
+    userId: string
+    tagId: string
+  }
+
+  export type UserTagPreferenceCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    explicitWeight?: SortOrder
+    implicitWeight?: SortOrder
+    lastReinforcedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserTagPreferenceAvgOrderByAggregateInput = {
+    weight?: SortOrder
+    explicitWeight?: SortOrder
+    implicitWeight?: SortOrder
+  }
+
+  export type UserTagPreferenceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    explicitWeight?: SortOrder
+    implicitWeight?: SortOrder
+    lastReinforcedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserTagPreferenceMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    tagId?: SortOrder
+    weight?: SortOrder
+    explicitWeight?: SortOrder
+    implicitWeight?: SortOrder
+    lastReinforcedAt?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserTagPreferenceSumOrderByAggregateInput = {
+    weight?: SortOrder
+    explicitWeight?: SortOrder
+    implicitWeight?: SortOrder
+  }
+
+  export type UserInterestProfileCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    latentVector?: SortOrder
+    positiveCentroid?: SortOrder
+    negativeCentroid?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserInterestProfileMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UserInterestProfileMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type EnumInteractionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.InteractionType | EnumInteractionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InteractionType[]
+    notIn?: $Enums.InteractionType[]
+    not?: NestedEnumInteractionTypeFilter<$PrismaModel> | $Enums.InteractionType
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type IdeaInteractionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    interactionType?: SortOrder
+    reward?: SortOrder
+    dwellTimeMs?: SortOrder
+    context?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type IdeaInteractionAvgOrderByAggregateInput = {
+    reward?: SortOrder
+    dwellTimeMs?: SortOrder
+  }
+
+  export type IdeaInteractionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    interactionType?: SortOrder
+    reward?: SortOrder
+    dwellTimeMs?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type IdeaInteractionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    interactionType?: SortOrder
+    reward?: SortOrder
+    dwellTimeMs?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type IdeaInteractionSumOrderByAggregateInput = {
+    reward?: SortOrder
+    dwellTimeMs?: SortOrder
+  }
+
+  export type EnumInteractionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InteractionType | EnumInteractionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InteractionType[]
+    notIn?: $Enums.InteractionType[]
+    not?: NestedEnumInteractionTypeWithAggregatesFilter<$PrismaModel> | $Enums.InteractionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInteractionTypeFilter<$PrismaModel>
+    _max?: NestedEnumInteractionTypeFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type RecommendationImpressionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    rank?: SortOrder
+    explicitScore?: SortOrder
+    latentScore?: SortOrder
+    explorationScore?: SortOrder
+    finalScore?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RecommendationImpressionAvgOrderByAggregateInput = {
+    rank?: SortOrder
+    explicitScore?: SortOrder
+    latentScore?: SortOrder
+    explorationScore?: SortOrder
+    finalScore?: SortOrder
+  }
+
+  export type RecommendationImpressionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    rank?: SortOrder
+    explicitScore?: SortOrder
+    latentScore?: SortOrder
+    explorationScore?: SortOrder
+    finalScore?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RecommendationImpressionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    ideaId?: SortOrder
+    rank?: SortOrder
+    explicitScore?: SortOrder
+    latentScore?: SortOrder
+    explorationScore?: SortOrder
+    finalScore?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type RecommendationImpressionSumOrderByAggregateInput = {
+    rank?: SortOrder
+    explicitScore?: SortOrder
+    latentScore?: SortOrder
+    explorationScore?: SortOrder
+    finalScore?: SortOrder
+  }
+
   export type IdeaStackCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -20644,17 +32793,6 @@ export namespace Prisma {
     not?: NestedEnumSwipeActionFilter<$PrismaModel> | $Enums.SwipeAction
   }
 
-  export type FloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
-  }
-
   export type IdeaStackNullableScalarRelationFilter = {
     is?: IdeaStackWhereInput | null
     isNot?: IdeaStackWhereInput | null
@@ -20706,22 +32844,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSwipeActionFilter<$PrismaModel>
     _max?: NestedEnumSwipeActionFilter<$PrismaModel>
-  }
-
-  export type FloatWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[]
-    notIn?: number[]
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedFloatFilter<$PrismaModel>
-    _min?: NestedFloatFilter<$PrismaModel>
-    _max?: NestedFloatFilter<$PrismaModel>
   }
 
   export type FavoriteUserIdIdeaIdCompoundUniqueInput = {
@@ -20984,6 +33106,33 @@ export namespace Prisma {
     connect?: PreferenceUpdateLogWhereUniqueInput | PreferenceUpdateLogWhereUniqueInput[]
   }
 
+  export type UserTagPreferenceCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutUserInput, UserTagPreferenceUncheckedCreateWithoutUserInput> | UserTagPreferenceCreateWithoutUserInput[] | UserTagPreferenceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutUserInput | UserTagPreferenceCreateOrConnectWithoutUserInput[]
+    createMany?: UserTagPreferenceCreateManyUserInputEnvelope
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+  }
+
+  export type UserInterestProfileCreateNestedOneWithoutUserInput = {
+    create?: XOR<UserInterestProfileCreateWithoutUserInput, UserInterestProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserInterestProfileCreateOrConnectWithoutUserInput
+    connect?: UserInterestProfileWhereUniqueInput
+  }
+
+  export type IdeaInteractionCreateNestedManyWithoutUserInput = {
+    create?: XOR<IdeaInteractionCreateWithoutUserInput, IdeaInteractionUncheckedCreateWithoutUserInput> | IdeaInteractionCreateWithoutUserInput[] | IdeaInteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutUserInput | IdeaInteractionCreateOrConnectWithoutUserInput[]
+    createMany?: IdeaInteractionCreateManyUserInputEnvelope
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+  }
+
+  export type RecommendationImpressionCreateNestedManyWithoutUserInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutUserInput, RecommendationImpressionUncheckedCreateWithoutUserInput> | RecommendationImpressionCreateWithoutUserInput[] | RecommendationImpressionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutUserInput | RecommendationImpressionCreateOrConnectWithoutUserInput[]
+    createMany?: RecommendationImpressionCreateManyUserInputEnvelope
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+  }
+
   export type SessionUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -21038,6 +33187,33 @@ export namespace Prisma {
     connectOrCreate?: PreferenceUpdateLogCreateOrConnectWithoutUserInput | PreferenceUpdateLogCreateOrConnectWithoutUserInput[]
     createMany?: PreferenceUpdateLogCreateManyUserInputEnvelope
     connect?: PreferenceUpdateLogWhereUniqueInput | PreferenceUpdateLogWhereUniqueInput[]
+  }
+
+  export type UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutUserInput, UserTagPreferenceUncheckedCreateWithoutUserInput> | UserTagPreferenceCreateWithoutUserInput[] | UserTagPreferenceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutUserInput | UserTagPreferenceCreateOrConnectWithoutUserInput[]
+    createMany?: UserTagPreferenceCreateManyUserInputEnvelope
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+  }
+
+  export type UserInterestProfileUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<UserInterestProfileCreateWithoutUserInput, UserInterestProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserInterestProfileCreateOrConnectWithoutUserInput
+    connect?: UserInterestProfileWhereUniqueInput
+  }
+
+  export type IdeaInteractionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<IdeaInteractionCreateWithoutUserInput, IdeaInteractionUncheckedCreateWithoutUserInput> | IdeaInteractionCreateWithoutUserInput[] | IdeaInteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutUserInput | IdeaInteractionCreateOrConnectWithoutUserInput[]
+    createMany?: IdeaInteractionCreateManyUserInputEnvelope
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+  }
+
+  export type RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutUserInput, RecommendationImpressionUncheckedCreateWithoutUserInput> | RecommendationImpressionCreateWithoutUserInput[] | RecommendationImpressionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutUserInput | RecommendationImpressionCreateOrConnectWithoutUserInput[]
+    createMany?: RecommendationImpressionCreateManyUserInputEnvelope
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -21160,6 +33336,58 @@ export namespace Prisma {
     deleteMany?: PreferenceUpdateLogScalarWhereInput | PreferenceUpdateLogScalarWhereInput[]
   }
 
+  export type UserTagPreferenceUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutUserInput, UserTagPreferenceUncheckedCreateWithoutUserInput> | UserTagPreferenceCreateWithoutUserInput[] | UserTagPreferenceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutUserInput | UserTagPreferenceCreateOrConnectWithoutUserInput[]
+    upsert?: UserTagPreferenceUpsertWithWhereUniqueWithoutUserInput | UserTagPreferenceUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserTagPreferenceCreateManyUserInputEnvelope
+    set?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    disconnect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    delete?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    update?: UserTagPreferenceUpdateWithWhereUniqueWithoutUserInput | UserTagPreferenceUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserTagPreferenceUpdateManyWithWhereWithoutUserInput | UserTagPreferenceUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserTagPreferenceScalarWhereInput | UserTagPreferenceScalarWhereInput[]
+  }
+
+  export type UserInterestProfileUpdateOneWithoutUserNestedInput = {
+    create?: XOR<UserInterestProfileCreateWithoutUserInput, UserInterestProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserInterestProfileCreateOrConnectWithoutUserInput
+    upsert?: UserInterestProfileUpsertWithoutUserInput
+    disconnect?: UserInterestProfileWhereInput | boolean
+    delete?: UserInterestProfileWhereInput | boolean
+    connect?: UserInterestProfileWhereUniqueInput
+    update?: XOR<XOR<UserInterestProfileUpdateToOneWithWhereWithoutUserInput, UserInterestProfileUpdateWithoutUserInput>, UserInterestProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type IdeaInteractionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<IdeaInteractionCreateWithoutUserInput, IdeaInteractionUncheckedCreateWithoutUserInput> | IdeaInteractionCreateWithoutUserInput[] | IdeaInteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutUserInput | IdeaInteractionCreateOrConnectWithoutUserInput[]
+    upsert?: IdeaInteractionUpsertWithWhereUniqueWithoutUserInput | IdeaInteractionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: IdeaInteractionCreateManyUserInputEnvelope
+    set?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    disconnect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    delete?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    update?: IdeaInteractionUpdateWithWhereUniqueWithoutUserInput | IdeaInteractionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: IdeaInteractionUpdateManyWithWhereWithoutUserInput | IdeaInteractionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: IdeaInteractionScalarWhereInput | IdeaInteractionScalarWhereInput[]
+  }
+
+  export type RecommendationImpressionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutUserInput, RecommendationImpressionUncheckedCreateWithoutUserInput> | RecommendationImpressionCreateWithoutUserInput[] | RecommendationImpressionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutUserInput | RecommendationImpressionCreateOrConnectWithoutUserInput[]
+    upsert?: RecommendationImpressionUpsertWithWhereUniqueWithoutUserInput | RecommendationImpressionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RecommendationImpressionCreateManyUserInputEnvelope
+    set?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    disconnect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    delete?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    update?: RecommendationImpressionUpdateWithWhereUniqueWithoutUserInput | RecommendationImpressionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RecommendationImpressionUpdateManyWithWhereWithoutUserInput | RecommendationImpressionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RecommendationImpressionScalarWhereInput | RecommendationImpressionScalarWhereInput[]
+  }
+
   export type SessionUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -21270,6 +33498,58 @@ export namespace Prisma {
     update?: PreferenceUpdateLogUpdateWithWhereUniqueWithoutUserInput | PreferenceUpdateLogUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: PreferenceUpdateLogUpdateManyWithWhereWithoutUserInput | PreferenceUpdateLogUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: PreferenceUpdateLogScalarWhereInput | PreferenceUpdateLogScalarWhereInput[]
+  }
+
+  export type UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutUserInput, UserTagPreferenceUncheckedCreateWithoutUserInput> | UserTagPreferenceCreateWithoutUserInput[] | UserTagPreferenceUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutUserInput | UserTagPreferenceCreateOrConnectWithoutUserInput[]
+    upsert?: UserTagPreferenceUpsertWithWhereUniqueWithoutUserInput | UserTagPreferenceUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: UserTagPreferenceCreateManyUserInputEnvelope
+    set?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    disconnect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    delete?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    update?: UserTagPreferenceUpdateWithWhereUniqueWithoutUserInput | UserTagPreferenceUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: UserTagPreferenceUpdateManyWithWhereWithoutUserInput | UserTagPreferenceUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: UserTagPreferenceScalarWhereInput | UserTagPreferenceScalarWhereInput[]
+  }
+
+  export type UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<UserInterestProfileCreateWithoutUserInput, UserInterestProfileUncheckedCreateWithoutUserInput>
+    connectOrCreate?: UserInterestProfileCreateOrConnectWithoutUserInput
+    upsert?: UserInterestProfileUpsertWithoutUserInput
+    disconnect?: UserInterestProfileWhereInput | boolean
+    delete?: UserInterestProfileWhereInput | boolean
+    connect?: UserInterestProfileWhereUniqueInput
+    update?: XOR<XOR<UserInterestProfileUpdateToOneWithWhereWithoutUserInput, UserInterestProfileUpdateWithoutUserInput>, UserInterestProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<IdeaInteractionCreateWithoutUserInput, IdeaInteractionUncheckedCreateWithoutUserInput> | IdeaInteractionCreateWithoutUserInput[] | IdeaInteractionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutUserInput | IdeaInteractionCreateOrConnectWithoutUserInput[]
+    upsert?: IdeaInteractionUpsertWithWhereUniqueWithoutUserInput | IdeaInteractionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: IdeaInteractionCreateManyUserInputEnvelope
+    set?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    disconnect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    delete?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    update?: IdeaInteractionUpdateWithWhereUniqueWithoutUserInput | IdeaInteractionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: IdeaInteractionUpdateManyWithWhereWithoutUserInput | IdeaInteractionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: IdeaInteractionScalarWhereInput | IdeaInteractionScalarWhereInput[]
+  }
+
+  export type RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutUserInput, RecommendationImpressionUncheckedCreateWithoutUserInput> | RecommendationImpressionCreateWithoutUserInput[] | RecommendationImpressionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutUserInput | RecommendationImpressionCreateOrConnectWithoutUserInput[]
+    upsert?: RecommendationImpressionUpsertWithWhereUniqueWithoutUserInput | RecommendationImpressionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: RecommendationImpressionCreateManyUserInputEnvelope
+    set?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    disconnect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    delete?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    update?: RecommendationImpressionUpdateWithWhereUniqueWithoutUserInput | RecommendationImpressionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: RecommendationImpressionUpdateManyWithWhereWithoutUserInput | RecommendationImpressionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: RecommendationImpressionScalarWhereInput | RecommendationImpressionScalarWhereInput[]
   }
 
   export type UserFieldSelectionCreateNestedManyWithoutFieldInput = {
@@ -21418,6 +33698,27 @@ export namespace Prisma {
     connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
   }
 
+  export type IdeaTagCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<IdeaTagCreateWithoutIdeaInput, IdeaTagUncheckedCreateWithoutIdeaInput> | IdeaTagCreateWithoutIdeaInput[] | IdeaTagUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutIdeaInput | IdeaTagCreateOrConnectWithoutIdeaInput[]
+    createMany?: IdeaTagCreateManyIdeaInputEnvelope
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+  }
+
+  export type IdeaInteractionCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<IdeaInteractionCreateWithoutIdeaInput, IdeaInteractionUncheckedCreateWithoutIdeaInput> | IdeaInteractionCreateWithoutIdeaInput[] | IdeaInteractionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutIdeaInput | IdeaInteractionCreateOrConnectWithoutIdeaInput[]
+    createMany?: IdeaInteractionCreateManyIdeaInputEnvelope
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+  }
+
+  export type RecommendationImpressionCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutIdeaInput, RecommendationImpressionUncheckedCreateWithoutIdeaInput> | RecommendationImpressionCreateWithoutIdeaInput[] | RecommendationImpressionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutIdeaInput | RecommendationImpressionCreateOrConnectWithoutIdeaInput[]
+    createMany?: RecommendationImpressionCreateManyIdeaInputEnvelope
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+  }
+
   export type IdeaChunkEmbeddingUncheckedCreateNestedManyWithoutIdeaInput = {
     create?: XOR<IdeaChunkEmbeddingCreateWithoutIdeaInput, IdeaChunkEmbeddingUncheckedCreateWithoutIdeaInput> | IdeaChunkEmbeddingCreateWithoutIdeaInput[] | IdeaChunkEmbeddingUncheckedCreateWithoutIdeaInput[]
     connectOrCreate?: IdeaChunkEmbeddingCreateOrConnectWithoutIdeaInput | IdeaChunkEmbeddingCreateOrConnectWithoutIdeaInput[]
@@ -21444,6 +33745,27 @@ export namespace Prisma {
     connectOrCreate?: FavoriteCreateOrConnectWithoutIdeaInput | FavoriteCreateOrConnectWithoutIdeaInput[]
     createMany?: FavoriteCreateManyIdeaInputEnvelope
     connect?: FavoriteWhereUniqueInput | FavoriteWhereUniqueInput[]
+  }
+
+  export type IdeaTagUncheckedCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<IdeaTagCreateWithoutIdeaInput, IdeaTagUncheckedCreateWithoutIdeaInput> | IdeaTagCreateWithoutIdeaInput[] | IdeaTagUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutIdeaInput | IdeaTagCreateOrConnectWithoutIdeaInput[]
+    createMany?: IdeaTagCreateManyIdeaInputEnvelope
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+  }
+
+  export type IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<IdeaInteractionCreateWithoutIdeaInput, IdeaInteractionUncheckedCreateWithoutIdeaInput> | IdeaInteractionCreateWithoutIdeaInput[] | IdeaInteractionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutIdeaInput | IdeaInteractionCreateOrConnectWithoutIdeaInput[]
+    createMany?: IdeaInteractionCreateManyIdeaInputEnvelope
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+  }
+
+  export type RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutIdeaInput, RecommendationImpressionUncheckedCreateWithoutIdeaInput> | RecommendationImpressionCreateWithoutIdeaInput[] | RecommendationImpressionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutIdeaInput | RecommendationImpressionCreateOrConnectWithoutIdeaInput[]
+    createMany?: RecommendationImpressionCreateManyIdeaInputEnvelope
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
   }
 
   export type FieldCatalogUpdateOneWithoutIdeasNestedInput = {
@@ -21512,6 +33834,48 @@ export namespace Prisma {
     deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
   }
 
+  export type IdeaTagUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<IdeaTagCreateWithoutIdeaInput, IdeaTagUncheckedCreateWithoutIdeaInput> | IdeaTagCreateWithoutIdeaInput[] | IdeaTagUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutIdeaInput | IdeaTagCreateOrConnectWithoutIdeaInput[]
+    upsert?: IdeaTagUpsertWithWhereUniqueWithoutIdeaInput | IdeaTagUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: IdeaTagCreateManyIdeaInputEnvelope
+    set?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    disconnect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    delete?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    update?: IdeaTagUpdateWithWhereUniqueWithoutIdeaInput | IdeaTagUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: IdeaTagUpdateManyWithWhereWithoutIdeaInput | IdeaTagUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: IdeaTagScalarWhereInput | IdeaTagScalarWhereInput[]
+  }
+
+  export type IdeaInteractionUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<IdeaInteractionCreateWithoutIdeaInput, IdeaInteractionUncheckedCreateWithoutIdeaInput> | IdeaInteractionCreateWithoutIdeaInput[] | IdeaInteractionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutIdeaInput | IdeaInteractionCreateOrConnectWithoutIdeaInput[]
+    upsert?: IdeaInteractionUpsertWithWhereUniqueWithoutIdeaInput | IdeaInteractionUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: IdeaInteractionCreateManyIdeaInputEnvelope
+    set?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    disconnect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    delete?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    update?: IdeaInteractionUpdateWithWhereUniqueWithoutIdeaInput | IdeaInteractionUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: IdeaInteractionUpdateManyWithWhereWithoutIdeaInput | IdeaInteractionUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: IdeaInteractionScalarWhereInput | IdeaInteractionScalarWhereInput[]
+  }
+
+  export type RecommendationImpressionUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutIdeaInput, RecommendationImpressionUncheckedCreateWithoutIdeaInput> | RecommendationImpressionCreateWithoutIdeaInput[] | RecommendationImpressionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutIdeaInput | RecommendationImpressionCreateOrConnectWithoutIdeaInput[]
+    upsert?: RecommendationImpressionUpsertWithWhereUniqueWithoutIdeaInput | RecommendationImpressionUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: RecommendationImpressionCreateManyIdeaInputEnvelope
+    set?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    disconnect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    delete?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    update?: RecommendationImpressionUpdateWithWhereUniqueWithoutIdeaInput | RecommendationImpressionUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: RecommendationImpressionUpdateManyWithWhereWithoutIdeaInput | RecommendationImpressionUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: RecommendationImpressionScalarWhereInput | RecommendationImpressionScalarWhereInput[]
+  }
+
   export type IdeaChunkEmbeddingUncheckedUpdateManyWithoutIdeaNestedInput = {
     create?: XOR<IdeaChunkEmbeddingCreateWithoutIdeaInput, IdeaChunkEmbeddingUncheckedCreateWithoutIdeaInput> | IdeaChunkEmbeddingCreateWithoutIdeaInput[] | IdeaChunkEmbeddingUncheckedCreateWithoutIdeaInput[]
     connectOrCreate?: IdeaChunkEmbeddingCreateOrConnectWithoutIdeaInput | IdeaChunkEmbeddingCreateOrConnectWithoutIdeaInput[]
@@ -21568,6 +33932,48 @@ export namespace Prisma {
     deleteMany?: FavoriteScalarWhereInput | FavoriteScalarWhereInput[]
   }
 
+  export type IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<IdeaTagCreateWithoutIdeaInput, IdeaTagUncheckedCreateWithoutIdeaInput> | IdeaTagCreateWithoutIdeaInput[] | IdeaTagUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutIdeaInput | IdeaTagCreateOrConnectWithoutIdeaInput[]
+    upsert?: IdeaTagUpsertWithWhereUniqueWithoutIdeaInput | IdeaTagUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: IdeaTagCreateManyIdeaInputEnvelope
+    set?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    disconnect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    delete?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    update?: IdeaTagUpdateWithWhereUniqueWithoutIdeaInput | IdeaTagUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: IdeaTagUpdateManyWithWhereWithoutIdeaInput | IdeaTagUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: IdeaTagScalarWhereInput | IdeaTagScalarWhereInput[]
+  }
+
+  export type IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<IdeaInteractionCreateWithoutIdeaInput, IdeaInteractionUncheckedCreateWithoutIdeaInput> | IdeaInteractionCreateWithoutIdeaInput[] | IdeaInteractionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: IdeaInteractionCreateOrConnectWithoutIdeaInput | IdeaInteractionCreateOrConnectWithoutIdeaInput[]
+    upsert?: IdeaInteractionUpsertWithWhereUniqueWithoutIdeaInput | IdeaInteractionUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: IdeaInteractionCreateManyIdeaInputEnvelope
+    set?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    disconnect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    delete?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    connect?: IdeaInteractionWhereUniqueInput | IdeaInteractionWhereUniqueInput[]
+    update?: IdeaInteractionUpdateWithWhereUniqueWithoutIdeaInput | IdeaInteractionUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: IdeaInteractionUpdateManyWithWhereWithoutIdeaInput | IdeaInteractionUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: IdeaInteractionScalarWhereInput | IdeaInteractionScalarWhereInput[]
+  }
+
+  export type RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput = {
+    create?: XOR<RecommendationImpressionCreateWithoutIdeaInput, RecommendationImpressionUncheckedCreateWithoutIdeaInput> | RecommendationImpressionCreateWithoutIdeaInput[] | RecommendationImpressionUncheckedCreateWithoutIdeaInput[]
+    connectOrCreate?: RecommendationImpressionCreateOrConnectWithoutIdeaInput | RecommendationImpressionCreateOrConnectWithoutIdeaInput[]
+    upsert?: RecommendationImpressionUpsertWithWhereUniqueWithoutIdeaInput | RecommendationImpressionUpsertWithWhereUniqueWithoutIdeaInput[]
+    createMany?: RecommendationImpressionCreateManyIdeaInputEnvelope
+    set?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    disconnect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    delete?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    connect?: RecommendationImpressionWhereUniqueInput | RecommendationImpressionWhereUniqueInput[]
+    update?: RecommendationImpressionUpdateWithWhereUniqueWithoutIdeaInput | RecommendationImpressionUpdateWithWhereUniqueWithoutIdeaInput[]
+    updateMany?: RecommendationImpressionUpdateManyWithWhereWithoutIdeaInput | RecommendationImpressionUpdateManyWithWhereWithoutIdeaInput[]
+    deleteMany?: RecommendationImpressionScalarWhereInput | RecommendationImpressionScalarWhereInput[]
+  }
+
   export type IdeaCreateNestedOneWithoutChunksInput = {
     create?: XOR<IdeaCreateWithoutChunksInput, IdeaUncheckedCreateWithoutChunksInput>
     connectOrCreate?: IdeaCreateOrConnectWithoutChunksInput
@@ -21588,6 +33994,528 @@ export namespace Prisma {
     upsert?: IdeaUpsertWithoutChunksInput
     connect?: IdeaWhereUniqueInput
     update?: XOR<XOR<IdeaUpdateToOneWithWhereWithoutChunksInput, IdeaUpdateWithoutChunksInput>, IdeaUncheckedUpdateWithoutChunksInput>
+  }
+
+  export type TagCreateNestedOneWithoutChildTagsInput = {
+    create?: XOR<TagCreateWithoutChildTagsInput, TagUncheckedCreateWithoutChildTagsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutChildTagsInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type TagCreateNestedManyWithoutParentTagInput = {
+    create?: XOR<TagCreateWithoutParentTagInput, TagUncheckedCreateWithoutParentTagInput> | TagCreateWithoutParentTagInput[] | TagUncheckedCreateWithoutParentTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentTagInput | TagCreateOrConnectWithoutParentTagInput[]
+    createMany?: TagCreateManyParentTagInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
+  export type TagCreateNestedOneWithoutCanonicalOfInput = {
+    create?: XOR<TagCreateWithoutCanonicalOfInput, TagUncheckedCreateWithoutCanonicalOfInput>
+    connectOrCreate?: TagCreateOrConnectWithoutCanonicalOfInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type TagCreateNestedManyWithoutCanonicalTagInput = {
+    create?: XOR<TagCreateWithoutCanonicalTagInput, TagUncheckedCreateWithoutCanonicalTagInput> | TagCreateWithoutCanonicalTagInput[] | TagUncheckedCreateWithoutCanonicalTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutCanonicalTagInput | TagCreateOrConnectWithoutCanonicalTagInput[]
+    createMany?: TagCreateManyCanonicalTagInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
+  export type TagAliasCreateNestedManyWithoutTagInput = {
+    create?: XOR<TagAliasCreateWithoutTagInput, TagAliasUncheckedCreateWithoutTagInput> | TagAliasCreateWithoutTagInput[] | TagAliasUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: TagAliasCreateOrConnectWithoutTagInput | TagAliasCreateOrConnectWithoutTagInput[]
+    createMany?: TagAliasCreateManyTagInputEnvelope
+    connect?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+  }
+
+  export type TagSimilarityCreateNestedManyWithoutTagAInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagAInput, TagSimilarityUncheckedCreateWithoutTagAInput> | TagSimilarityCreateWithoutTagAInput[] | TagSimilarityUncheckedCreateWithoutTagAInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagAInput | TagSimilarityCreateOrConnectWithoutTagAInput[]
+    createMany?: TagSimilarityCreateManyTagAInputEnvelope
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+  }
+
+  export type TagSimilarityCreateNestedManyWithoutTagBInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagBInput, TagSimilarityUncheckedCreateWithoutTagBInput> | TagSimilarityCreateWithoutTagBInput[] | TagSimilarityUncheckedCreateWithoutTagBInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagBInput | TagSimilarityCreateOrConnectWithoutTagBInput[]
+    createMany?: TagSimilarityCreateManyTagBInputEnvelope
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+  }
+
+  export type IdeaTagCreateNestedManyWithoutTagInput = {
+    create?: XOR<IdeaTagCreateWithoutTagInput, IdeaTagUncheckedCreateWithoutTagInput> | IdeaTagCreateWithoutTagInput[] | IdeaTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutTagInput | IdeaTagCreateOrConnectWithoutTagInput[]
+    createMany?: IdeaTagCreateManyTagInputEnvelope
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+  }
+
+  export type UserTagPreferenceCreateNestedManyWithoutTagInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutTagInput, UserTagPreferenceUncheckedCreateWithoutTagInput> | UserTagPreferenceCreateWithoutTagInput[] | UserTagPreferenceUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutTagInput | UserTagPreferenceCreateOrConnectWithoutTagInput[]
+    createMany?: UserTagPreferenceCreateManyTagInputEnvelope
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+  }
+
+  export type TagUncheckedCreateNestedManyWithoutParentTagInput = {
+    create?: XOR<TagCreateWithoutParentTagInput, TagUncheckedCreateWithoutParentTagInput> | TagCreateWithoutParentTagInput[] | TagUncheckedCreateWithoutParentTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentTagInput | TagCreateOrConnectWithoutParentTagInput[]
+    createMany?: TagCreateManyParentTagInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
+  export type TagUncheckedCreateNestedManyWithoutCanonicalTagInput = {
+    create?: XOR<TagCreateWithoutCanonicalTagInput, TagUncheckedCreateWithoutCanonicalTagInput> | TagCreateWithoutCanonicalTagInput[] | TagUncheckedCreateWithoutCanonicalTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutCanonicalTagInput | TagCreateOrConnectWithoutCanonicalTagInput[]
+    createMany?: TagCreateManyCanonicalTagInputEnvelope
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+  }
+
+  export type TagAliasUncheckedCreateNestedManyWithoutTagInput = {
+    create?: XOR<TagAliasCreateWithoutTagInput, TagAliasUncheckedCreateWithoutTagInput> | TagAliasCreateWithoutTagInput[] | TagAliasUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: TagAliasCreateOrConnectWithoutTagInput | TagAliasCreateOrConnectWithoutTagInput[]
+    createMany?: TagAliasCreateManyTagInputEnvelope
+    connect?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+  }
+
+  export type TagSimilarityUncheckedCreateNestedManyWithoutTagAInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagAInput, TagSimilarityUncheckedCreateWithoutTagAInput> | TagSimilarityCreateWithoutTagAInput[] | TagSimilarityUncheckedCreateWithoutTagAInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagAInput | TagSimilarityCreateOrConnectWithoutTagAInput[]
+    createMany?: TagSimilarityCreateManyTagAInputEnvelope
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+  }
+
+  export type TagSimilarityUncheckedCreateNestedManyWithoutTagBInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagBInput, TagSimilarityUncheckedCreateWithoutTagBInput> | TagSimilarityCreateWithoutTagBInput[] | TagSimilarityUncheckedCreateWithoutTagBInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagBInput | TagSimilarityCreateOrConnectWithoutTagBInput[]
+    createMany?: TagSimilarityCreateManyTagBInputEnvelope
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+  }
+
+  export type IdeaTagUncheckedCreateNestedManyWithoutTagInput = {
+    create?: XOR<IdeaTagCreateWithoutTagInput, IdeaTagUncheckedCreateWithoutTagInput> | IdeaTagCreateWithoutTagInput[] | IdeaTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutTagInput | IdeaTagCreateOrConnectWithoutTagInput[]
+    createMany?: IdeaTagCreateManyTagInputEnvelope
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+  }
+
+  export type UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutTagInput, UserTagPreferenceUncheckedCreateWithoutTagInput> | UserTagPreferenceCreateWithoutTagInput[] | UserTagPreferenceUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutTagInput | UserTagPreferenceCreateOrConnectWithoutTagInput[]
+    createMany?: UserTagPreferenceCreateManyTagInputEnvelope
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+  }
+
+  export type EnumTagStatusFieldUpdateOperationsInput = {
+    set?: $Enums.TagStatus
+  }
+
+  export type EnumTagSourceFieldUpdateOperationsInput = {
+    set?: $Enums.TagSource
+  }
+
+  export type TagUpdateOneWithoutChildTagsNestedInput = {
+    create?: XOR<TagCreateWithoutChildTagsInput, TagUncheckedCreateWithoutChildTagsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutChildTagsInput
+    upsert?: TagUpsertWithoutChildTagsInput
+    disconnect?: TagWhereInput | boolean
+    delete?: TagWhereInput | boolean
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutChildTagsInput, TagUpdateWithoutChildTagsInput>, TagUncheckedUpdateWithoutChildTagsInput>
+  }
+
+  export type TagUpdateManyWithoutParentTagNestedInput = {
+    create?: XOR<TagCreateWithoutParentTagInput, TagUncheckedCreateWithoutParentTagInput> | TagCreateWithoutParentTagInput[] | TagUncheckedCreateWithoutParentTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentTagInput | TagCreateOrConnectWithoutParentTagInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutParentTagInput | TagUpsertWithWhereUniqueWithoutParentTagInput[]
+    createMany?: TagCreateManyParentTagInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutParentTagInput | TagUpdateWithWhereUniqueWithoutParentTagInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutParentTagInput | TagUpdateManyWithWhereWithoutParentTagInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
+  export type TagUpdateOneWithoutCanonicalOfNestedInput = {
+    create?: XOR<TagCreateWithoutCanonicalOfInput, TagUncheckedCreateWithoutCanonicalOfInput>
+    connectOrCreate?: TagCreateOrConnectWithoutCanonicalOfInput
+    upsert?: TagUpsertWithoutCanonicalOfInput
+    disconnect?: TagWhereInput | boolean
+    delete?: TagWhereInput | boolean
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutCanonicalOfInput, TagUpdateWithoutCanonicalOfInput>, TagUncheckedUpdateWithoutCanonicalOfInput>
+  }
+
+  export type TagUpdateManyWithoutCanonicalTagNestedInput = {
+    create?: XOR<TagCreateWithoutCanonicalTagInput, TagUncheckedCreateWithoutCanonicalTagInput> | TagCreateWithoutCanonicalTagInput[] | TagUncheckedCreateWithoutCanonicalTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutCanonicalTagInput | TagCreateOrConnectWithoutCanonicalTagInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutCanonicalTagInput | TagUpsertWithWhereUniqueWithoutCanonicalTagInput[]
+    createMany?: TagCreateManyCanonicalTagInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutCanonicalTagInput | TagUpdateWithWhereUniqueWithoutCanonicalTagInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutCanonicalTagInput | TagUpdateManyWithWhereWithoutCanonicalTagInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
+  export type TagAliasUpdateManyWithoutTagNestedInput = {
+    create?: XOR<TagAliasCreateWithoutTagInput, TagAliasUncheckedCreateWithoutTagInput> | TagAliasCreateWithoutTagInput[] | TagAliasUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: TagAliasCreateOrConnectWithoutTagInput | TagAliasCreateOrConnectWithoutTagInput[]
+    upsert?: TagAliasUpsertWithWhereUniqueWithoutTagInput | TagAliasUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: TagAliasCreateManyTagInputEnvelope
+    set?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    disconnect?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    delete?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    connect?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    update?: TagAliasUpdateWithWhereUniqueWithoutTagInput | TagAliasUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: TagAliasUpdateManyWithWhereWithoutTagInput | TagAliasUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: TagAliasScalarWhereInput | TagAliasScalarWhereInput[]
+  }
+
+  export type TagSimilarityUpdateManyWithoutTagANestedInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagAInput, TagSimilarityUncheckedCreateWithoutTagAInput> | TagSimilarityCreateWithoutTagAInput[] | TagSimilarityUncheckedCreateWithoutTagAInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagAInput | TagSimilarityCreateOrConnectWithoutTagAInput[]
+    upsert?: TagSimilarityUpsertWithWhereUniqueWithoutTagAInput | TagSimilarityUpsertWithWhereUniqueWithoutTagAInput[]
+    createMany?: TagSimilarityCreateManyTagAInputEnvelope
+    set?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    disconnect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    delete?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    update?: TagSimilarityUpdateWithWhereUniqueWithoutTagAInput | TagSimilarityUpdateWithWhereUniqueWithoutTagAInput[]
+    updateMany?: TagSimilarityUpdateManyWithWhereWithoutTagAInput | TagSimilarityUpdateManyWithWhereWithoutTagAInput[]
+    deleteMany?: TagSimilarityScalarWhereInput | TagSimilarityScalarWhereInput[]
+  }
+
+  export type TagSimilarityUpdateManyWithoutTagBNestedInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagBInput, TagSimilarityUncheckedCreateWithoutTagBInput> | TagSimilarityCreateWithoutTagBInput[] | TagSimilarityUncheckedCreateWithoutTagBInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagBInput | TagSimilarityCreateOrConnectWithoutTagBInput[]
+    upsert?: TagSimilarityUpsertWithWhereUniqueWithoutTagBInput | TagSimilarityUpsertWithWhereUniqueWithoutTagBInput[]
+    createMany?: TagSimilarityCreateManyTagBInputEnvelope
+    set?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    disconnect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    delete?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    update?: TagSimilarityUpdateWithWhereUniqueWithoutTagBInput | TagSimilarityUpdateWithWhereUniqueWithoutTagBInput[]
+    updateMany?: TagSimilarityUpdateManyWithWhereWithoutTagBInput | TagSimilarityUpdateManyWithWhereWithoutTagBInput[]
+    deleteMany?: TagSimilarityScalarWhereInput | TagSimilarityScalarWhereInput[]
+  }
+
+  export type IdeaTagUpdateManyWithoutTagNestedInput = {
+    create?: XOR<IdeaTagCreateWithoutTagInput, IdeaTagUncheckedCreateWithoutTagInput> | IdeaTagCreateWithoutTagInput[] | IdeaTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutTagInput | IdeaTagCreateOrConnectWithoutTagInput[]
+    upsert?: IdeaTagUpsertWithWhereUniqueWithoutTagInput | IdeaTagUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: IdeaTagCreateManyTagInputEnvelope
+    set?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    disconnect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    delete?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    update?: IdeaTagUpdateWithWhereUniqueWithoutTagInput | IdeaTagUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: IdeaTagUpdateManyWithWhereWithoutTagInput | IdeaTagUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: IdeaTagScalarWhereInput | IdeaTagScalarWhereInput[]
+  }
+
+  export type UserTagPreferenceUpdateManyWithoutTagNestedInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutTagInput, UserTagPreferenceUncheckedCreateWithoutTagInput> | UserTagPreferenceCreateWithoutTagInput[] | UserTagPreferenceUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutTagInput | UserTagPreferenceCreateOrConnectWithoutTagInput[]
+    upsert?: UserTagPreferenceUpsertWithWhereUniqueWithoutTagInput | UserTagPreferenceUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: UserTagPreferenceCreateManyTagInputEnvelope
+    set?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    disconnect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    delete?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    update?: UserTagPreferenceUpdateWithWhereUniqueWithoutTagInput | UserTagPreferenceUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: UserTagPreferenceUpdateManyWithWhereWithoutTagInput | UserTagPreferenceUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: UserTagPreferenceScalarWhereInput | UserTagPreferenceScalarWhereInput[]
+  }
+
+  export type TagUncheckedUpdateManyWithoutParentTagNestedInput = {
+    create?: XOR<TagCreateWithoutParentTagInput, TagUncheckedCreateWithoutParentTagInput> | TagCreateWithoutParentTagInput[] | TagUncheckedCreateWithoutParentTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutParentTagInput | TagCreateOrConnectWithoutParentTagInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutParentTagInput | TagUpsertWithWhereUniqueWithoutParentTagInput[]
+    createMany?: TagCreateManyParentTagInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutParentTagInput | TagUpdateWithWhereUniqueWithoutParentTagInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutParentTagInput | TagUpdateManyWithWhereWithoutParentTagInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
+  export type TagUncheckedUpdateManyWithoutCanonicalTagNestedInput = {
+    create?: XOR<TagCreateWithoutCanonicalTagInput, TagUncheckedCreateWithoutCanonicalTagInput> | TagCreateWithoutCanonicalTagInput[] | TagUncheckedCreateWithoutCanonicalTagInput[]
+    connectOrCreate?: TagCreateOrConnectWithoutCanonicalTagInput | TagCreateOrConnectWithoutCanonicalTagInput[]
+    upsert?: TagUpsertWithWhereUniqueWithoutCanonicalTagInput | TagUpsertWithWhereUniqueWithoutCanonicalTagInput[]
+    createMany?: TagCreateManyCanonicalTagInputEnvelope
+    set?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    disconnect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    delete?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    connect?: TagWhereUniqueInput | TagWhereUniqueInput[]
+    update?: TagUpdateWithWhereUniqueWithoutCanonicalTagInput | TagUpdateWithWhereUniqueWithoutCanonicalTagInput[]
+    updateMany?: TagUpdateManyWithWhereWithoutCanonicalTagInput | TagUpdateManyWithWhereWithoutCanonicalTagInput[]
+    deleteMany?: TagScalarWhereInput | TagScalarWhereInput[]
+  }
+
+  export type TagAliasUncheckedUpdateManyWithoutTagNestedInput = {
+    create?: XOR<TagAliasCreateWithoutTagInput, TagAliasUncheckedCreateWithoutTagInput> | TagAliasCreateWithoutTagInput[] | TagAliasUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: TagAliasCreateOrConnectWithoutTagInput | TagAliasCreateOrConnectWithoutTagInput[]
+    upsert?: TagAliasUpsertWithWhereUniqueWithoutTagInput | TagAliasUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: TagAliasCreateManyTagInputEnvelope
+    set?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    disconnect?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    delete?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    connect?: TagAliasWhereUniqueInput | TagAliasWhereUniqueInput[]
+    update?: TagAliasUpdateWithWhereUniqueWithoutTagInput | TagAliasUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: TagAliasUpdateManyWithWhereWithoutTagInput | TagAliasUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: TagAliasScalarWhereInput | TagAliasScalarWhereInput[]
+  }
+
+  export type TagSimilarityUncheckedUpdateManyWithoutTagANestedInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagAInput, TagSimilarityUncheckedCreateWithoutTagAInput> | TagSimilarityCreateWithoutTagAInput[] | TagSimilarityUncheckedCreateWithoutTagAInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagAInput | TagSimilarityCreateOrConnectWithoutTagAInput[]
+    upsert?: TagSimilarityUpsertWithWhereUniqueWithoutTagAInput | TagSimilarityUpsertWithWhereUniqueWithoutTagAInput[]
+    createMany?: TagSimilarityCreateManyTagAInputEnvelope
+    set?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    disconnect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    delete?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    update?: TagSimilarityUpdateWithWhereUniqueWithoutTagAInput | TagSimilarityUpdateWithWhereUniqueWithoutTagAInput[]
+    updateMany?: TagSimilarityUpdateManyWithWhereWithoutTagAInput | TagSimilarityUpdateManyWithWhereWithoutTagAInput[]
+    deleteMany?: TagSimilarityScalarWhereInput | TagSimilarityScalarWhereInput[]
+  }
+
+  export type TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput = {
+    create?: XOR<TagSimilarityCreateWithoutTagBInput, TagSimilarityUncheckedCreateWithoutTagBInput> | TagSimilarityCreateWithoutTagBInput[] | TagSimilarityUncheckedCreateWithoutTagBInput[]
+    connectOrCreate?: TagSimilarityCreateOrConnectWithoutTagBInput | TagSimilarityCreateOrConnectWithoutTagBInput[]
+    upsert?: TagSimilarityUpsertWithWhereUniqueWithoutTagBInput | TagSimilarityUpsertWithWhereUniqueWithoutTagBInput[]
+    createMany?: TagSimilarityCreateManyTagBInputEnvelope
+    set?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    disconnect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    delete?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    connect?: TagSimilarityWhereUniqueInput | TagSimilarityWhereUniqueInput[]
+    update?: TagSimilarityUpdateWithWhereUniqueWithoutTagBInput | TagSimilarityUpdateWithWhereUniqueWithoutTagBInput[]
+    updateMany?: TagSimilarityUpdateManyWithWhereWithoutTagBInput | TagSimilarityUpdateManyWithWhereWithoutTagBInput[]
+    deleteMany?: TagSimilarityScalarWhereInput | TagSimilarityScalarWhereInput[]
+  }
+
+  export type IdeaTagUncheckedUpdateManyWithoutTagNestedInput = {
+    create?: XOR<IdeaTagCreateWithoutTagInput, IdeaTagUncheckedCreateWithoutTagInput> | IdeaTagCreateWithoutTagInput[] | IdeaTagUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: IdeaTagCreateOrConnectWithoutTagInput | IdeaTagCreateOrConnectWithoutTagInput[]
+    upsert?: IdeaTagUpsertWithWhereUniqueWithoutTagInput | IdeaTagUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: IdeaTagCreateManyTagInputEnvelope
+    set?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    disconnect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    delete?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    connect?: IdeaTagWhereUniqueInput | IdeaTagWhereUniqueInput[]
+    update?: IdeaTagUpdateWithWhereUniqueWithoutTagInput | IdeaTagUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: IdeaTagUpdateManyWithWhereWithoutTagInput | IdeaTagUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: IdeaTagScalarWhereInput | IdeaTagScalarWhereInput[]
+  }
+
+  export type UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput = {
+    create?: XOR<UserTagPreferenceCreateWithoutTagInput, UserTagPreferenceUncheckedCreateWithoutTagInput> | UserTagPreferenceCreateWithoutTagInput[] | UserTagPreferenceUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: UserTagPreferenceCreateOrConnectWithoutTagInput | UserTagPreferenceCreateOrConnectWithoutTagInput[]
+    upsert?: UserTagPreferenceUpsertWithWhereUniqueWithoutTagInput | UserTagPreferenceUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: UserTagPreferenceCreateManyTagInputEnvelope
+    set?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    disconnect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    delete?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    connect?: UserTagPreferenceWhereUniqueInput | UserTagPreferenceWhereUniqueInput[]
+    update?: UserTagPreferenceUpdateWithWhereUniqueWithoutTagInput | UserTagPreferenceUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: UserTagPreferenceUpdateManyWithWhereWithoutTagInput | UserTagPreferenceUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: UserTagPreferenceScalarWhereInput | UserTagPreferenceScalarWhereInput[]
+  }
+
+  export type TagCreateNestedOneWithoutAliasRecordsInput = {
+    create?: XOR<TagCreateWithoutAliasRecordsInput, TagUncheckedCreateWithoutAliasRecordsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutAliasRecordsInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type TagUpdateOneRequiredWithoutAliasRecordsNestedInput = {
+    create?: XOR<TagCreateWithoutAliasRecordsInput, TagUncheckedCreateWithoutAliasRecordsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutAliasRecordsInput
+    upsert?: TagUpsertWithoutAliasRecordsInput
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutAliasRecordsInput, TagUpdateWithoutAliasRecordsInput>, TagUncheckedUpdateWithoutAliasRecordsInput>
+  }
+
+  export type TagCreateNestedOneWithoutSimilarityAsAInput = {
+    create?: XOR<TagCreateWithoutSimilarityAsAInput, TagUncheckedCreateWithoutSimilarityAsAInput>
+    connectOrCreate?: TagCreateOrConnectWithoutSimilarityAsAInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type TagCreateNestedOneWithoutSimilarityAsBInput = {
+    create?: XOR<TagCreateWithoutSimilarityAsBInput, TagUncheckedCreateWithoutSimilarityAsBInput>
+    connectOrCreate?: TagCreateOrConnectWithoutSimilarityAsBInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type FloatFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type TagUpdateOneRequiredWithoutSimilarityAsANestedInput = {
+    create?: XOR<TagCreateWithoutSimilarityAsAInput, TagUncheckedCreateWithoutSimilarityAsAInput>
+    connectOrCreate?: TagCreateOrConnectWithoutSimilarityAsAInput
+    upsert?: TagUpsertWithoutSimilarityAsAInput
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutSimilarityAsAInput, TagUpdateWithoutSimilarityAsAInput>, TagUncheckedUpdateWithoutSimilarityAsAInput>
+  }
+
+  export type TagUpdateOneRequiredWithoutSimilarityAsBNestedInput = {
+    create?: XOR<TagCreateWithoutSimilarityAsBInput, TagUncheckedCreateWithoutSimilarityAsBInput>
+    connectOrCreate?: TagCreateOrConnectWithoutSimilarityAsBInput
+    upsert?: TagUpsertWithoutSimilarityAsBInput
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutSimilarityAsBInput, TagUpdateWithoutSimilarityAsBInput>, TagUncheckedUpdateWithoutSimilarityAsBInput>
+  }
+
+  export type IdeaCreateNestedOneWithoutTagsInput = {
+    create?: XOR<IdeaCreateWithoutTagsInput, IdeaUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutTagsInput
+    connect?: IdeaWhereUniqueInput
+  }
+
+  export type TagCreateNestedOneWithoutIdeaTagsInput = {
+    create?: XOR<TagCreateWithoutIdeaTagsInput, TagUncheckedCreateWithoutIdeaTagsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutIdeaTagsInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type IdeaUpdateOneRequiredWithoutTagsNestedInput = {
+    create?: XOR<IdeaCreateWithoutTagsInput, IdeaUncheckedCreateWithoutTagsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutTagsInput
+    upsert?: IdeaUpsertWithoutTagsInput
+    connect?: IdeaWhereUniqueInput
+    update?: XOR<XOR<IdeaUpdateToOneWithWhereWithoutTagsInput, IdeaUpdateWithoutTagsInput>, IdeaUncheckedUpdateWithoutTagsInput>
+  }
+
+  export type TagUpdateOneRequiredWithoutIdeaTagsNestedInput = {
+    create?: XOR<TagCreateWithoutIdeaTagsInput, TagUncheckedCreateWithoutIdeaTagsInput>
+    connectOrCreate?: TagCreateOrConnectWithoutIdeaTagsInput
+    upsert?: TagUpsertWithoutIdeaTagsInput
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutIdeaTagsInput, TagUpdateWithoutIdeaTagsInput>, TagUncheckedUpdateWithoutIdeaTagsInput>
+  }
+
+  export type UserCreateNestedOneWithoutTagPreferencesInput = {
+    create?: XOR<UserCreateWithoutTagPreferencesInput, UserUncheckedCreateWithoutTagPreferencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTagPreferencesInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type TagCreateNestedOneWithoutUserPreferencesInput = {
+    create?: XOR<TagCreateWithoutUserPreferencesInput, TagUncheckedCreateWithoutUserPreferencesInput>
+    connectOrCreate?: TagCreateOrConnectWithoutUserPreferencesInput
+    connect?: TagWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutTagPreferencesNestedInput = {
+    create?: XOR<UserCreateWithoutTagPreferencesInput, UserUncheckedCreateWithoutTagPreferencesInput>
+    connectOrCreate?: UserCreateOrConnectWithoutTagPreferencesInput
+    upsert?: UserUpsertWithoutTagPreferencesInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutTagPreferencesInput, UserUpdateWithoutTagPreferencesInput>, UserUncheckedUpdateWithoutTagPreferencesInput>
+  }
+
+  export type TagUpdateOneRequiredWithoutUserPreferencesNestedInput = {
+    create?: XOR<TagCreateWithoutUserPreferencesInput, TagUncheckedCreateWithoutUserPreferencesInput>
+    connectOrCreate?: TagCreateOrConnectWithoutUserPreferencesInput
+    upsert?: TagUpsertWithoutUserPreferencesInput
+    connect?: TagWhereUniqueInput
+    update?: XOR<XOR<TagUpdateToOneWithWhereWithoutUserPreferencesInput, TagUpdateWithoutUserPreferencesInput>, TagUncheckedUpdateWithoutUserPreferencesInput>
+  }
+
+  export type UserCreateNestedOneWithoutInterestProfileInput = {
+    create?: XOR<UserCreateWithoutInterestProfileInput, UserUncheckedCreateWithoutInterestProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInterestProfileInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutInterestProfileNestedInput = {
+    create?: XOR<UserCreateWithoutInterestProfileInput, UserUncheckedCreateWithoutInterestProfileInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInterestProfileInput
+    upsert?: UserUpsertWithoutInterestProfileInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInterestProfileInput, UserUpdateWithoutInterestProfileInput>, UserUncheckedUpdateWithoutInterestProfileInput>
+  }
+
+  export type UserCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInteractionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IdeaCreateNestedOneWithoutInteractionsInput = {
+    create?: XOR<IdeaCreateWithoutInteractionsInput, IdeaUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutInteractionsInput
+    connect?: IdeaWhereUniqueInput
+  }
+
+  export type EnumInteractionTypeFieldUpdateOperationsInput = {
+    set?: $Enums.InteractionType
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutInteractionsNestedInput = {
+    create?: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutInteractionsInput
+    upsert?: UserUpsertWithoutInteractionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutInteractionsInput, UserUpdateWithoutInteractionsInput>, UserUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type IdeaUpdateOneRequiredWithoutInteractionsNestedInput = {
+    create?: XOR<IdeaCreateWithoutInteractionsInput, IdeaUncheckedCreateWithoutInteractionsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutInteractionsInput
+    upsert?: IdeaUpsertWithoutInteractionsInput
+    connect?: IdeaWhereUniqueInput
+    update?: XOR<XOR<IdeaUpdateToOneWithWhereWithoutInteractionsInput, IdeaUpdateWithoutInteractionsInput>, IdeaUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type UserCreateNestedOneWithoutImpressionsInput = {
+    create?: XOR<UserCreateWithoutImpressionsInput, UserUncheckedCreateWithoutImpressionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutImpressionsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IdeaCreateNestedOneWithoutImpressionsInput = {
+    create?: XOR<IdeaCreateWithoutImpressionsInput, IdeaUncheckedCreateWithoutImpressionsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutImpressionsInput
+    connect?: IdeaWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutImpressionsNestedInput = {
+    create?: XOR<UserCreateWithoutImpressionsInput, UserUncheckedCreateWithoutImpressionsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutImpressionsInput
+    upsert?: UserUpsertWithoutImpressionsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutImpressionsInput, UserUpdateWithoutImpressionsInput>, UserUncheckedUpdateWithoutImpressionsInput>
+  }
+
+  export type IdeaUpdateOneRequiredWithoutImpressionsNestedInput = {
+    create?: XOR<IdeaCreateWithoutImpressionsInput, IdeaUncheckedCreateWithoutImpressionsInput>
+    connectOrCreate?: IdeaCreateOrConnectWithoutImpressionsInput
+    upsert?: IdeaUpsertWithoutImpressionsInput
+    connect?: IdeaWhereUniqueInput
+    update?: XOR<XOR<IdeaUpdateToOneWithWhereWithoutImpressionsInput, IdeaUpdateWithoutImpressionsInput>, IdeaUncheckedUpdateWithoutImpressionsInput>
   }
 
   export type UserCreateNestedOneWithoutStacksInput = {
@@ -21736,14 +34664,6 @@ export namespace Prisma {
 
   export type EnumSwipeActionFieldUpdateOperationsInput = {
     set?: $Enums.SwipeAction
-  }
-
-  export type FloatFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutSwipeEventsNestedInput = {
@@ -22031,21 +34951,38 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedEnumSwipeActionFilter<$PrismaModel = never> = {
-    equals?: $Enums.SwipeAction | EnumSwipeActionFieldRefInput<$PrismaModel>
-    in?: $Enums.SwipeAction[]
-    notIn?: $Enums.SwipeAction[]
-    not?: NestedEnumSwipeActionFilter<$PrismaModel> | $Enums.SwipeAction
+  export type NestedEnumTagStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagStatus | EnumTagStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TagStatus[]
+    notIn?: $Enums.TagStatus[]
+    not?: NestedEnumTagStatusFilter<$PrismaModel> | $Enums.TagStatus
   }
 
-  export type NestedEnumSwipeActionWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.SwipeAction | EnumSwipeActionFieldRefInput<$PrismaModel>
-    in?: $Enums.SwipeAction[]
-    notIn?: $Enums.SwipeAction[]
-    not?: NestedEnumSwipeActionWithAggregatesFilter<$PrismaModel> | $Enums.SwipeAction
+  export type NestedEnumTagSourceFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagSource | EnumTagSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.TagSource[]
+    notIn?: $Enums.TagSource[]
+    not?: NestedEnumTagSourceFilter<$PrismaModel> | $Enums.TagSource
+  }
+
+  export type NestedEnumTagStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagStatus | EnumTagStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.TagStatus[]
+    notIn?: $Enums.TagStatus[]
+    not?: NestedEnumTagStatusWithAggregatesFilter<$PrismaModel> | $Enums.TagStatus
     _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumSwipeActionFilter<$PrismaModel>
-    _max?: NestedEnumSwipeActionFilter<$PrismaModel>
+    _min?: NestedEnumTagStatusFilter<$PrismaModel>
+    _max?: NestedEnumTagStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumTagSourceWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.TagSource | EnumTagSourceFieldRefInput<$PrismaModel>
+    in?: $Enums.TagSource[]
+    notIn?: $Enums.TagSource[]
+    not?: NestedEnumTagSourceWithAggregatesFilter<$PrismaModel> | $Enums.TagSource
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumTagSourceFilter<$PrismaModel>
+    _max?: NestedEnumTagSourceFilter<$PrismaModel>
   }
 
   export type NestedFloatWithAggregatesFilter<$PrismaModel = never> = {
@@ -22062,6 +34999,67 @@ export namespace Prisma {
     _sum?: NestedFloatFilter<$PrismaModel>
     _min?: NestedFloatFilter<$PrismaModel>
     _max?: NestedFloatFilter<$PrismaModel>
+  }
+
+  export type NestedEnumInteractionTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.InteractionType | EnumInteractionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InteractionType[]
+    notIn?: $Enums.InteractionType[]
+    not?: NestedEnumInteractionTypeFilter<$PrismaModel> | $Enums.InteractionType
+  }
+
+  export type NestedEnumInteractionTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.InteractionType | EnumInteractionTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.InteractionType[]
+    notIn?: $Enums.InteractionType[]
+    not?: NestedEnumInteractionTypeWithAggregatesFilter<$PrismaModel> | $Enums.InteractionType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumInteractionTypeFilter<$PrismaModel>
+    _max?: NestedEnumInteractionTypeFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumSwipeActionFilter<$PrismaModel = never> = {
+    equals?: $Enums.SwipeAction | EnumSwipeActionFieldRefInput<$PrismaModel>
+    in?: $Enums.SwipeAction[]
+    notIn?: $Enums.SwipeAction[]
+    not?: NestedEnumSwipeActionFilter<$PrismaModel> | $Enums.SwipeAction
+  }
+
+  export type NestedEnumSwipeActionWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SwipeAction | EnumSwipeActionFieldRefInput<$PrismaModel>
+    in?: $Enums.SwipeAction[]
+    notIn?: $Enums.SwipeAction[]
+    not?: NestedEnumSwipeActionWithAggregatesFilter<$PrismaModel> | $Enums.SwipeAction
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSwipeActionFilter<$PrismaModel>
+    _max?: NestedEnumSwipeActionFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -22106,6 +35104,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
@@ -22125,6 +35127,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -22160,6 +35166,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
@@ -22179,6 +35189,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionCreateWithoutUserInput = {
@@ -22391,6 +35405,120 @@ export namespace Prisma {
 
   export type PreferenceUpdateLogCreateManyUserInputEnvelope = {
     data: PreferenceUpdateLogCreateManyUserInput | PreferenceUpdateLogCreateManyUserInput[]
+  }
+
+  export type UserTagPreferenceCreateWithoutUserInput = {
+    id?: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tag: TagCreateNestedOneWithoutUserPreferencesInput
+  }
+
+  export type UserTagPreferenceUncheckedCreateWithoutUserInput = {
+    id?: string
+    tagId: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserTagPreferenceCreateOrConnectWithoutUserInput = {
+    where: UserTagPreferenceWhereUniqueInput
+    create: XOR<UserTagPreferenceCreateWithoutUserInput, UserTagPreferenceUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserTagPreferenceCreateManyUserInputEnvelope = {
+    data: UserTagPreferenceCreateManyUserInput | UserTagPreferenceCreateManyUserInput[]
+  }
+
+  export type UserInterestProfileCreateWithoutUserInput = {
+    id?: string
+    latentVector: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserInterestProfileUncheckedCreateWithoutUserInput = {
+    id?: string
+    latentVector: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserInterestProfileCreateOrConnectWithoutUserInput = {
+    where: UserInterestProfileWhereUniqueInput
+    create: XOR<UserInterestProfileCreateWithoutUserInput, UserInterestProfileUncheckedCreateWithoutUserInput>
+  }
+
+  export type IdeaInteractionCreateWithoutUserInput = {
+    id?: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    idea: IdeaCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type IdeaInteractionUncheckedCreateWithoutUserInput = {
+    id?: string
+    ideaId: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type IdeaInteractionCreateOrConnectWithoutUserInput = {
+    where: IdeaInteractionWhereUniqueInput
+    create: XOR<IdeaInteractionCreateWithoutUserInput, IdeaInteractionUncheckedCreateWithoutUserInput>
+  }
+
+  export type IdeaInteractionCreateManyUserInputEnvelope = {
+    data: IdeaInteractionCreateManyUserInput | IdeaInteractionCreateManyUserInput[]
+  }
+
+  export type RecommendationImpressionCreateWithoutUserInput = {
+    id?: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt?: Date | string
+    idea: IdeaCreateNestedOneWithoutImpressionsInput
+  }
+
+  export type RecommendationImpressionUncheckedCreateWithoutUserInput = {
+    id?: string
+    ideaId: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt?: Date | string
+  }
+
+  export type RecommendationImpressionCreateOrConnectWithoutUserInput = {
+    where: RecommendationImpressionWhereUniqueInput
+    create: XOR<RecommendationImpressionCreateWithoutUserInput, RecommendationImpressionUncheckedCreateWithoutUserInput>
+  }
+
+  export type RecommendationImpressionCreateManyUserInputEnvelope = {
+    data: RecommendationImpressionCreateManyUserInput | RecommendationImpressionCreateManyUserInput[]
   }
 
   export type SessionUpsertWithWhereUniqueWithoutUserInput = {
@@ -22621,6 +35749,127 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"PreferenceUpdateLog"> | Date | string
   }
 
+  export type UserTagPreferenceUpsertWithWhereUniqueWithoutUserInput = {
+    where: UserTagPreferenceWhereUniqueInput
+    update: XOR<UserTagPreferenceUpdateWithoutUserInput, UserTagPreferenceUncheckedUpdateWithoutUserInput>
+    create: XOR<UserTagPreferenceCreateWithoutUserInput, UserTagPreferenceUncheckedCreateWithoutUserInput>
+  }
+
+  export type UserTagPreferenceUpdateWithWhereUniqueWithoutUserInput = {
+    where: UserTagPreferenceWhereUniqueInput
+    data: XOR<UserTagPreferenceUpdateWithoutUserInput, UserTagPreferenceUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserTagPreferenceUpdateManyWithWhereWithoutUserInput = {
+    where: UserTagPreferenceScalarWhereInput
+    data: XOR<UserTagPreferenceUpdateManyMutationInput, UserTagPreferenceUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type UserTagPreferenceScalarWhereInput = {
+    AND?: UserTagPreferenceScalarWhereInput | UserTagPreferenceScalarWhereInput[]
+    OR?: UserTagPreferenceScalarWhereInput[]
+    NOT?: UserTagPreferenceScalarWhereInput | UserTagPreferenceScalarWhereInput[]
+    id?: StringFilter<"UserTagPreference"> | string
+    userId?: StringFilter<"UserTagPreference"> | string
+    tagId?: StringFilter<"UserTagPreference"> | string
+    weight?: FloatFilter<"UserTagPreference"> | number
+    explicitWeight?: FloatFilter<"UserTagPreference"> | number
+    implicitWeight?: FloatFilter<"UserTagPreference"> | number
+    lastReinforcedAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    createdAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+    updatedAt?: DateTimeFilter<"UserTagPreference"> | Date | string
+  }
+
+  export type UserInterestProfileUpsertWithoutUserInput = {
+    update: XOR<UserInterestProfileUpdateWithoutUserInput, UserInterestProfileUncheckedUpdateWithoutUserInput>
+    create: XOR<UserInterestProfileCreateWithoutUserInput, UserInterestProfileUncheckedCreateWithoutUserInput>
+    where?: UserInterestProfileWhereInput
+  }
+
+  export type UserInterestProfileUpdateToOneWithWhereWithoutUserInput = {
+    where?: UserInterestProfileWhereInput
+    data: XOR<UserInterestProfileUpdateWithoutUserInput, UserInterestProfileUncheckedUpdateWithoutUserInput>
+  }
+
+  export type UserInterestProfileUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latentVector?: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserInterestProfileUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    latentVector?: JsonNullValueInput | InputJsonValue
+    positiveCentroid?: NullableJsonNullValueInput | InputJsonValue
+    negativeCentroid?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionUpsertWithWhereUniqueWithoutUserInput = {
+    where: IdeaInteractionWhereUniqueInput
+    update: XOR<IdeaInteractionUpdateWithoutUserInput, IdeaInteractionUncheckedUpdateWithoutUserInput>
+    create: XOR<IdeaInteractionCreateWithoutUserInput, IdeaInteractionUncheckedCreateWithoutUserInput>
+  }
+
+  export type IdeaInteractionUpdateWithWhereUniqueWithoutUserInput = {
+    where: IdeaInteractionWhereUniqueInput
+    data: XOR<IdeaInteractionUpdateWithoutUserInput, IdeaInteractionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type IdeaInteractionUpdateManyWithWhereWithoutUserInput = {
+    where: IdeaInteractionScalarWhereInput
+    data: XOR<IdeaInteractionUpdateManyMutationInput, IdeaInteractionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type IdeaInteractionScalarWhereInput = {
+    AND?: IdeaInteractionScalarWhereInput | IdeaInteractionScalarWhereInput[]
+    OR?: IdeaInteractionScalarWhereInput[]
+    NOT?: IdeaInteractionScalarWhereInput | IdeaInteractionScalarWhereInput[]
+    id?: StringFilter<"IdeaInteraction"> | string
+    userId?: StringFilter<"IdeaInteraction"> | string
+    ideaId?: StringFilter<"IdeaInteraction"> | string
+    interactionType?: EnumInteractionTypeFilter<"IdeaInteraction"> | $Enums.InteractionType
+    reward?: FloatFilter<"IdeaInteraction"> | number
+    dwellTimeMs?: IntNullableFilter<"IdeaInteraction"> | number | null
+    context?: JsonNullableFilter<"IdeaInteraction">
+    createdAt?: DateTimeFilter<"IdeaInteraction"> | Date | string
+  }
+
+  export type RecommendationImpressionUpsertWithWhereUniqueWithoutUserInput = {
+    where: RecommendationImpressionWhereUniqueInput
+    update: XOR<RecommendationImpressionUpdateWithoutUserInput, RecommendationImpressionUncheckedUpdateWithoutUserInput>
+    create: XOR<RecommendationImpressionCreateWithoutUserInput, RecommendationImpressionUncheckedCreateWithoutUserInput>
+  }
+
+  export type RecommendationImpressionUpdateWithWhereUniqueWithoutUserInput = {
+    where: RecommendationImpressionWhereUniqueInput
+    data: XOR<RecommendationImpressionUpdateWithoutUserInput, RecommendationImpressionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type RecommendationImpressionUpdateManyWithWhereWithoutUserInput = {
+    where: RecommendationImpressionScalarWhereInput
+    data: XOR<RecommendationImpressionUpdateManyMutationInput, RecommendationImpressionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type RecommendationImpressionScalarWhereInput = {
+    AND?: RecommendationImpressionScalarWhereInput | RecommendationImpressionScalarWhereInput[]
+    OR?: RecommendationImpressionScalarWhereInput[]
+    NOT?: RecommendationImpressionScalarWhereInput | RecommendationImpressionScalarWhereInput[]
+    id?: StringFilter<"RecommendationImpression"> | string
+    userId?: StringFilter<"RecommendationImpression"> | string
+    ideaId?: StringFilter<"RecommendationImpression"> | string
+    rank?: IntFilter<"RecommendationImpression"> | number
+    explicitScore?: FloatFilter<"RecommendationImpression"> | number
+    latentScore?: FloatFilter<"RecommendationImpression"> | number
+    explorationScore?: FloatFilter<"RecommendationImpression"> | number
+    finalScore?: FloatFilter<"RecommendationImpression"> | number
+    createdAt?: DateTimeFilter<"RecommendationImpression"> | Date | string
+  }
+
   export type UserFieldSelectionCreateWithoutFieldInput = {
     id?: string
     createdAt?: Date | string
@@ -22653,6 +35902,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUncheckedCreateWithoutFieldInput = {
@@ -22666,6 +35918,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaCreateOrConnectWithoutFieldInput = {
@@ -22739,6 +35994,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFieldSelectionsInput = {
@@ -22758,6 +36017,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFieldSelectionsInput = {
@@ -22818,6 +36081,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFieldSelectionsInput = {
@@ -22837,6 +36104,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type FieldCatalogUpsertWithoutUserSelectionsInput = {
@@ -22989,6 +36260,93 @@ export namespace Prisma {
     data: FavoriteCreateManyIdeaInput | FavoriteCreateManyIdeaInput[]
   }
 
+  export type IdeaTagCreateWithoutIdeaInput = {
+    id?: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tag: TagCreateNestedOneWithoutIdeaTagsInput
+  }
+
+  export type IdeaTagUncheckedCreateWithoutIdeaInput = {
+    id?: string
+    tagId: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IdeaTagCreateOrConnectWithoutIdeaInput = {
+    where: IdeaTagWhereUniqueInput
+    create: XOR<IdeaTagCreateWithoutIdeaInput, IdeaTagUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type IdeaTagCreateManyIdeaInputEnvelope = {
+    data: IdeaTagCreateManyIdeaInput | IdeaTagCreateManyIdeaInput[]
+  }
+
+  export type IdeaInteractionCreateWithoutIdeaInput = {
+    id?: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutInteractionsInput
+  }
+
+  export type IdeaInteractionUncheckedCreateWithoutIdeaInput = {
+    id?: string
+    userId: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type IdeaInteractionCreateOrConnectWithoutIdeaInput = {
+    where: IdeaInteractionWhereUniqueInput
+    create: XOR<IdeaInteractionCreateWithoutIdeaInput, IdeaInteractionUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type IdeaInteractionCreateManyIdeaInputEnvelope = {
+    data: IdeaInteractionCreateManyIdeaInput | IdeaInteractionCreateManyIdeaInput[]
+  }
+
+  export type RecommendationImpressionCreateWithoutIdeaInput = {
+    id?: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt?: Date | string
+    user: UserCreateNestedOneWithoutImpressionsInput
+  }
+
+  export type RecommendationImpressionUncheckedCreateWithoutIdeaInput = {
+    id?: string
+    userId: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
+    createdAt?: Date | string
+  }
+
+  export type RecommendationImpressionCreateOrConnectWithoutIdeaInput = {
+    where: RecommendationImpressionWhereUniqueInput
+    create: XOR<RecommendationImpressionCreateWithoutIdeaInput, RecommendationImpressionUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type RecommendationImpressionCreateManyIdeaInputEnvelope = {
+    data: RecommendationImpressionCreateManyIdeaInput | RecommendationImpressionCreateManyIdeaInput[]
+  }
+
   export type FieldCatalogUpsertWithoutIdeasInput = {
     update: XOR<FieldCatalogUpdateWithoutIdeasInput, FieldCatalogUncheckedUpdateWithoutIdeasInput>
     create: XOR<FieldCatalogCreateWithoutIdeasInput, FieldCatalogUncheckedCreateWithoutIdeasInput>
@@ -23106,6 +36464,67 @@ export namespace Prisma {
     data: XOR<FavoriteUpdateManyMutationInput, FavoriteUncheckedUpdateManyWithoutIdeaInput>
   }
 
+  export type IdeaTagUpsertWithWhereUniqueWithoutIdeaInput = {
+    where: IdeaTagWhereUniqueInput
+    update: XOR<IdeaTagUpdateWithoutIdeaInput, IdeaTagUncheckedUpdateWithoutIdeaInput>
+    create: XOR<IdeaTagCreateWithoutIdeaInput, IdeaTagUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type IdeaTagUpdateWithWhereUniqueWithoutIdeaInput = {
+    where: IdeaTagWhereUniqueInput
+    data: XOR<IdeaTagUpdateWithoutIdeaInput, IdeaTagUncheckedUpdateWithoutIdeaInput>
+  }
+
+  export type IdeaTagUpdateManyWithWhereWithoutIdeaInput = {
+    where: IdeaTagScalarWhereInput
+    data: XOR<IdeaTagUpdateManyMutationInput, IdeaTagUncheckedUpdateManyWithoutIdeaInput>
+  }
+
+  export type IdeaTagScalarWhereInput = {
+    AND?: IdeaTagScalarWhereInput | IdeaTagScalarWhereInput[]
+    OR?: IdeaTagScalarWhereInput[]
+    NOT?: IdeaTagScalarWhereInput | IdeaTagScalarWhereInput[]
+    id?: StringFilter<"IdeaTag"> | string
+    ideaId?: StringFilter<"IdeaTag"> | string
+    tagId?: StringFilter<"IdeaTag"> | string
+    weight?: FloatFilter<"IdeaTag"> | number
+    sourceConfidence?: FloatFilter<"IdeaTag"> | number
+    createdAt?: DateTimeFilter<"IdeaTag"> | Date | string
+    updatedAt?: DateTimeFilter<"IdeaTag"> | Date | string
+  }
+
+  export type IdeaInteractionUpsertWithWhereUniqueWithoutIdeaInput = {
+    where: IdeaInteractionWhereUniqueInput
+    update: XOR<IdeaInteractionUpdateWithoutIdeaInput, IdeaInteractionUncheckedUpdateWithoutIdeaInput>
+    create: XOR<IdeaInteractionCreateWithoutIdeaInput, IdeaInteractionUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type IdeaInteractionUpdateWithWhereUniqueWithoutIdeaInput = {
+    where: IdeaInteractionWhereUniqueInput
+    data: XOR<IdeaInteractionUpdateWithoutIdeaInput, IdeaInteractionUncheckedUpdateWithoutIdeaInput>
+  }
+
+  export type IdeaInteractionUpdateManyWithWhereWithoutIdeaInput = {
+    where: IdeaInteractionScalarWhereInput
+    data: XOR<IdeaInteractionUpdateManyMutationInput, IdeaInteractionUncheckedUpdateManyWithoutIdeaInput>
+  }
+
+  export type RecommendationImpressionUpsertWithWhereUniqueWithoutIdeaInput = {
+    where: RecommendationImpressionWhereUniqueInput
+    update: XOR<RecommendationImpressionUpdateWithoutIdeaInput, RecommendationImpressionUncheckedUpdateWithoutIdeaInput>
+    create: XOR<RecommendationImpressionCreateWithoutIdeaInput, RecommendationImpressionUncheckedCreateWithoutIdeaInput>
+  }
+
+  export type RecommendationImpressionUpdateWithWhereUniqueWithoutIdeaInput = {
+    where: RecommendationImpressionWhereUniqueInput
+    data: XOR<RecommendationImpressionUpdateWithoutIdeaInput, RecommendationImpressionUncheckedUpdateWithoutIdeaInput>
+  }
+
+  export type RecommendationImpressionUpdateManyWithWhereWithoutIdeaInput = {
+    where: RecommendationImpressionScalarWhereInput
+    data: XOR<RecommendationImpressionUpdateManyMutationInput, RecommendationImpressionUncheckedUpdateManyWithoutIdeaInput>
+  }
+
   export type IdeaCreateWithoutChunksInput = {
     id?: string
     title: string
@@ -23117,6 +36536,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUncheckedCreateWithoutChunksInput = {
@@ -23130,6 +36552,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaCreateOrConnectWithoutChunksInput = {
@@ -23159,6 +36584,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateWithoutChunksInput = {
@@ -23172,6 +36600,1698 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type TagCreateWithoutChildTagsInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutChildTagsInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutChildTagsInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutChildTagsInput, TagUncheckedCreateWithoutChildTagsInput>
+  }
+
+  export type TagCreateWithoutParentTagInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutParentTagInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutParentTagInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutParentTagInput, TagUncheckedCreateWithoutParentTagInput>
+  }
+
+  export type TagCreateManyParentTagInputEnvelope = {
+    data: TagCreateManyParentTagInput | TagCreateManyParentTagInput[]
+  }
+
+  export type TagCreateWithoutCanonicalOfInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutCanonicalOfInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutCanonicalOfInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutCanonicalOfInput, TagUncheckedCreateWithoutCanonicalOfInput>
+  }
+
+  export type TagCreateWithoutCanonicalTagInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutCanonicalTagInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutCanonicalTagInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutCanonicalTagInput, TagUncheckedCreateWithoutCanonicalTagInput>
+  }
+
+  export type TagCreateManyCanonicalTagInputEnvelope = {
+    data: TagCreateManyCanonicalTagInput | TagCreateManyCanonicalTagInput[]
+  }
+
+  export type TagAliasCreateWithoutTagInput = {
+    id?: string
+    alias: string
+    createdAt?: Date | string
+  }
+
+  export type TagAliasUncheckedCreateWithoutTagInput = {
+    id?: string
+    alias: string
+    createdAt?: Date | string
+  }
+
+  export type TagAliasCreateOrConnectWithoutTagInput = {
+    where: TagAliasWhereUniqueInput
+    create: XOR<TagAliasCreateWithoutTagInput, TagAliasUncheckedCreateWithoutTagInput>
+  }
+
+  export type TagAliasCreateManyTagInputEnvelope = {
+    data: TagAliasCreateManyTagInput | TagAliasCreateManyTagInput[]
+  }
+
+  export type TagSimilarityCreateWithoutTagAInput = {
+    id?: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tagB: TagCreateNestedOneWithoutSimilarityAsBInput
+  }
+
+  export type TagSimilarityUncheckedCreateWithoutTagAInput = {
+    id?: string
+    tagBId: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagSimilarityCreateOrConnectWithoutTagAInput = {
+    where: TagSimilarityWhereUniqueInput
+    create: XOR<TagSimilarityCreateWithoutTagAInput, TagSimilarityUncheckedCreateWithoutTagAInput>
+  }
+
+  export type TagSimilarityCreateManyTagAInputEnvelope = {
+    data: TagSimilarityCreateManyTagAInput | TagSimilarityCreateManyTagAInput[]
+  }
+
+  export type TagSimilarityCreateWithoutTagBInput = {
+    id?: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tagA: TagCreateNestedOneWithoutSimilarityAsAInput
+  }
+
+  export type TagSimilarityUncheckedCreateWithoutTagBInput = {
+    id?: string
+    tagAId: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagSimilarityCreateOrConnectWithoutTagBInput = {
+    where: TagSimilarityWhereUniqueInput
+    create: XOR<TagSimilarityCreateWithoutTagBInput, TagSimilarityUncheckedCreateWithoutTagBInput>
+  }
+
+  export type TagSimilarityCreateManyTagBInputEnvelope = {
+    data: TagSimilarityCreateManyTagBInput | TagSimilarityCreateManyTagBInput[]
+  }
+
+  export type IdeaTagCreateWithoutTagInput = {
+    id?: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    idea: IdeaCreateNestedOneWithoutTagsInput
+  }
+
+  export type IdeaTagUncheckedCreateWithoutTagInput = {
+    id?: string
+    ideaId: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IdeaTagCreateOrConnectWithoutTagInput = {
+    where: IdeaTagWhereUniqueInput
+    create: XOR<IdeaTagCreateWithoutTagInput, IdeaTagUncheckedCreateWithoutTagInput>
+  }
+
+  export type IdeaTagCreateManyTagInputEnvelope = {
+    data: IdeaTagCreateManyTagInput | IdeaTagCreateManyTagInput[]
+  }
+
+  export type UserTagPreferenceCreateWithoutTagInput = {
+    id?: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutTagPreferencesInput
+  }
+
+  export type UserTagPreferenceUncheckedCreateWithoutTagInput = {
+    id?: string
+    userId: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserTagPreferenceCreateOrConnectWithoutTagInput = {
+    where: UserTagPreferenceWhereUniqueInput
+    create: XOR<UserTagPreferenceCreateWithoutTagInput, UserTagPreferenceUncheckedCreateWithoutTagInput>
+  }
+
+  export type UserTagPreferenceCreateManyTagInputEnvelope = {
+    data: UserTagPreferenceCreateManyTagInput | UserTagPreferenceCreateManyTagInput[]
+  }
+
+  export type TagUpsertWithoutChildTagsInput = {
+    update: XOR<TagUpdateWithoutChildTagsInput, TagUncheckedUpdateWithoutChildTagsInput>
+    create: XOR<TagCreateWithoutChildTagsInput, TagUncheckedCreateWithoutChildTagsInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutChildTagsInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutChildTagsInput, TagUncheckedUpdateWithoutChildTagsInput>
+  }
+
+  export type TagUpdateWithoutChildTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutChildTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUpsertWithWhereUniqueWithoutParentTagInput = {
+    where: TagWhereUniqueInput
+    update: XOR<TagUpdateWithoutParentTagInput, TagUncheckedUpdateWithoutParentTagInput>
+    create: XOR<TagCreateWithoutParentTagInput, TagUncheckedCreateWithoutParentTagInput>
+  }
+
+  export type TagUpdateWithWhereUniqueWithoutParentTagInput = {
+    where: TagWhereUniqueInput
+    data: XOR<TagUpdateWithoutParentTagInput, TagUncheckedUpdateWithoutParentTagInput>
+  }
+
+  export type TagUpdateManyWithWhereWithoutParentTagInput = {
+    where: TagScalarWhereInput
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutParentTagInput>
+  }
+
+  export type TagScalarWhereInput = {
+    AND?: TagScalarWhereInput | TagScalarWhereInput[]
+    OR?: TagScalarWhereInput[]
+    NOT?: TagScalarWhereInput | TagScalarWhereInput[]
+    id?: StringFilter<"Tag"> | string
+    slug?: StringFilter<"Tag"> | string
+    label?: StringFilter<"Tag"> | string
+    embedding?: JsonNullableFilter<"Tag">
+    parentTagId?: StringNullableFilter<"Tag"> | string | null
+    status?: EnumTagStatusFilter<"Tag"> | $Enums.TagStatus
+    canonicalTagId?: StringNullableFilter<"Tag"> | string | null
+    source?: EnumTagSourceFilter<"Tag"> | $Enums.TagSource
+    createdAt?: DateTimeFilter<"Tag"> | Date | string
+    updatedAt?: DateTimeFilter<"Tag"> | Date | string
+  }
+
+  export type TagUpsertWithoutCanonicalOfInput = {
+    update: XOR<TagUpdateWithoutCanonicalOfInput, TagUncheckedUpdateWithoutCanonicalOfInput>
+    create: XOR<TagCreateWithoutCanonicalOfInput, TagUncheckedCreateWithoutCanonicalOfInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutCanonicalOfInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutCanonicalOfInput, TagUncheckedUpdateWithoutCanonicalOfInput>
+  }
+
+  export type TagUpdateWithoutCanonicalOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutCanonicalOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUpsertWithWhereUniqueWithoutCanonicalTagInput = {
+    where: TagWhereUniqueInput
+    update: XOR<TagUpdateWithoutCanonicalTagInput, TagUncheckedUpdateWithoutCanonicalTagInput>
+    create: XOR<TagCreateWithoutCanonicalTagInput, TagUncheckedCreateWithoutCanonicalTagInput>
+  }
+
+  export type TagUpdateWithWhereUniqueWithoutCanonicalTagInput = {
+    where: TagWhereUniqueInput
+    data: XOR<TagUpdateWithoutCanonicalTagInput, TagUncheckedUpdateWithoutCanonicalTagInput>
+  }
+
+  export type TagUpdateManyWithWhereWithoutCanonicalTagInput = {
+    where: TagScalarWhereInput
+    data: XOR<TagUpdateManyMutationInput, TagUncheckedUpdateManyWithoutCanonicalTagInput>
+  }
+
+  export type TagAliasUpsertWithWhereUniqueWithoutTagInput = {
+    where: TagAliasWhereUniqueInput
+    update: XOR<TagAliasUpdateWithoutTagInput, TagAliasUncheckedUpdateWithoutTagInput>
+    create: XOR<TagAliasCreateWithoutTagInput, TagAliasUncheckedCreateWithoutTagInput>
+  }
+
+  export type TagAliasUpdateWithWhereUniqueWithoutTagInput = {
+    where: TagAliasWhereUniqueInput
+    data: XOR<TagAliasUpdateWithoutTagInput, TagAliasUncheckedUpdateWithoutTagInput>
+  }
+
+  export type TagAliasUpdateManyWithWhereWithoutTagInput = {
+    where: TagAliasScalarWhereInput
+    data: XOR<TagAliasUpdateManyMutationInput, TagAliasUncheckedUpdateManyWithoutTagInput>
+  }
+
+  export type TagAliasScalarWhereInput = {
+    AND?: TagAliasScalarWhereInput | TagAliasScalarWhereInput[]
+    OR?: TagAliasScalarWhereInput[]
+    NOT?: TagAliasScalarWhereInput | TagAliasScalarWhereInput[]
+    id?: StringFilter<"TagAlias"> | string
+    alias?: StringFilter<"TagAlias"> | string
+    tagId?: StringFilter<"TagAlias"> | string
+    createdAt?: DateTimeFilter<"TagAlias"> | Date | string
+  }
+
+  export type TagSimilarityUpsertWithWhereUniqueWithoutTagAInput = {
+    where: TagSimilarityWhereUniqueInput
+    update: XOR<TagSimilarityUpdateWithoutTagAInput, TagSimilarityUncheckedUpdateWithoutTagAInput>
+    create: XOR<TagSimilarityCreateWithoutTagAInput, TagSimilarityUncheckedCreateWithoutTagAInput>
+  }
+
+  export type TagSimilarityUpdateWithWhereUniqueWithoutTagAInput = {
+    where: TagSimilarityWhereUniqueInput
+    data: XOR<TagSimilarityUpdateWithoutTagAInput, TagSimilarityUncheckedUpdateWithoutTagAInput>
+  }
+
+  export type TagSimilarityUpdateManyWithWhereWithoutTagAInput = {
+    where: TagSimilarityScalarWhereInput
+    data: XOR<TagSimilarityUpdateManyMutationInput, TagSimilarityUncheckedUpdateManyWithoutTagAInput>
+  }
+
+  export type TagSimilarityScalarWhereInput = {
+    AND?: TagSimilarityScalarWhereInput | TagSimilarityScalarWhereInput[]
+    OR?: TagSimilarityScalarWhereInput[]
+    NOT?: TagSimilarityScalarWhereInput | TagSimilarityScalarWhereInput[]
+    id?: StringFilter<"TagSimilarity"> | string
+    tagAId?: StringFilter<"TagSimilarity"> | string
+    tagBId?: StringFilter<"TagSimilarity"> | string
+    similarity?: FloatFilter<"TagSimilarity"> | number
+    createdAt?: DateTimeFilter<"TagSimilarity"> | Date | string
+    updatedAt?: DateTimeFilter<"TagSimilarity"> | Date | string
+  }
+
+  export type TagSimilarityUpsertWithWhereUniqueWithoutTagBInput = {
+    where: TagSimilarityWhereUniqueInput
+    update: XOR<TagSimilarityUpdateWithoutTagBInput, TagSimilarityUncheckedUpdateWithoutTagBInput>
+    create: XOR<TagSimilarityCreateWithoutTagBInput, TagSimilarityUncheckedCreateWithoutTagBInput>
+  }
+
+  export type TagSimilarityUpdateWithWhereUniqueWithoutTagBInput = {
+    where: TagSimilarityWhereUniqueInput
+    data: XOR<TagSimilarityUpdateWithoutTagBInput, TagSimilarityUncheckedUpdateWithoutTagBInput>
+  }
+
+  export type TagSimilarityUpdateManyWithWhereWithoutTagBInput = {
+    where: TagSimilarityScalarWhereInput
+    data: XOR<TagSimilarityUpdateManyMutationInput, TagSimilarityUncheckedUpdateManyWithoutTagBInput>
+  }
+
+  export type IdeaTagUpsertWithWhereUniqueWithoutTagInput = {
+    where: IdeaTagWhereUniqueInput
+    update: XOR<IdeaTagUpdateWithoutTagInput, IdeaTagUncheckedUpdateWithoutTagInput>
+    create: XOR<IdeaTagCreateWithoutTagInput, IdeaTagUncheckedCreateWithoutTagInput>
+  }
+
+  export type IdeaTagUpdateWithWhereUniqueWithoutTagInput = {
+    where: IdeaTagWhereUniqueInput
+    data: XOR<IdeaTagUpdateWithoutTagInput, IdeaTagUncheckedUpdateWithoutTagInput>
+  }
+
+  export type IdeaTagUpdateManyWithWhereWithoutTagInput = {
+    where: IdeaTagScalarWhereInput
+    data: XOR<IdeaTagUpdateManyMutationInput, IdeaTagUncheckedUpdateManyWithoutTagInput>
+  }
+
+  export type UserTagPreferenceUpsertWithWhereUniqueWithoutTagInput = {
+    where: UserTagPreferenceWhereUniqueInput
+    update: XOR<UserTagPreferenceUpdateWithoutTagInput, UserTagPreferenceUncheckedUpdateWithoutTagInput>
+    create: XOR<UserTagPreferenceCreateWithoutTagInput, UserTagPreferenceUncheckedCreateWithoutTagInput>
+  }
+
+  export type UserTagPreferenceUpdateWithWhereUniqueWithoutTagInput = {
+    where: UserTagPreferenceWhereUniqueInput
+    data: XOR<UserTagPreferenceUpdateWithoutTagInput, UserTagPreferenceUncheckedUpdateWithoutTagInput>
+  }
+
+  export type UserTagPreferenceUpdateManyWithWhereWithoutTagInput = {
+    where: UserTagPreferenceScalarWhereInput
+    data: XOR<UserTagPreferenceUpdateManyMutationInput, UserTagPreferenceUncheckedUpdateManyWithoutTagInput>
+  }
+
+  export type TagCreateWithoutAliasRecordsInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutAliasRecordsInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutAliasRecordsInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutAliasRecordsInput, TagUncheckedCreateWithoutAliasRecordsInput>
+  }
+
+  export type TagUpsertWithoutAliasRecordsInput = {
+    update: XOR<TagUpdateWithoutAliasRecordsInput, TagUncheckedUpdateWithoutAliasRecordsInput>
+    create: XOR<TagCreateWithoutAliasRecordsInput, TagUncheckedCreateWithoutAliasRecordsInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutAliasRecordsInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutAliasRecordsInput, TagUncheckedUpdateWithoutAliasRecordsInput>
+  }
+
+  export type TagUpdateWithoutAliasRecordsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutAliasRecordsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagCreateWithoutSimilarityAsAInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutSimilarityAsAInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutSimilarityAsAInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutSimilarityAsAInput, TagUncheckedCreateWithoutSimilarityAsAInput>
+  }
+
+  export type TagCreateWithoutSimilarityAsBInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutSimilarityAsBInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutSimilarityAsBInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutSimilarityAsBInput, TagUncheckedCreateWithoutSimilarityAsBInput>
+  }
+
+  export type TagUpsertWithoutSimilarityAsAInput = {
+    update: XOR<TagUpdateWithoutSimilarityAsAInput, TagUncheckedUpdateWithoutSimilarityAsAInput>
+    create: XOR<TagCreateWithoutSimilarityAsAInput, TagUncheckedCreateWithoutSimilarityAsAInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutSimilarityAsAInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutSimilarityAsAInput, TagUncheckedUpdateWithoutSimilarityAsAInput>
+  }
+
+  export type TagUpdateWithoutSimilarityAsAInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutSimilarityAsAInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUpsertWithoutSimilarityAsBInput = {
+    update: XOR<TagUpdateWithoutSimilarityAsBInput, TagUncheckedUpdateWithoutSimilarityAsBInput>
+    create: XOR<TagCreateWithoutSimilarityAsBInput, TagUncheckedCreateWithoutSimilarityAsBInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutSimilarityAsBInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutSimilarityAsBInput, TagUncheckedUpdateWithoutSimilarityAsBInput>
+  }
+
+  export type TagUpdateWithoutSimilarityAsBInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutSimilarityAsBInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type IdeaCreateWithoutTagsInput = {
+    id?: string
+    title: string
+    description: string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    field?: FieldCatalogCreateNestedOneWithoutIdeasInput
+    chunks?: IdeaChunkEmbeddingCreateNestedManyWithoutIdeaInput
+    stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
+    swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
+    favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaUncheckedCreateWithoutTagsInput = {
+    id?: string
+    title: string
+    description: string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fieldId?: string | null
+    chunks?: IdeaChunkEmbeddingUncheckedCreateNestedManyWithoutIdeaInput
+    stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
+    swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaCreateOrConnectWithoutTagsInput = {
+    where: IdeaWhereUniqueInput
+    create: XOR<IdeaCreateWithoutTagsInput, IdeaUncheckedCreateWithoutTagsInput>
+  }
+
+  export type TagCreateWithoutIdeaTagsInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    userPreferences?: UserTagPreferenceCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutIdeaTagsInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    userPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutIdeaTagsInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutIdeaTagsInput, TagUncheckedCreateWithoutIdeaTagsInput>
+  }
+
+  export type IdeaUpsertWithoutTagsInput = {
+    update: XOR<IdeaUpdateWithoutTagsInput, IdeaUncheckedUpdateWithoutTagsInput>
+    create: XOR<IdeaCreateWithoutTagsInput, IdeaUncheckedCreateWithoutTagsInput>
+    where?: IdeaWhereInput
+  }
+
+  export type IdeaUpdateToOneWithWhereWithoutTagsInput = {
+    where?: IdeaWhereInput
+    data: XOR<IdeaUpdateWithoutTagsInput, IdeaUncheckedUpdateWithoutTagsInput>
+  }
+
+  export type IdeaUpdateWithoutTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    field?: FieldCatalogUpdateOneWithoutIdeasNestedInput
+    chunks?: IdeaChunkEmbeddingUpdateManyWithoutIdeaNestedInput
+    stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
+    swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
+    favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type IdeaUncheckedUpdateWithoutTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fieldId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunks?: IdeaChunkEmbeddingUncheckedUpdateManyWithoutIdeaNestedInput
+    stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
+    swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type TagUpsertWithoutIdeaTagsInput = {
+    update: XOR<TagUpdateWithoutIdeaTagsInput, TagUncheckedUpdateWithoutIdeaTagsInput>
+    create: XOR<TagCreateWithoutIdeaTagsInput, TagUncheckedCreateWithoutIdeaTagsInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutIdeaTagsInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutIdeaTagsInput, TagUncheckedUpdateWithoutIdeaTagsInput>
+  }
+
+  export type TagUpdateWithoutIdeaTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutIdeaTagsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type UserCreateWithoutTagPreferencesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutTagPreferencesInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionUncheckedCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackUncheckedCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutTagPreferencesInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutTagPreferencesInput, UserUncheckedCreateWithoutTagPreferencesInput>
+  }
+
+  export type TagCreateWithoutUserPreferencesInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    parentTag?: TagCreateNestedOneWithoutChildTagsInput
+    childTags?: TagCreateNestedManyWithoutParentTagInput
+    canonicalTag?: TagCreateNestedOneWithoutCanonicalOfInput
+    canonicalOf?: TagCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagCreateNestedManyWithoutTagInput
+  }
+
+  export type TagUncheckedCreateWithoutUserPreferencesInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    childTags?: TagUncheckedCreateNestedManyWithoutParentTagInput
+    canonicalOf?: TagUncheckedCreateNestedManyWithoutCanonicalTagInput
+    aliasRecords?: TagAliasUncheckedCreateNestedManyWithoutTagInput
+    similarityAsA?: TagSimilarityUncheckedCreateNestedManyWithoutTagAInput
+    similarityAsB?: TagSimilarityUncheckedCreateNestedManyWithoutTagBInput
+    ideaTags?: IdeaTagUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagCreateOrConnectWithoutUserPreferencesInput = {
+    where: TagWhereUniqueInput
+    create: XOR<TagCreateWithoutUserPreferencesInput, TagUncheckedCreateWithoutUserPreferencesInput>
+  }
+
+  export type UserUpsertWithoutTagPreferencesInput = {
+    update: XOR<UserUpdateWithoutTagPreferencesInput, UserUncheckedUpdateWithoutTagPreferencesInput>
+    create: XOR<UserCreateWithoutTagPreferencesInput, UserUncheckedCreateWithoutTagPreferencesInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutTagPreferencesInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutTagPreferencesInput, UserUncheckedUpdateWithoutTagPreferencesInput>
+  }
+
+  export type UserUpdateWithoutTagPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutTagPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUncheckedUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUncheckedUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type TagUpsertWithoutUserPreferencesInput = {
+    update: XOR<TagUpdateWithoutUserPreferencesInput, TagUncheckedUpdateWithoutUserPreferencesInput>
+    create: XOR<TagCreateWithoutUserPreferencesInput, TagUncheckedCreateWithoutUserPreferencesInput>
+    where?: TagWhereInput
+  }
+
+  export type TagUpdateToOneWithWhereWithoutUserPreferencesInput = {
+    where?: TagWhereInput
+    data: XOR<TagUpdateWithoutUserPreferencesInput, TagUncheckedUpdateWithoutUserPreferencesInput>
+  }
+
+  export type TagUpdateWithoutUserPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutUserPreferencesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type UserCreateWithoutInterestProfileInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutInterestProfileInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionUncheckedCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackUncheckedCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutInterestProfileInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutInterestProfileInput, UserUncheckedCreateWithoutInterestProfileInput>
+  }
+
+  export type UserUpsertWithoutInterestProfileInput = {
+    update: XOR<UserUpdateWithoutInterestProfileInput, UserUncheckedUpdateWithoutInterestProfileInput>
+    create: XOR<UserCreateWithoutInterestProfileInput, UserUncheckedCreateWithoutInterestProfileInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInterestProfileInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInterestProfileInput, UserUncheckedUpdateWithoutInterestProfileInput>
+  }
+
+  export type UserUpdateWithoutInterestProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutInterestProfileInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUncheckedUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUncheckedUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutInteractionsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutInteractionsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionUncheckedCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackUncheckedCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutInteractionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+  }
+
+  export type IdeaCreateWithoutInteractionsInput = {
+    id?: string
+    title: string
+    description: string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    field?: FieldCatalogCreateNestedOneWithoutIdeasInput
+    chunks?: IdeaChunkEmbeddingCreateNestedManyWithoutIdeaInput
+    stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
+    swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
+    favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaUncheckedCreateWithoutInteractionsInput = {
+    id?: string
+    title: string
+    description: string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fieldId?: string | null
+    chunks?: IdeaChunkEmbeddingUncheckedCreateNestedManyWithoutIdeaInput
+    stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
+    swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaCreateOrConnectWithoutInteractionsInput = {
+    where: IdeaWhereUniqueInput
+    create: XOR<IdeaCreateWithoutInteractionsInput, IdeaUncheckedCreateWithoutInteractionsInput>
+  }
+
+  export type UserUpsertWithoutInteractionsInput = {
+    update: XOR<UserUpdateWithoutInteractionsInput, UserUncheckedUpdateWithoutInteractionsInput>
+    create: XOR<UserCreateWithoutInteractionsInput, UserUncheckedCreateWithoutInteractionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutInteractionsInput, UserUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type UserUpdateWithoutInteractionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutInteractionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUncheckedUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUncheckedUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type IdeaUpsertWithoutInteractionsInput = {
+    update: XOR<IdeaUpdateWithoutInteractionsInput, IdeaUncheckedUpdateWithoutInteractionsInput>
+    create: XOR<IdeaCreateWithoutInteractionsInput, IdeaUncheckedCreateWithoutInteractionsInput>
+    where?: IdeaWhereInput
+  }
+
+  export type IdeaUpdateToOneWithWhereWithoutInteractionsInput = {
+    where?: IdeaWhereInput
+    data: XOR<IdeaUpdateWithoutInteractionsInput, IdeaUncheckedUpdateWithoutInteractionsInput>
+  }
+
+  export type IdeaUpdateWithoutInteractionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    field?: FieldCatalogUpdateOneWithoutIdeasNestedInput
+    chunks?: IdeaChunkEmbeddingUpdateManyWithoutIdeaNestedInput
+    stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
+    swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
+    favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type IdeaUncheckedUpdateWithoutInteractionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fieldId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunks?: IdeaChunkEmbeddingUncheckedUpdateManyWithoutIdeaNestedInput
+    stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
+    swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type UserCreateWithoutImpressionsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    posts?: PostCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
+    favorites?: FavoriteCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutImpressionsInput = {
+    id: string
+    name: string
+    email: string
+    emailVerified?: boolean
+    image?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    onboardingCompleted?: boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    posts?: PostUncheckedCreateNestedManyWithoutCreatedByInput
+    fieldSelections?: UserFieldSelectionUncheckedCreateNestedManyWithoutUserInput
+    stacks?: IdeaStackUncheckedCreateNestedManyWithoutUserInput
+    swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutImpressionsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutImpressionsInput, UserUncheckedCreateWithoutImpressionsInput>
+  }
+
+  export type IdeaCreateWithoutImpressionsInput = {
+    id?: string
+    title: string
+    description: string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    field?: FieldCatalogCreateNestedOneWithoutIdeasInput
+    chunks?: IdeaChunkEmbeddingCreateNestedManyWithoutIdeaInput
+    stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
+    swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
+    favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaUncheckedCreateWithoutImpressionsInput = {
+    id?: string
+    title: string
+    description: string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    fieldId?: string | null
+    chunks?: IdeaChunkEmbeddingUncheckedCreateNestedManyWithoutIdeaInput
+    stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
+    swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
+    favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+  }
+
+  export type IdeaCreateOrConnectWithoutImpressionsInput = {
+    where: IdeaWhereUniqueInput
+    create: XOR<IdeaCreateWithoutImpressionsInput, IdeaUncheckedCreateWithoutImpressionsInput>
+  }
+
+  export type UserUpsertWithoutImpressionsInput = {
+    update: XOR<UserUpdateWithoutImpressionsInput, UserUncheckedUpdateWithoutImpressionsInput>
+    create: XOR<UserCreateWithoutImpressionsInput, UserUncheckedCreateWithoutImpressionsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutImpressionsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutImpressionsInput, UserUncheckedUpdateWithoutImpressionsInput>
+  }
+
+  export type UserUpdateWithoutImpressionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    posts?: PostUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutImpressionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    onboardingCompleted?: BoolFieldUpdateOperationsInput | boolean
+    preferenceVector?: NullableJsonNullValueInput | InputJsonValue
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    posts?: PostUncheckedUpdateManyWithoutCreatedByNestedInput
+    fieldSelections?: UserFieldSelectionUncheckedUpdateManyWithoutUserNestedInput
+    stacks?: IdeaStackUncheckedUpdateManyWithoutUserNestedInput
+    swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type IdeaUpsertWithoutImpressionsInput = {
+    update: XOR<IdeaUpdateWithoutImpressionsInput, IdeaUncheckedUpdateWithoutImpressionsInput>
+    create: XOR<IdeaCreateWithoutImpressionsInput, IdeaUncheckedCreateWithoutImpressionsInput>
+    where?: IdeaWhereInput
+  }
+
+  export type IdeaUpdateToOneWithWhereWithoutImpressionsInput = {
+    where?: IdeaWhereInput
+    data: XOR<IdeaUpdateWithoutImpressionsInput, IdeaUncheckedUpdateWithoutImpressionsInput>
+  }
+
+  export type IdeaUpdateWithoutImpressionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    field?: FieldCatalogUpdateOneWithoutIdeasNestedInput
+    chunks?: IdeaChunkEmbeddingUpdateManyWithoutIdeaNestedInput
+    stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
+    swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
+    favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+  }
+
+  export type IdeaUncheckedUpdateWithoutImpressionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    vector?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    fieldId?: NullableStringFieldUpdateOperationsInput | string | null
+    chunks?: IdeaChunkEmbeddingUncheckedUpdateManyWithoutIdeaNestedInput
+    stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
+    swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
+    favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type UserCreateWithoutStacksInput = {
@@ -23191,6 +38311,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutStacksInput = {
@@ -23210,6 +38334,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutStacksInput = {
@@ -23293,6 +38421,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutStacksInput = {
@@ -23312,6 +38444,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type IdeaStackItemUpsertWithWhereUniqueWithoutStackInput = {
@@ -23380,6 +38516,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUncheckedCreateWithoutStackItemsInput = {
@@ -23393,6 +38532,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUncheckedCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaCreateOrConnectWithoutStackItemsInput = {
@@ -23451,6 +38593,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateWithoutStackItemsInput = {
@@ -23464,6 +38609,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUncheckedUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type UserCreateWithoutSwipeEventsInput = {
@@ -23483,6 +38631,10 @@ export namespace Prisma {
     stacks?: IdeaStackCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSwipeEventsInput = {
@@ -23502,6 +38654,10 @@ export namespace Prisma {
     stacks?: IdeaStackUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSwipeEventsInput = {
@@ -23520,6 +38676,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingCreateNestedManyWithoutIdeaInput
     stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUncheckedCreateWithoutSwipeEventsInput = {
@@ -23533,6 +38692,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUncheckedCreateNestedManyWithoutIdeaInput
     stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaCreateOrConnectWithoutSwipeEventsInput = {
@@ -23591,6 +38753,10 @@ export namespace Prisma {
     stacks?: IdeaStackUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSwipeEventsInput = {
@@ -23610,6 +38776,10 @@ export namespace Prisma {
     stacks?: IdeaStackUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type IdeaUpsertWithoutSwipeEventsInput = {
@@ -23634,6 +38804,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUpdateManyWithoutIdeaNestedInput
     stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateWithoutSwipeEventsInput = {
@@ -23647,6 +38820,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUncheckedUpdateManyWithoutIdeaNestedInput
     stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaStackUpsertWithoutSwipeEventsInput = {
@@ -23695,6 +38871,10 @@ export namespace Prisma {
     stacks?: IdeaStackCreateNestedManyWithoutUserInput
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutFavoritesInput = {
@@ -23714,6 +38894,10 @@ export namespace Prisma {
     stacks?: IdeaStackUncheckedCreateNestedManyWithoutUserInput
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutFavoritesInput = {
@@ -23732,6 +38916,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingCreateNestedManyWithoutIdeaInput
     stackItems?: IdeaStackItemCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaUncheckedCreateWithoutFavoritesInput = {
@@ -23745,6 +38932,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUncheckedCreateNestedManyWithoutIdeaInput
     stackItems?: IdeaStackItemUncheckedCreateNestedManyWithoutIdeaInput
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutIdeaInput
+    tags?: IdeaTagUncheckedCreateNestedManyWithoutIdeaInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutIdeaInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutIdeaInput
   }
 
   export type IdeaCreateOrConnectWithoutFavoritesInput = {
@@ -23780,6 +38970,10 @@ export namespace Prisma {
     stacks?: IdeaStackUpdateManyWithoutUserNestedInput
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutFavoritesInput = {
@@ -23799,6 +38993,10 @@ export namespace Prisma {
     stacks?: IdeaStackUncheckedUpdateManyWithoutUserNestedInput
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type IdeaUpsertWithoutFavoritesInput = {
@@ -23823,6 +39021,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUpdateManyWithoutIdeaNestedInput
     stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateWithoutFavoritesInput = {
@@ -23836,6 +39037,9 @@ export namespace Prisma {
     chunks?: IdeaChunkEmbeddingUncheckedUpdateManyWithoutIdeaNestedInput
     stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type UserCreateWithoutPreferenceLogsInput = {
@@ -23855,6 +39059,10 @@ export namespace Prisma {
     stacks?: IdeaStackCreateNestedManyWithoutUserInput
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPreferenceLogsInput = {
@@ -23874,6 +39082,10 @@ export namespace Prisma {
     stacks?: IdeaStackUncheckedCreateNestedManyWithoutUserInput
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPreferenceLogsInput = {
@@ -23909,6 +39121,10 @@ export namespace Prisma {
     stacks?: IdeaStackUpdateManyWithoutUserNestedInput
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPreferenceLogsInput = {
@@ -23928,6 +39144,10 @@ export namespace Prisma {
     stacks?: IdeaStackUncheckedUpdateManyWithoutUserNestedInput
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -23947,6 +39167,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -23966,6 +39190,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -24001,6 +39229,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -24020,6 +39252,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAccountsInput = {
@@ -24039,6 +39275,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventCreateNestedManyWithoutUserInput
     favorites?: FavoriteCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -24058,6 +39298,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedCreateNestedManyWithoutUserInput
     favorites?: FavoriteUncheckedCreateNestedManyWithoutUserInput
     preferenceLogs?: PreferenceUpdateLogUncheckedCreateNestedManyWithoutUserInput
+    tagPreferences?: UserTagPreferenceUncheckedCreateNestedManyWithoutUserInput
+    interestProfile?: UserInterestProfileUncheckedCreateNestedOneWithoutUserInput
+    interactions?: IdeaInteractionUncheckedCreateNestedManyWithoutUserInput
+    impressions?: RecommendationImpressionUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -24093,6 +39337,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -24112,6 +39360,10 @@ export namespace Prisma {
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutUserNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutUserNestedInput
     preferenceLogs?: PreferenceUpdateLogUncheckedUpdateManyWithoutUserNestedInput
+    tagPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutUserNestedInput
+    interestProfile?: UserInterestProfileUncheckedUpdateOneWithoutUserNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutUserNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type SessionCreateManyUserInput = {
@@ -24179,6 +39431,38 @@ export namespace Prisma {
     reason: string
     previousVector?: NullableJsonNullValueInput | InputJsonValue
     updatedVector: JsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type UserTagPreferenceCreateManyUserInput = {
+    id?: string
+    tagId: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IdeaInteractionCreateManyUserInput = {
+    id?: string
+    ideaId: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type RecommendationImpressionCreateManyUserInput = {
+    id?: string
+    ideaId: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
     createdAt?: Date | string
   }
 
@@ -24390,6 +39674,102 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UserTagPreferenceUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tag?: TagUpdateOneRequiredWithoutUserPreferencesNestedInput
+  }
+
+  export type UserTagPreferenceUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserTagPreferenceUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    idea?: IdeaUpdateOneRequiredWithoutInteractionsNestedInput
+  }
+
+  export type IdeaInteractionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationImpressionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    idea?: IdeaUpdateOneRequiredWithoutImpressionsNestedInput
+  }
+
+  export type RecommendationImpressionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationImpressionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserFieldSelectionCreateManyFieldInput = {
     id?: string
     userId: string
@@ -24434,6 +39814,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateWithoutFieldInput = {
@@ -24447,6 +39830,9 @@ export namespace Prisma {
     stackItems?: IdeaStackItemUncheckedUpdateManyWithoutIdeaNestedInput
     swipeEvents?: SwipeEventUncheckedUpdateManyWithoutIdeaNestedInput
     favorites?: FavoriteUncheckedUpdateManyWithoutIdeaNestedInput
+    tags?: IdeaTagUncheckedUpdateManyWithoutIdeaNestedInput
+    interactions?: IdeaInteractionUncheckedUpdateManyWithoutIdeaNestedInput
+    impressions?: RecommendationImpressionUncheckedUpdateManyWithoutIdeaNestedInput
   }
 
   export type IdeaUncheckedUpdateManyWithoutFieldInput = {
@@ -24484,6 +39870,36 @@ export namespace Prisma {
   export type FavoriteCreateManyIdeaInput = {
     id?: string
     userId: string
+    createdAt?: Date | string
+  }
+
+  export type IdeaTagCreateManyIdeaInput = {
+    id?: string
+    tagId: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IdeaInteractionCreateManyIdeaInput = {
+    id?: string
+    userId: string
+    interactionType: $Enums.InteractionType
+    reward: number
+    dwellTimeMs?: number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+  }
+
+  export type RecommendationImpressionCreateManyIdeaInput = {
+    id?: string
+    userId: string
+    rank: number
+    explicitScore: number
+    latentScore: number
+    explorationScore: number
+    finalScore: number
     createdAt?: Date | string
   }
 
@@ -24572,6 +39988,388 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaTagUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tag?: TagUpdateOneRequiredWithoutIdeaTagsNestedInput
+  }
+
+  export type IdeaTagUncheckedUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaTagUncheckedUpdateManyWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutInteractionsNestedInput
+  }
+
+  export type IdeaInteractionUncheckedUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaInteractionUncheckedUpdateManyWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    interactionType?: EnumInteractionTypeFieldUpdateOperationsInput | $Enums.InteractionType
+    reward?: FloatFieldUpdateOperationsInput | number
+    dwellTimeMs?: NullableIntFieldUpdateOperationsInput | number | null
+    context?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationImpressionUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutImpressionsNestedInput
+  }
+
+  export type RecommendationImpressionUncheckedUpdateWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RecommendationImpressionUncheckedUpdateManyWithoutIdeaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    rank?: IntFieldUpdateOperationsInput | number
+    explicitScore?: FloatFieldUpdateOperationsInput | number
+    latentScore?: FloatFieldUpdateOperationsInput | number
+    explorationScore?: FloatFieldUpdateOperationsInput | number
+    finalScore?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagCreateManyParentTagInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: $Enums.TagStatus
+    canonicalTagId?: string | null
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagCreateManyCanonicalTagInput = {
+    id?: string
+    slug: string
+    label: string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: string | null
+    status?: $Enums.TagStatus
+    source?: $Enums.TagSource
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagAliasCreateManyTagInput = {
+    id?: string
+    alias: string
+    createdAt?: Date | string
+  }
+
+  export type TagSimilarityCreateManyTagAInput = {
+    id?: string
+    tagBId: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagSimilarityCreateManyTagBInput = {
+    id?: string
+    tagAId: string
+    similarity: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IdeaTagCreateManyTagInput = {
+    id?: string
+    ideaId: string
+    weight?: number
+    sourceConfidence?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserTagPreferenceCreateManyTagInput = {
+    id?: string
+    userId: string
+    weight?: number
+    explicitWeight?: number
+    implicitWeight?: number
+    lastReinforcedAt?: Date | string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagUpdateWithoutParentTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalTag?: TagUpdateOneWithoutCanonicalOfNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutParentTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateManyWithoutParentTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    canonicalTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagUpdateWithoutCanonicalTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    parentTag?: TagUpdateOneWithoutChildTagsNestedInput
+    childTags?: TagUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateWithoutCanonicalTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    childTags?: TagUncheckedUpdateManyWithoutParentTagNestedInput
+    canonicalOf?: TagUncheckedUpdateManyWithoutCanonicalTagNestedInput
+    aliasRecords?: TagAliasUncheckedUpdateManyWithoutTagNestedInput
+    similarityAsA?: TagSimilarityUncheckedUpdateManyWithoutTagANestedInput
+    similarityAsB?: TagSimilarityUncheckedUpdateManyWithoutTagBNestedInput
+    ideaTags?: IdeaTagUncheckedUpdateManyWithoutTagNestedInput
+    userPreferences?: UserTagPreferenceUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagUncheckedUpdateManyWithoutCanonicalTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    slug?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    embedding?: NullableJsonNullValueInput | InputJsonValue
+    parentTagId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumTagStatusFieldUpdateOperationsInput | $Enums.TagStatus
+    source?: EnumTagSourceFieldUpdateOperationsInput | $Enums.TagSource
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagAliasUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagAliasUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagAliasUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    alias?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagSimilarityUpdateWithoutTagAInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tagB?: TagUpdateOneRequiredWithoutSimilarityAsBNestedInput
+  }
+
+  export type TagSimilarityUncheckedUpdateWithoutTagAInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagBId?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagSimilarityUncheckedUpdateManyWithoutTagAInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagBId?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagSimilarityUpdateWithoutTagBInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tagA?: TagUpdateOneRequiredWithoutSimilarityAsANestedInput
+  }
+
+  export type TagSimilarityUncheckedUpdateWithoutTagBInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagAId?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagSimilarityUncheckedUpdateManyWithoutTagBInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tagAId?: StringFieldUpdateOperationsInput | string
+    similarity?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaTagUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    idea?: IdeaUpdateOneRequiredWithoutTagsNestedInput
+  }
+
+  export type IdeaTagUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IdeaTagUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    ideaId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    sourceConfidence?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserTagPreferenceUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutTagPreferencesNestedInput
+  }
+
+  export type UserTagPreferenceUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserTagPreferenceUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    weight?: FloatFieldUpdateOperationsInput | number
+    explicitWeight?: FloatFieldUpdateOperationsInput | number
+    implicitWeight?: FloatFieldUpdateOperationsInput | number
+    lastReinforcedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IdeaStackItemCreateManyStackInput = {

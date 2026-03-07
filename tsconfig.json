@@ -27,8 +27,10 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
-    }
+      "~/*": ["./src/*"],
+      "~prisma/*": ["./generated/prisma/*"]
+    },
+    "types": ["node"]
   },
   "include": [
     "next-env.d.ts",
@@ -36,7 +38,13 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "generated/prisma/**/*.d.ts"
   ],
-  "exclude": ["node_modules", "generated"]
+  "exclude": [
+    "node_modules",
+    "generated/**/*.js",
+    "generated/**/*.cjs",
+    "generated/**/*.mjs"
+  ]
 }

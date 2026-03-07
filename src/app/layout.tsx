@@ -21,11 +21,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
-      <body>
+    <html
+      lang="en"
+      className={`${geist.variable} bg-background text-foreground`}
+    >
+      <body className="relative w-screen overflow-y-auto pb-24 md:pb-0">
         <TRPCReactProvider>
           <AppHeader />
-          {children}
+          <div className="bg-background mt-28">{children}</div>
         </TRPCReactProvider>
       </body>
     </html>

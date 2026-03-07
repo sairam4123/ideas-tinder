@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Sparkles,
@@ -15,46 +16,142 @@ import {
 import { SessionGuard } from "~/app/_components/session-guard";
 import { api } from "~/trpc/react";
 
+type NavigationTrailItem = {
+  id: string;
+  title: string;
+};
+
 function IdeaDetailsContent() {
   const params = useParams<{ id: string }>();
+  const searchParams = useSearchParams();
   const ideaId = params.id;
+  const source = searchParams.get("from") ?? "stack";
+  const sourceParam = source ? `?from=${encodeURIComponent(source)}` : "";
+  const backHref =
+    source === "profile"
+      ? "/user"
+      : source === "profile-favorites"
+        ? "/user/favorites"
+        : "/";
+  const backLabel =
+    source === "profile"
+      ? "Back to profile"
+      : source === "profile-favorites"
+        ? "Back to favorites"
+        : "Back to stack";
 
   const detailsQuery = api.idea.getIdeaDetails.useQuery({ ideaId });
   const swipeMutation = api.idea.swipeIdea.useMutation();
+  const [navigationTrail, setNavigationTrail] = useState<NavigationTrailItem[]>(
+    [],
+  );
+  const currentIdeaId = detailsQuery.data?.idea.id;
+  const currentIdeaTitle = detailsQuery.data?.idea.title;
+
+  useEffect(() => {
+    if (!currentIdeaId || !currentIdeaTitle) {
+      return;
+    }
+
+    const storageKey = "idea-navigation-trail";
+
+    try {
+      const raw = window.sessionStorage.getItem(storageKey);
+      const parsed = raw
+        ? (JSON.parse(raw) as NavigationTrailItem[])
+        : ([] as NavigationTrailItem[]);
+
+      const withoutCurrent = parsed.filter(
+        (entry) => entry.id !== currentIdeaId,
+      );
+      const updatedTrail = [
+        ...withoutCurrent,
+        { id: currentIdeaId, title: currentIdeaTitle },
+      ].slice(-8);
+
+      window.sessionStorage.setItem(storageKey, JSON.stringify(updatedTrail));
+      setNavigationTrail(updatedTrail);
+    } catch {
+      setNavigationTrail([{ id: currentIdeaId, title: currentIdeaTitle }]);
+    }
+  }, [currentIdeaId, currentIdeaTitle]);
 
   if (detailsQuery.isPending) {
     return (
-      <main className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-6 bg-slate-50 px-4 py-8">
-        <section className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
-          <div className="mb-6 h-10 w-2/3 animate-pulse rounded-xl bg-slate-200" />
-          <div className="mb-6 space-y-3">
-            <div className="h-5 w-full animate-pulse rounded-lg bg-slate-200" />
-            <div className="h-5 w-full animate-pulse rounded-lg bg-slate-200" />
-            <div className="h-5 w-4/5 animate-pulse rounded-lg bg-slate-200" />
-          </div>
-          <div className="mb-8 h-5 w-1/4 animate-pulse rounded-lg bg-slate-200" />
-          <div className="flex gap-3">
-            <div className="h-12 w-24 animate-pulse rounded-xl bg-slate-200" />
-            <div className="h-12 w-32 animate-pulse rounded-xl bg-slate-200" />
-            <div className="h-12 w-24 animate-pulse rounded-xl bg-slate-200" />
+      <main className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 bg-background px-4 py-8">
+        <div>
+          <div className="skeleton mb-6 h-5 w-32 rounded-lg" />
+
+          <section className="mb-4 rounded-2xl border border-border bg-background-surface p-4 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="skeleton h-5 w-60 rounded-lg" />
+              <div className="flex gap-2">
+                <div className="skeleton h-7 w-18 rounded-lg" />
+                <div className="skeleton h-7 w-16 rounded-lg" />
+              </div>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <div className="skeleton h-6 w-24 rounded-full" />
+              <div className="skeleton h-6 w-28 rounded-full" />
+              <div className="skeleton h-6 w-20 rounded-full" />
+            </div>
+          </section>
+
+          <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+            <div className="mb-6 flex flex-wrap gap-2">
+              <div className="skeleton h-6 w-28 rounded-full" />
+              <div className="skeleton h-6 w-36 rounded-full" />
+            </div>
+            <div className="skeleton mb-3 h-10 w-3/4 rounded-xl" />
+            <div className="space-y-2">
+              <div className="skeleton h-5 w-full rounded-lg" />
+              <div className="skeleton h-5 w-11/12 rounded-lg" />
+              <div className="skeleton h-5 w-4/5 rounded-lg" />
+            </div>
+            <div className="mt-10 flex flex-wrap gap-3 border-t border-border pt-8">
+              <div className="skeleton h-12 w-24 rounded-xl" />
+              <div className="skeleton h-12 w-24 rounded-xl" />
+              <div className="skeleton h-12 w-28 rounded-xl" />
+            </div>
+          </section>
+        </div>
+
+        <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+          <div className="skeleton mb-6 h-7 w-36 rounded-lg" />
+          <div className="rounded-2xl border border-border bg-background-muted p-6">
+            <div className="skeleton mb-5 h-5 w-48 rounded-lg" />
+            <div className="skeleton mb-5 h-3 w-full rounded-full" />
+            <div className="skeleton h-4 w-2/3 rounded-lg" />
           </div>
         </section>
 
-        <section className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
-          <div className="mb-6 h-7 w-1/4 animate-pulse rounded-lg bg-slate-200" />
-          <div className="mb-3 h-5 w-full animate-pulse rounded-lg bg-slate-200" />
-          <div className="h-5 w-1/3 animate-pulse rounded-lg bg-slate-200" />
+        <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+          <div className="skeleton mb-6 h-7 w-56 rounded-lg" />
+          <div className="grid gap-3 sm:grid-cols-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="rounded-xl border border-border bg-background-muted p-4"
+              >
+                <div className="skeleton mb-2 h-5 w-1/2 rounded-lg" />
+                <div className="skeleton mb-2 h-4 w-3/5 rounded-lg" />
+                <div className="skeleton h-3 w-4/5 rounded-lg" />
+              </div>
+            ))}
+          </div>
         </section>
 
-        <section className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
-          <div className="mb-6 h-7 w-1/4 animate-pulse rounded-lg bg-slate-200" />
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="rounded-2xl border border-slate-100 p-5">
-                <div className="mb-3 h-6 w-1/2 animate-pulse rounded-lg bg-slate-200" />
-                <div className="mb-2 h-5 w-full animate-pulse rounded-lg bg-slate-200" />
-                <div className="mb-4 h-5 w-4/5 animate-pulse rounded-lg bg-slate-200" />
-                <div className="h-4 w-24 animate-pulse rounded-lg bg-slate-200" />
+        <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+          <div className="skeleton mb-6 h-7 w-40 rounded-lg" />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="rounded-2xl border border-border bg-background-muted p-6"
+              >
+                <div className="skeleton mb-2 h-5 w-4/5 rounded-lg" />
+                <div className="skeleton mb-4 h-4 w-full rounded-lg" />
+                <div className="skeleton h-5 w-20 rounded-lg" />
               </div>
             ))}
           </div>
@@ -65,17 +162,17 @@ function IdeaDetailsContent() {
 
   if (!detailsQuery.data) {
     return (
-      <main className="flex min-h-[calc(100vh-73px)] items-center justify-center bg-slate-50 px-4">
+      <main className="flex min-h-[calc(100vh-73px)] items-center justify-center bg-background px-4">
         <div className="flex flex-col items-center gap-4 text-center">
-          <h2 className="text-3xl font-black tracking-tight text-slate-800">
+          <h2 className="text-3xl font-black tracking-tight text-foreground-surface">
             Idea not found
           </h2>
-          <p className="font-medium text-slate-500">
+          <p className="font-medium text-foreground-muted">
             We couldn&apos;t locate the details for this idea.
           </p>
           <Link
             href="/"
-            className="mt-4 rounded-xl bg-slate-900 px-6 py-3 font-bold text-white shadow-md transition-all hover:scale-105"
+            className="mt-4 rounded-xl bg-foreground px-6 py-3 font-bold text-white transition-all hover:scale-105"
           >
             Back to Deck
           </Link>
@@ -86,36 +183,97 @@ function IdeaDetailsContent() {
 
   const data = detailsQuery.data;
   const canSwipe = Boolean(data.lastStackId);
+  const trailLinks = navigationTrail
+    .slice()
+    .reverse()
+    .filter((entry) => entry.id !== ideaId)
+    .slice(0, 4);
 
   return (
-    <main className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 bg-slate-50 px-4 py-8">
+    <main className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 bg-background px-4 py-8">
       <div>
         <Link
-          href="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-slate-500 transition-colors hover:text-slate-900"
+          href={backHref}
+          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-foreground-muted transition-colors hover:text-foreground"
         >
-          <ArrowLeft className="h-4 w-4" /> Back to stack
+          <ArrowLeft className="h-4 w-4" /> {backLabel}
         </Link>
 
-        <section className="relative overflow-hidden rounded-3xl border border-slate-100 bg-white p-8 shadow-lg shadow-slate-100/50">
+        <section className="mb-4 rounded-2xl border border-border bg-background-surface p-4 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="text-sm font-semibold text-foreground-surface">
+              {data.navigation
+                ? `Stack navigation: ${data.navigation.currentPosition} / ${data.navigation.totalIdeas}`
+                : "Stack navigation: unavailable for this idea"}
+            </div>
+            <div className="flex items-center gap-2">
+              {data.navigation?.previousIdeaId ? (
+                <Link
+                  href={`/ideas/${data.navigation.previousIdeaId}${sourceParam}`}
+                  className="rounded-lg border border-border bg-background-surface px-3 py-1.5 text-xs font-semibold text-foreground-surface hover:border-slate-300"
+                >
+                  Previous
+                </Link>
+              ) : null}
+              {data.navigation?.nextIdeaId ? (
+                <Link
+                  href={`/ideas/${data.navigation.nextIdeaId}${sourceParam}`}
+                  className="rounded-lg border border-border bg-background-surface px-3 py-1.5 text-xs font-semibold text-foreground-surface hover:border-slate-300"
+                >
+                  Next
+                </Link>
+              ) : null}
+            </div>
+          </div>
+          {trailLinks.length > 0 ? (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {trailLinks.map((entry) => (
+                <Link
+                  key={`trail-${entry.id}`}
+                  href={`/ideas/${entry.id}${sourceParam}`}
+                  className="max-w-48 truncate rounded-full border border-border bg-background-muted px-2.5 py-1 text-xs font-medium text-foreground-muted hover:border-slate-300"
+                  title={entry.title}
+                >
+                  {entry.title}
+                </Link>
+              ))}
+            </div>
+          ) : null}
+        </section>
+
+        <section className="relative overflow-hidden rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
           <div className="pointer-events-none absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-indigo-50 blur-3xl" />
 
           <div className="relative z-10">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs font-bold tracking-wide text-indigo-700 uppercase">
-              <Layers className="h-4 w-4" />
-              <span>{data.idea.field ?? "Discovery"}</span>
+            <div className="mb-6 flex flex-wrap items-center gap-2">
+              <div className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs font-bold tracking-wide text-indigo-700 uppercase">
+                <Layers className="h-4 w-4" />
+                <span>{data.idea.field ?? "Discovery"}</span>
+              </div>
+              {data.interactionStatus.lastActionAt ? (
+                <span className="rounded-full border border-border bg-background-muted px-3 py-1 text-xs font-medium text-foreground-muted">
+                  Last action{" "}
+                  {new Date(
+                    data.interactionStatus.lastActionAt,
+                  ).toLocaleString()}
+                </span>
+              ) : null}
             </div>
 
-            <h1 className="text-4xl leading-tight font-black tracking-tight text-slate-900">
+            <h1 className="text-4xl leading-tight font-black tracking-tight text-foreground">
               {data.idea.title}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed font-medium text-slate-600">
+            <p className="mt-6 text-lg leading-relaxed font-medium text-foreground-muted">
               {data.idea.description}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
               <button
-                className="group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-slate-200 bg-white px-5 py-3 font-bold text-slate-600 shadow-sm transition-all hover:border-red-300 hover:bg-red-50 hover:text-red-600 active:scale-95 disabled:opacity-50 sm:flex-none"
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
+                  data.interactionStatus.isDisliked
+                    ? "border-red-300 bg-red-50 text-red-600"
+                    : "border-border bg-background-surface text-foreground-muted hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+                }`}
                 onClick={() =>
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
@@ -126,10 +284,15 @@ function IdeaDetailsContent() {
                 type="button"
                 disabled={!canSwipe}
               >
-                <X className="h-5 w-5" /> Dislike
+                <X className="h-5 w-5" />
+                {data.interactionStatus.isDisliked ? "Disliked" : "Dislike"}
               </button>
               <button
-                className="group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-slate-200 bg-white px-5 py-3 font-bold text-slate-600 shadow-sm transition-all hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700 active:scale-95 disabled:opacity-50 sm:flex-none"
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
+                  data.interactionStatus.isLiked
+                    ? "border-emerald-300 bg-emerald-50 text-emerald-700"
+                    : "border-border bg-background-surface text-foreground-muted hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
+                }`}
                 onClick={() =>
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
@@ -140,10 +303,15 @@ function IdeaDetailsContent() {
                 type="button"
                 disabled={!canSwipe}
               >
-                <Heart className="h-5 w-5" /> Like
+                <Heart className="h-5 w-5" />
+                {data.interactionStatus.isLiked ? "Liked" : "Like"}
               </button>
               <button
-                className="group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 border-slate-200 bg-white px-5 py-3 font-bold text-slate-600 shadow-sm transition-all hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700 active:scale-95 disabled:opacity-50 sm:flex-none"
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
+                  data.interactionStatus.isFavorited
+                    ? "border-sky-300 bg-sky-50 text-sky-700"
+                    : "border-border bg-background-surface text-foreground-muted hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700"
+                }`}
                 onClick={() =>
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
@@ -154,7 +322,8 @@ function IdeaDetailsContent() {
                 type="button"
                 disabled={!canSwipe}
               >
-                <Star className="h-5 w-5" /> Favorite
+                <Star className="h-5 w-5" />
+                {data.interactionStatus.isFavorited ? "Favorited" : "Favorite"}
               </button>
             </div>
             {!canSwipe ? (
@@ -167,18 +336,18 @@ function IdeaDetailsContent() {
         </section>
       </div>
 
-      <section className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
+      <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
           <div className="rounded-xl bg-purple-100 p-2">
             <Target className="h-6 w-6 text-purple-600" />
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-900">
+          <h2 className="text-2xl font-black tracking-tight text-foreground">
             AI Analysis
           </h2>
         </div>
-        <div className="space-y-4 rounded-2xl border border-slate-100 bg-slate-50 p-6">
+        <div className="space-y-4 rounded-2xl border border-border bg-background-muted p-6">
           <div>
-            <span className="mb-2 block text-xs font-bold tracking-wider text-slate-500 uppercase">
+            <span className="mb-2 block text-xs font-bold tracking-wider text-foreground-muted uppercase">
               Vector Similarity Factor
             </span>
             <div className="flex items-center gap-4">
@@ -190,53 +359,88 @@ function IdeaDetailsContent() {
                   }}
                 />
               </div>
-              <span className="text-sm font-bold text-slate-700">
+              <span className="text-sm font-bold text-foreground-surface">
                 {data.preferenceImpact.similarity.toFixed(3)}
               </span>
             </div>
           </div>
           <div className="border-t border-slate-200 pt-4">
-            <span className="mb-2 block text-xs font-bold tracking-wider text-slate-500 uppercase">
+            <span className="mb-2 block text-xs font-bold tracking-wider text-foreground-muted uppercase">
               Impact Summary
             </span>
-            <p className="leading-relaxed font-medium text-slate-700">
+            <p className="leading-relaxed font-medium text-foreground-surface">
               {data.preferenceImpact.summary}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm">
+      <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+        <div className="mb-6 flex items-center gap-3">
+          <div className="rounded-xl bg-indigo-100 p-2">
+            <Layers className="h-6 w-6 text-indigo-600" />
+          </div>
+          <h2 className="text-2xl font-black tracking-tight text-foreground">
+            Profile Tag Contributions
+          </h2>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2">
+          {data.profileTagContributions.map((item) => (
+            <div
+              key={`contribution-${item.tagId}`}
+              className="rounded-xl border border-border bg-background-muted p-4"
+            >
+              <p className="text-sm font-bold text-foreground">
+                {item.tagLabel}
+              </p>
+              <p className="mt-1 text-xs text-foreground-muted">
+                contribution {item.contribution.toFixed(3)}
+              </p>
+              <p className="mt-1 text-[11px] text-foreground-muted">
+                idea tag {item.ideaTagWeight.toFixed(2)} × profile tag{" "}
+                {item.userTagWeight.toFixed(2)}
+              </p>
+            </div>
+          ))}
+          {data.profileTagContributions.length === 0 ? (
+            <p className="rounded-xl border border-dashed border-border p-4 text-sm text-foreground-muted sm:col-span-2">
+              No tag-level contribution data is available for this idea.
+            </p>
+          ) : null}
+        </div>
+      </section>
+
+      <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
           <div className="rounded-xl bg-blue-100 p-2">
             <Sparkles className="h-6 w-6 text-blue-600" />
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-slate-900">
+          <h2 className="text-2xl font-black tracking-tight text-foreground">
             Related Ideas
           </h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           {data.relatedIdeas.map((relatedIdea) => (
             <article
-              className="flex flex-col rounded-2xl border border-slate-100 bg-slate-50/50 p-6 transition-all hover:border-slate-200 hover:bg-white hover:shadow-md"
+              className="flex flex-col rounded-2xl border border-border bg-background-muted/70 p-6 transition-all hover:border-slate-200 hover:bg-background-surface"
               key={relatedIdea.id}
             >
-              <h3 className="mb-2 line-clamp-2 font-bold text-slate-900">
+              <h3 className="mb-2 line-clamp-2 font-bold text-foreground">
                 {relatedIdea.title}
               </h3>
-              <p className="mb-4 line-clamp-3 grow text-sm font-medium text-slate-600">
+              <p className="mb-4 line-clamp-3 grow text-sm font-medium text-foreground-muted">
                 {relatedIdea.description}
               </p>
               <Link
                 className="mt-auto inline-block text-sm font-bold text-indigo-600 hover:text-indigo-700"
-                href={`/ideas/${relatedIdea.id}`}
+                href={`/ideas/${relatedIdea.id}${sourceParam}`}
               >
                 Explore &rarr;
               </Link>
             </article>
           ))}
           {data.relatedIdeas.length === 0 ? (
-            <p className="col-span-2 rounded-2xl border-2 border-dashed border-slate-200 p-6 text-center text-sm font-medium text-slate-500">
+            <p className="col-span-2 rounded-2xl border-2 border-dashed border-border p-6 text-center text-sm font-medium text-foreground-muted">
               No closely related ideas found in your historical stack.
             </p>
           ) : null}

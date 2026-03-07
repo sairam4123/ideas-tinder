@@ -18,7 +18,20 @@ export async function GET(request: Request) {
 
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
+      let isClosed = false;
+
+      const closeStream = () => {
+        if (isClosed) {
+          return;
+        }
+        isClosed = true;
+        controller.close();
+      };
+
       const pushEvent = (event: string, payload: unknown) => {
+        if (isClosed) {
+          return;
+        }
         controller.enqueue(
           encoder.encode(
             `event: ${event}\ndata: ${JSON.stringify(payload)}\n\n`,
@@ -30,18 +43,30 @@ export async function GET(request: Request) {
         try {
           pushEvent("start", { forceRefresh });
 
-          if (!forceRefresh) {
+          const activeStack = await db.ideaStack.findFirst({
+            where: {
+              userId: session.user.id,
+              expiresAt: { gt: new Date() },
+            },
+            orderBy: { createdAt: "desc" },
+            include: {
+              items: {
+                orderBy: { position: "asc" },
+              },
+            },
+          });
+
+          if (activeStack && !forceRefresh) {
             const stack = await getOrCreateActiveStack({
               db,
               userId: session.user.id,
-              forceRefresh: false,
             });
 
             pushEvent("ready", {
               stackId: stack.id,
               ideaCount: stack.items.length,
             });
-            controller.close();
+            closeStream();
             return;
           }
 
@@ -74,7 +99,7 @@ export async function GET(request: Request) {
             error instanceof Error ? error.message : "Stack stream failed";
           pushEvent("error", { message });
         } finally {
-          controller.close();
+          closeStream();
         }
       };
 
@@ -87,6 +112,7 @@ export async function GET(request: Request) {
       "Content-Type": "text/event-stream",
       "Cache-Control": "no-cache, no-transform",
       Connection: "keep-alive",
+      "Content-Encoding": "none",
       "X-Accel-Buffering": "no",
     },
   });

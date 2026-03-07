@@ -11,10 +11,29 @@ import {
 import {
   asVector,
   averageVectors,
+  blendVectors,
   chunkText,
-  cosineSimilarity,
-  updatePreferenceVector,
+  normalizeVector,
+  vectorMagnitude,
 } from "~/server/services/idea/vector";
+import {
+  applyLazyDecayToUserTags,
+  getUserTagProfileSummary,
+  initializeOrRefreshUserInterestProfile,
+  reinforceUserTagsFromIdea,
+  seedUserTagPreferences,
+  updateLatentProfileFromInteraction,
+} from "~/server/services/idea/profile";
+import {
+  buildCandidateTagsFromIdea,
+  ensureTagsForLabels,
+  mapTagWeights,
+} from "~/server/services/idea/tags";
+import { rankHybridIdeas } from "~/server/services/idea/ranking";
+import {
+  rewardFromSwipeDirection,
+  type SwipeDirection,
+} from "~/server/services/idea/interactions";
 
 const toJsonVector = (vector: number[]): Prisma.InputJsonValue =>
   vector as unknown as Prisma.InputJsonValue;
@@ -78,6 +97,11 @@ const ensureFieldCatalog = async (db: PrismaClient, labels: string[]) => {
 
 export const ensureDefaultFields = async (db: PrismaClient) => {
   await ensureFieldCatalog(db, [...DEFAULT_FIELD_TAXONOMY]);
+  await ensureTagsForLabels({
+    db,
+    labels: [...DEFAULT_FIELD_TAXONOMY],
+    source: "SYSTEM",
+  });
 };
 
 export const saveUserInterestsAndRecompute = async (params: {
@@ -124,6 +148,25 @@ export const saveUserInterestsAndRecompute = async (params: {
     },
   });
 
+  const mappedTags = await ensureTagsForLabels({
+    db,
+    labels: fieldRows.map((field) => field.label),
+    source: "SYSTEM",
+  });
+
+  await seedUserTagPreferences({
+    db,
+    userId,
+    tags: mappedTags,
+    rootSeedWeight: 0.8,
+  });
+
+  await initializeOrRefreshUserInterestProfile({
+    db,
+    userId,
+    latentVector: vector,
+  });
+
   return vector;
 };
 
@@ -161,13 +204,64 @@ const createIdeaWithEmbeddings = async (params: {
     },
   });
 
+  const candidateTags = buildCandidateTagsFromIdea({
+    title,
+    description,
+    fieldLabel,
+    maxTags: 5,
+  });
+
+  const canonicalTags = await ensureTagsForLabels({
+    db,
+    labels: candidateTags,
+    source: "MODEL",
+  });
+
+  const weightedTags = mapTagWeights(canonicalTags);
+
+  for (const weightedTag of weightedTags) {
+    const tag = canonicalTags.find((item) => item.slug === weightedTag.slug);
+    if (!tag) {
+      continue;
+    }
+
+    await db.ideaTag.upsert({
+      where: {
+        ideaId_tagId: {
+          ideaId: idea.id,
+          tagId: tag.id,
+        },
+      },
+      update: {
+        weight: weightedTag.weight,
+        sourceConfidence: 0.8,
+      },
+      create: {
+        ideaId: idea.id,
+        tagId: tag.id,
+        weight: weightedTag.weight,
+        sourceConfidence: 0.8,
+      },
+    });
+  }
+
   return {
     idea,
     vector: ideaVector,
+    tags: canonicalTags,
   };
 };
 
 const getUserPreferenceVector = async (db: PrismaClient, userId: string) => {
+  const profile = await db.userInterestProfile.findUnique({
+    where: { userId },
+    select: { latentVector: true },
+  });
+
+  if (profile?.latentVector) {
+    return asVector(profile.latentVector);
+  }
+
   const user = await db.user.findUnique({
     where: { id: userId },
     select: { preferenceVector: true },
@@ -205,9 +299,7 @@ export const generateFreshStack = async (params: {
   }
 
   const preferenceVector = await getUserPreferenceVector(db, userId);
-  const vectorMagnitude = Math.sqrt(
-    preferenceVector.reduce((sum, value) => sum + value * value, 0),
-  );
+  const magnitude = vectorMagnitude(preferenceVector);
   const vectorPreview = preferenceVector
     .slice(0, 8)
     .map((value) => value.toFixed(3))
@@ -217,7 +309,7 @@ export const generateFreshStack = async (params: {
     fields.length > 0
       ? `Preferred fields: ${fields.join(", ")}. Current vector dimensions: ${
           preferenceVector.length
-        }. Vector magnitude: ${vectorMagnitude.toFixed(3)}.${
+        }. Vector magnitude: ${magnitude.toFixed(3)}.${
           vectorPreview.length > 0 ? ` Vector preview: [${vectorPreview}].` : ""
         }`
       : "No explicit preferences yet.";
@@ -245,15 +337,16 @@ export const generateFreshStack = async (params: {
     },
   });
 
-  const createdIdeas = [] as Array<{
+  const createdCandidates = [] as Array<{
     idea: {
       id: string;
       title: string;
       description: string;
       fieldId: string | null;
       createdAt: Date;
+      vector: number[];
     };
-    score: number;
+    tags: Array<{ tagId: string; weight: number }>;
   }>;
 
   for (const generatedIdea of generatedIdeas) {
@@ -264,19 +357,96 @@ export const generateFreshStack = async (params: {
       fieldLabel: generatedIdea.field,
     });
 
-    const score = cosineSimilarity(preferenceVector, ideaVector);
-    createdIdeas.push({
-      idea,
-      score,
+    const ideaTags = await db.ideaTag.findMany({
+      where: { ideaId: idea.id },
+      select: { tagId: true, weight: true },
+    });
+
+    createdCandidates.push({
+      idea: {
+        ...idea,
+        vector: ideaVector,
+      },
+      tags: ideaTags,
     });
   }
 
-  const rankedIdeas = createdIdeas
-    .sort((a, b) => b.score - a.score)
-    .map((entry) => entry.idea);
+  const historicalIdeas = await db.idea.findMany({
+    where: {
+      swipeEvents: {
+        none: {
+          userId,
+        },
+      },
+    },
+    orderBy: { createdAt: "desc" },
+    take: Math.max(count, 12),
+    include: {
+      tags: {
+        select: {
+          tagId: true,
+          weight: true,
+        },
+      },
+    },
+  });
+
+  const allCandidatesMap = new Map<
+    string,
+    {
+      idea: {
+        id: string;
+        title: string;
+        description: string;
+        fieldId: string | null;
+        createdAt: Date;
+        vector: number[];
+      };
+      tags: Array<{ tagId: string; weight: number }>;
+    }
+  >();
+
+  for (const candidate of createdCandidates) {
+    allCandidatesMap.set(candidate.idea.id, candidate);
+  }
+
+  for (const idea of historicalIdeas) {
+    if (allCandidatesMap.has(idea.id)) {
+      continue;
+    }
+
+    allCandidatesMap.set(idea.id, {
+      idea: {
+        id: idea.id,
+        title: idea.title,
+        description: idea.description,
+        fieldId: idea.fieldId,
+        createdAt: idea.createdAt,
+        vector: asVector(idea.vector),
+      },
+      tags: idea.tags,
+    });
+  }
+
+  await applyLazyDecayToUserTags({ db, userId });
+  const userTagProfile = await getUserTagProfileSummary({ db, userId });
+  const userTagWeightMap = new Map(
+    userTagProfile.topInterests.map((entry) => [entry.tagId, entry.weight]),
+  );
+  const userSeenTagIds = new Set(
+    userTagProfile.topInterests.map((entry) => entry.tagId),
+  );
+
+  const rankedIdeas = rankHybridIdeas({
+    userLatentVector: normalizeVector(preferenceVector),
+    userTagWeights: userTagWeightMap,
+    userSeenTagIds,
+    candidates: Array.from(allCandidatesMap.values()),
+  }).slice(0, count);
 
   for (let index = 0; index < rankedIdeas.length; index += 1) {
-    const idea = rankedIdeas[index]!;
+    const ranked = rankedIdeas[index]!;
+    const idea = ranked.idea;
 
     const stackItem = await db.ideaStackItem.create({
       data: {
@@ -286,6 +456,18 @@ export const generateFreshStack = async (params: {
       },
       select: {
         id: true,
+      },
+    });
+
+    await db.recommendationImpression.create({
+      data: {
+        userId,
+        ideaId: idea.id,
+        rank: index,
+        explicitScore: ranked.explicitScore,
+        latentScore: ranked.latentScore,
+        explorationScore: ranked.explorationScore,
+        finalScore: ranked.finalScore,
       },
     });
 
@@ -320,7 +502,7 @@ export const getOrCreateActiveStack = async (params: {
   userId: string;
   forceRefresh?: boolean;
 }) => {
-  const { db, userId, forceRefresh = false } = params;
+  const { db, userId } = params;
 
   const active = await db.ideaStack.findFirst({
     where: {
@@ -336,20 +518,8 @@ export const getOrCreateActiveStack = async (params: {
     },
   });
 
-  if (active && !forceRefresh) {
-    const latestPreferenceUpdate = await db.preferenceUpdateLog.findFirst({
-      where: { userId },
-      orderBy: { createdAt: "desc" },
-      select: { createdAt: true },
-    });
-
-    const hasPreferenceUpdatesAfterStack =
-      latestPreferenceUpdate !== null &&
-      latestPreferenceUpdate.createdAt > active.createdAt;
-
-    if (!hasPreferenceUpdatesAfterStack) {
-      return active;
-    }
+  if (active) {
+    return active;
   }
 
   return generateFreshStack({ db, userId });
@@ -360,32 +530,26 @@ export const registerSwipe = async (params: {
   userId: string;
   stackId: string;
   ideaId: string;
-  direction: "left" | "right" | "top";
+  direction: SwipeDirection;
+  dwellTimeMs?: number;
 }) => {
-  const { db, userId, stackId, ideaId, direction } = params;
+  const { db, userId, stackId, ideaId, direction, dwellTimeMs } = params;
 
-  const actionMap = {
-    left: {
-      action: "DISLIKE",
-      delta: env.SWIPE_WEIGHT_LEFT,
-      favorite: false,
-    },
-    right: {
-      action: "FAVE_ONLY",
-      delta: env.SWIPE_WEIGHT_RIGHT,
-      favorite: false,
-    },
-    top: {
-      action: "LIKE_AND_FAVE",
-      delta: env.SWIPE_WEIGHT_TOP,
-      favorite: true,
-    },
-  } as const;
-
-  const actionConfig = actionMap[direction];
+  const interaction = rewardFromSwipeDirection(direction, dwellTimeMs);
 
   const [idea, user] = await Promise.all([
-    db.idea.findUnique({ where: { id: ideaId }, select: { vector: true } }),
+    db.idea.findUnique({
+      where: { id: ideaId },
+      select: {
+        vector: true,
+        tags: {
+          select: {
+            tagId: true,
+            weight: true,
+          },
+        },
+      },
+    }),
     db.user.findUnique({
       where: { id: userId },
       select: { preferenceVector: true },
@@ -398,10 +562,10 @@ export const registerSwipe = async (params: {
 
   const previousVector = asVector(user?.preferenceVector);
   const ideaVector = asVector(idea.vector);
-  const updatedVector = updatePreferenceVector(
+  let updatedVector = blendVectors(
     previousVector,
     ideaVector,
-    actionConfig.delta,
+    interaction.reward,
     env.PREF_LEARNING_RATE,
   );
 
@@ -411,12 +575,12 @@ export const registerSwipe = async (params: {
         userId,
         ideaId,
         stackId,
-        action: actionConfig.action,
-        scoreDelta: actionConfig.delta,
+        action: interaction.swipeAction,
+        scoreDelta: interaction.reward,
       },
     });
 
-    if (actionConfig.favorite) {
+    if (interaction.shouldFavorite) {
       await tx.favorite.upsert({
         where: {
           userId_ideaId: {
@@ -432,19 +596,50 @@ export const registerSwipe = async (params: {
       });
     }
 
+    await tx.ideaInteraction.create({
+      data: {
+        userId,
+        ideaId,
+        interactionType: interaction.interactionType,
+        reward: interaction.reward,
+        dwellTimeMs,
+        context: {
+          source: "swipe",
+          stackId,
+          direction,
+        } as Prisma.InputJsonValue,
+      },
+    });
+
+    await applyLazyDecayToUserTags({ db: tx, userId });
+    await reinforceUserTagsFromIdea({
+      db: tx,
+      userId,
+      reward: interaction.reward,
+      ideaTags: idea.tags,
+    });
+
+    const nextLatent = await updateLatentProfileFromInteraction({
+      db: tx,
+      userId,
+      reward: interaction.reward,
+      ideaVector,
+    });
+    updatedVector = nextLatent;
+
     await tx.user.update({
       where: { id: userId },
       data: {
-        preferenceVector: toJsonVector(updatedVector),
+        preferenceVector: toJsonVector(nextLatent),
       },
     });
 
     await tx.preferenceUpdateLog.create({
       data: {
         userId,
-        reason: `swipe:${direction}`,
+        reason: `interaction:${interaction.interactionType}`,
         previousVector: toJsonVector(previousVector),
-        updatedVector: toJsonVector(updatedVector),
+        updatedVector: toJsonVector(nextLatent),
       },
     });
   });

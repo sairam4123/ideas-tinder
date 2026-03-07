@@ -254,6 +254,12 @@ $$
 - `explicitWeight` starts from onboarding
 - `implicitWeight` changes through reinforcement
 
+Treat onboarding values as **initial seeds only**:
+
+- seed explicit weights should decay faster than learned implicit weights
+- onboarding-only tags without reinforcement should fade quickly (for example, over a few weeks)
+- repeated interactions can still re-amplify those tags through `implicitWeight`
+
 Initialize onboarding tags with a bounded prior, for example:
 
 - selected root tags: `0.8`
@@ -291,12 +297,11 @@ This supports “recommended because similar to what you liked” and “avoid t
 
 Use a stable, bounded reward map:
 
-- `VIEW`: `+0.1` if dwell time is meaningful
-- `LIKE`: `+0.8`
-- `SAVE`: `+1.0`
-- `SHARE`: `+1.2`
-- `SKIP`: `-0.6`
-- `GENERATE_RELATED`: `+0.7`
+- `LIKE`: `+1.0`
+- `DISLIKE`: `-1.0`
+- `LIKE+FAV`: `+1.5`
+
+Optional dwell-time contribution should stay minimal (small bounded adjustment only, e.g. `±0.05` to `±0.10` at most) so interaction intent dominates.
 
 This should replace the current narrow left/right/top-only interpretation over time.
 
