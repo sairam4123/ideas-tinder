@@ -35,8 +35,7 @@ export function StackList(props: StackListProps) {
       <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
         {allItems.map((item, itemIndex) => {
           const itemStatus = swipeStatusByIdea[item.idea.id] ?? null;
-          const isCurrent =
-            currentCard.kind === "idea" && itemIndex === index;
+          const isCurrent = currentCard.kind === "idea" && itemIndex === index;
           const isSeen = itemStatus !== null || itemIndex < index;
 
           const statusIcon =

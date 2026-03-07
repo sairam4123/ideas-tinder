@@ -18,7 +18,7 @@ import type {
   SwipeStatus,
 } from "./types";
 
-const parseStreamEvent = <T,>(event: Event): T | null => {
+const parseStreamEvent = <T>(event: Event): T | null => {
   const payload = (event as MessageEvent<string>).data;
   if (typeof payload !== "string") {
     return null;
