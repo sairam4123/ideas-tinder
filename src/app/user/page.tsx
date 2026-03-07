@@ -205,7 +205,7 @@ function UserPageContent() {
   return (
     <main className="bg-background mx-auto min-h-[calc(100vh-73px)] w-full max-w-7xl space-y-6 px-4 py-8 lg:py-10">
       <section className="border-border bg-background-surface relative overflow-hidden rounded-3xl border p-6 shadow-sm lg:p-8">
-        <div className="pointer-events-none absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-indigo-50 blur-3xl" />
+        <div className="pointer-events-none absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-indigo-50 dark:bg-indigo-900/10 blur-[100px]" />
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-4">
           <div>
             <div className="mb-2 flex items-center gap-3">
@@ -221,7 +221,7 @@ function UserPageContent() {
             </p>
           </div>
           <Link
-            className="bg-foreground inline-flex items-center gap-2 rounded-xl px-5 py-2.5 font-semibold text-white transition hover:bg-slate-800"
+            className="bg-foreground inline-flex items-center gap-2 rounded-xl px-5 py-2.5 font-semibold text-background-surface transition hover:bg-slate-800 dark:hover:bg-slate-200"
             href="/onboarding"
           >
             Retune Preferences
@@ -420,7 +420,7 @@ function UserPageContent() {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <button
-                      className="inline-flex items-center gap-1 rounded-md border border-emerald-200 bg-white px-2.5 py-1 text-xs font-semibold text-emerald-700 transition hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="inline-flex items-center gap-1 rounded-md border border-success-soft bg-background-surface px-2.5 py-1 text-xs font-semibold text-success transition hover:bg-success-soft disabled:cursor-not-allowed disabled:opacity-60"
                       onClick={() => boostTag.mutate({ tagId: tag.tagId })}
                       type="button"
                       disabled={
@@ -436,7 +436,7 @@ function UserPageContent() {
                       {boostTag.isPending ? "Boosting..." : "Boost"}
                     </button>
                     <button
-                      className="inline-flex items-center gap-1 rounded-md border border-rose-200 bg-white px-2.5 py-1 text-xs font-semibold text-rose-700 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60"
+                      className="inline-flex items-center gap-1 rounded-md border border-danger-soft bg-background-surface px-2.5 py-1 text-xs font-semibold text-danger transition hover:bg-danger-soft disabled:cursor-not-allowed disabled:opacity-60"
                       onClick={() => muteTag.mutate({ tagId: tag.tagId })}
                       type="button"
                       disabled={
@@ -509,7 +509,7 @@ function UserPageContent() {
             </div>
             <Link
               href="/user/favorites"
-              className="text-sm font-semibold text-indigo-600 hover:text-indigo-700"
+              className="text-sm font-semibold text-primary transition-colors hover:text-primary/80"
             >
               View all
             </Link>
@@ -544,7 +544,7 @@ function UserPageContent() {
                     Saved {new Date(entry.savedAt).toLocaleDateString()}
                   </span>
                   <Link
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-100 bg-white px-3 py-1.5 text-sm font-semibold text-indigo-600 hover:border-indigo-200 hover:text-indigo-700"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-primary-soft bg-background-surface px-3 py-1.5 text-sm font-semibold text-primary transition-colors hover:border-border hover:text-primary"
                     href={`/ideas/${entry.idea.id}?from=profile`}
                   >
                     Open <ArrowRight className="h-4 w-4" />
@@ -564,7 +564,7 @@ function UserPageContent() {
                 </p>
                 <Link
                   href="/"
-                  className="mt-4 inline-block font-semibold text-indigo-600"
+                  className="mt-4 inline-block font-semibold text-primary transition-colors hover:text-primary/80"
                 >
                   Start Swiping &rarr;
                 </Link>

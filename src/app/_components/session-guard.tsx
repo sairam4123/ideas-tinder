@@ -20,8 +20,8 @@ export function SessionGuard(props: {
 
   if (isPending) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4">
-        <p className="text-slate-600">Checking session...</p>
+      <main className="flex min-h-screen items-center justify-center bg-background px-4">
+        <p className="text-foreground-muted">Checking session...</p>
       </main>
     );
   }

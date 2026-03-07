@@ -1,28 +1,30 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --font-sans:
     var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  --color-background: #f4f6fb;
-  --color-foreground: #0f172a;
-  --color-background-surface: #ffffff;
-  --color-foreground-surface: #1e293b;
-  --color-background-muted: #eef2f8;
-  --color-foreground-muted: #64748b;
-  --color-border: #d7dfeb;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-background-surface: var(--background-surface);
+  --color-foreground-surface: var(--foreground-surface);
+  --color-background-muted: var(--background-muted);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-border: var(--border);
 
-  --color-primary: #4f46e5;
-  --color-primary-foreground: #ffffff;
-  --color-primary-soft: #e8eafe;
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
 
-  --color-danger: #dc2626;
-  --color-danger-soft: #fee2e2;
-  --color-success: #059669;
-  --color-success-soft: #d1fae5;
-  --color-info: #0284c7;
-  --color-info-soft: #e0f2fe;
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
 
   --color-white: #ffffff;
   --color-black: #020617;
@@ -80,6 +82,44 @@
 }
 
 @layer base {
+  :root {
+    --background: #f4f6fb;
+    --foreground: #0f172a;
+    --background-surface: #ffffff;
+    --foreground-surface: #1e293b;
+    --background-muted: #eef2f8;
+    --foreground-muted: #64748b;
+    --border: #d7dfeb;
+    --primary: #4f46e5;
+    --primary-foreground: #ffffff;
+    --primary-soft: #e8eafe;
+    --danger: #dc2626;
+    --danger-soft: #fee2e2;
+    --success: #059669;
+    --success-soft: #d1fae5;
+    --info: #0284c7;
+    --info-soft: #e0f2fe;
+  }
+
+  .dark {
+    --background: #09090b;
+    --foreground: #fafafa;
+    --background-surface: #18181b;
+    --foreground-surface: #f4f4f5;
+    --background-muted: #27272a;
+    --foreground-muted: #a1a1aa;
+    --border: #3f3f46;
+    --primary: #818cf8;
+    --primary-foreground: #000000;
+    --primary-soft: #312e81;
+    --danger: #ef4444;
+    --danger-soft: #450a0a;
+    --success: #10b981;
+    --success-soft: #064e3b;
+    --info: #0ea5e9;
+    --info-soft: #082f49;
+  }
+
   html,
   body {
     min-height: 100%;
@@ -107,14 +147,14 @@
   .skeleton {
     position: relative;
     overflow: hidden;
-    background-color: var(--color-slate-200);
+    background-color: var(--color-border);
     animation: pulse 1.8s ease-in-out infinite;
   }
 
   .skeleton-soft {
     position: relative;
     overflow: hidden;
-    background-color: var(--color-slate-100);
+    background-color: var(--color-background-muted);
     animation: pulse 1.8s ease-in-out infinite;
   }
 }
@@ -141,4 +181,23 @@
   transform-style: preserve-3d;
   animation: card-enter-z 260ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform, opacity;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 9999px;
+  border: 3px solid var(--color-background);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-foreground-muted);
 }

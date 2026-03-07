@@ -23,9 +23,9 @@ export default function RegisterPage() {
   }, [session, router]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10">
+    <main className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
       <form
-        className="w-full max-w-md space-y-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm"
+        className="w-full max-w-md space-y-4 rounded-2xl border border-border bg-background-surface p-6 shadow-sm"
         onSubmit={async (event) => {
           event.preventDefault();
           setError(null);
@@ -47,15 +47,15 @@ export default function RegisterPage() {
           router.replace("/onboarding");
         }}
       >
-        <h1 className="text-2xl font-bold text-slate-900">Create account</h1>
-        <p className="text-sm text-slate-600">
+        <h1 className="text-2xl font-bold text-foreground">Create account</h1>
+        <p className="text-sm text-foreground-muted">
           Set up your profile to start ideation.
         </p>
 
-        <label className="block space-y-1 text-sm">
+        <label className="block space-y-1 text-sm text-foreground">
           <span>Name</span>
           <input
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className="w-full rounded-md border border-border bg-background px-3 py-2 text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             onChange={(event) => setName(event.target.value)}
             type="text"
             value={name}
@@ -63,10 +63,10 @@ export default function RegisterPage() {
           />
         </label>
 
-        <label className="block space-y-1 text-sm">
+        <label className="block space-y-1 text-sm text-foreground">
           <span>Email</span>
           <input
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className="w-full rounded-md border border-border bg-background px-3 py-2 text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             onChange={(event) => setEmail(event.target.value)}
             type="email"
             value={email}
@@ -74,10 +74,10 @@ export default function RegisterPage() {
           />
         </label>
 
-        <label className="block space-y-1 text-sm">
+        <label className="block space-y-1 text-sm text-foreground">
           <span>Password</span>
           <input
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className="w-full rounded-md border border-border bg-background px-3 py-2 text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
             onChange={(event) => setPassword(event.target.value)}
             type="password"
             value={password}
@@ -88,16 +88,16 @@ export default function RegisterPage() {
         {error ? <p className="text-sm text-red-600">{error}</p> : null}
 
         <button
-          className="w-full rounded-md bg-slate-900 px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="w-full rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
           type="submit"
           disabled={isLoading}
         >
           {isLoading ? "Creating account..." : "Create account"}
         </button>
 
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-foreground-muted">
           Already have an account?{" "}
-          <Link className="font-medium text-slate-900" href="/auth/login">
+          <Link className="font-medium text-foreground hover:text-primary transition-colors" href="/auth/login">
             Login
           </Link>
         </p>

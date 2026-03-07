@@ -64,7 +64,7 @@ function FavoritesPageContent() {
           </div>
           <Link
             href="/user"
-            className="inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
           >
             <ArrowLeft className="h-4 w-4" /> Back to Profile
           </Link>
@@ -84,7 +84,7 @@ function FavoritesPageContent() {
           </p>
           <Link
             href="/"
-            className="mt-4 inline-block font-semibold text-indigo-600"
+            className="mt-4 inline-block font-semibold text-primary transition-colors hover:text-primary/80"
           >
             Start Swiping &rarr;
           </Link>
@@ -130,7 +130,7 @@ function FavoritesPageContent() {
                     </div>
                     <Link
                       href={`/ideas/${item.idea.id}?from=profile-favorites`}
-                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-indigo-600 hover:text-indigo-700"
+                      className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
                     >
                       Open idea <ArrowRight className="h-4 w-4" />
                     </Link>

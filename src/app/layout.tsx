@@ -1,5 +1,7 @@
 import "~/styles/globals.css";
 
+import { ThemeProvider } from "~/app/_components/theme-provider";
+
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
@@ -26,10 +28,17 @@ export default function RootLayout({
       className={`${geist.variable} bg-background text-foreground`}
     >
       <body className="mobile-app-shell relative md:pb-0">
-        <TRPCReactProvider>
-          <AppHeader />
-          <div className="bg-background mt-28">{children}</div>
-        </TRPCReactProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={false}
+          disableTransitionOnChange
+        >
+          <TRPCReactProvider>
+            <AppHeader />
+            <div className="bg-background mt-28">{children}</div>
+          </TRPCReactProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

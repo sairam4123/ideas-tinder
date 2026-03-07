@@ -17,6 +17,7 @@ type DeckCardProps = {
   card: DeckCardType;
   depth: number;
   effectiveIdeaCount: number;
+  generatedIdeaCount: number;
   index: number;
   isStreamingStack: boolean;
   streamProgress: StackStreamProgress | null;
@@ -46,6 +47,7 @@ export function DeckCard(props: DeckCardProps) {
     card,
     depth,
     effectiveIdeaCount,
+    generatedIdeaCount,
     index,
     isStreamingStack,
     streamProgress,
@@ -192,27 +194,27 @@ export function DeckCard(props: DeckCardProps) {
           {isTop && (
             <>
               <motion.div
-                className="pointer-events-none absolute inset-0 bg-red-50"
+                className="pointer-events-none absolute inset-0 bg-danger-soft"
                 style={{ opacity: leftDragHighlightOpacity }}
               />
               <motion.div
-                className="pointer-events-none absolute inset-0 bg-emerald-50"
+                className="pointer-events-none absolute inset-0 bg-success-soft"
                 style={{ opacity: rightDragHighlightOpacity }}
               />
               <motion.div
-                className="pointer-events-none absolute inset-0 bg-sky-50"
+                className="pointer-events-none absolute inset-0 bg-info-soft"
                 style={{ opacity: topDragHighlightOpacity }}
               />
               <motion.div
-                className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-red-300"
+                className="pointer-events-none absolute inset-0 rounded-4xl border-4 border-danger/40"
                 style={{ opacity: leftDragBorderOpacity }}
               />
               <motion.div
-                className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-emerald-300"
+                className="pointer-events-none absolute inset-0 rounded-4xl border-4 border-success/40"
                 style={{ opacity: rightDragBorderOpacity }}
               />
               <motion.div
-                className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-sky-300"
+                className="pointer-events-none absolute inset-0 rounded-4xl border-4 border-info/40"
                 style={{ opacity: topDragBorderOpacity }}
               />
             </>
@@ -220,7 +222,7 @@ export function DeckCard(props: DeckCardProps) {
 
           <div className="mb-auto flex items-center justify-between">
             <span className="border-border bg-background-muted text-foreground-muted rounded-full border px-3 py-1.5 text-xs font-bold tracking-wide">
-              {index + depth + 1} / {effectiveIdeaCount}
+              {index + depth + 1} / {generatedIdeaCount}
             </span>
             <Link
               className="border-border bg-background-muted text-foreground-muted rounded-full border p-2 transition-colors hover:border-indigo-100 hover:bg-indigo-50 hover:text-indigo-500"
@@ -240,10 +242,10 @@ export function DeckCard(props: DeckCardProps) {
             </p>
           </div>
 
-          <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-slate-100 pt-6 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+          <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-border pt-6 text-[10px] font-bold tracking-widest text-foreground-muted uppercase">
             <div>
               Swipe right to Like{" "}
-              <span className="mx-1 inline-block text-slate-300">&bull;</span>
+              <span className="mx-1 inline-block text-border">&bull;</span>
               Swipe up to Like + Fave
             </div>
           </div>
@@ -254,19 +256,23 @@ export function DeckCard(props: DeckCardProps) {
             <Star className="h-8 w-8 text-indigo-400" />
           </div>
           <h2 className="text-foreground mb-2 text-2xl font-bold">
-            You&apos;re caught up!
+            {isStreamingStack ? "Generating ideas..." : "You're caught up!"}
           </h2>
           <p className="text-foreground-muted mb-6 text-sm leading-relaxed">
-            {isStackExpired
-              ? "Your stack expired. Generate a new set of AI ideas based on your recent swipes."
-              : `Your current stack is still active until ${stackExpiresAt?.toLocaleTimeString(
-                [],
-                { hour: "2-digit", minute: "2-digit" },
-              )}.`}
+            {isStreamingStack
+              ? "We are currently generating new ideas based on your preferences. Please wait..."
+              : isStackExpired
+                ? "Your stack expired. Generate a new set of AI ideas based on your recent swipes."
+                : !stackExpiresAt
+                  ? "Generate your first deck of AI startup concepts to get started."
+                  : `Your current stack is still active until ${stackExpiresAt.toLocaleTimeString(
+                    [],
+                    { hour: "2-digit", minute: "2-digit" },
+                  )}.`}
           </p>
           {isTop && (
             <button
-              className="bg-foreground mt-2 inline-flex w-full items-center justify-center rounded-2xl px-6 py-4 font-semibold text-white transition-all hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:hover:scale-100"
+              className="bg-primary mt-2 inline-flex w-full items-center justify-center rounded-2xl px-6 py-4 font-semibold text-primary-foreground transition-all hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:bg-primary/20 disabled:text-foreground-muted disabled:hover:scale-100"
               onClick={onGenerateNewStack}
               type="button"
               disabled={!canGenerateNewStack}
@@ -274,7 +280,7 @@ export function DeckCard(props: DeckCardProps) {
               {isStreamingStack
                 ? streamProgress && streamProgress.total > 0
                   ? `${streamProgress.message} ${Math.min(streamProgress.current, streamProgress.total)}/${streamProgress.total}`
-                  : "Generating..."
+                  : "Generating ideas..."
                 : "Generate New Stack"}
             </button>
           )}

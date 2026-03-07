@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   ArrowLeft,
@@ -24,6 +24,7 @@ type NavigationTrailItem = {
 function IdeaDetailsContent() {
   const params = useParams<{ id: string }>();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const ideaId = params.id;
   const source = searchParams.get("from") ?? "stack";
   const sourceParam = source ? `?from=${encodeURIComponent(source)}` : "";
@@ -45,8 +46,41 @@ function IdeaDetailsContent() {
   const [navigationTrail, setNavigationTrail] = useState<NavigationTrailItem[]>(
     [],
   );
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
   const currentIdeaId = detailsQuery.data?.idea.id;
   const currentIdeaTitle = detailsQuery.data?.idea.title;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    if (e.targetTouches.length > 0) {
+      setTouchStart(e.targetTouches[0]!.clientX);
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (e.targetTouches.length > 0) {
+      setTouchEnd(e.targetTouches[0]!.clientX);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const minSwipeDistance = 50;
+
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    // As requested: left swipe -> previous idea, right swipe -> next idea
+    if (isLeftSwipe && detailsQuery.data?.navigation?.previousIdeaId) {
+      router.push(`/ideas/${detailsQuery.data.navigation.previousIdeaId}${sourceParam}`);
+    }
+    if (isRightSwipe && detailsQuery.data?.navigation?.nextIdeaId) {
+      router.push(`/ideas/${detailsQuery.data.navigation.nextIdeaId}${sourceParam}`);
+    }
+  };
 
   useEffect(() => {
     if (!currentIdeaId || !currentIdeaTitle) {
@@ -190,7 +224,12 @@ function IdeaDetailsContent() {
     .slice(0, 4);
 
   return (
-    <main className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 bg-background px-4 py-8">
+    <main
+      className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 bg-background px-4 py-8 overflow-x-hidden"
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <div>
         <Link
           href={backHref}
@@ -242,11 +281,11 @@ function IdeaDetailsContent() {
         </section>
 
         <section className="relative overflow-hidden rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
-          <div className="pointer-events-none absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-indigo-50 blur-3xl" />
+          <div className="pointer-events-none absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-primary-soft dark:bg-primary/10 blur-3xl" />
 
           <div className="relative z-10">
             <div className="mb-6 flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs font-bold tracking-wide text-indigo-700 uppercase">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary-soft px-3 py-1 text-xs font-bold tracking-wide text-primary uppercase">
                 <Layers className="h-4 w-4" />
                 <span>{data.idea.field ?? "Discovery"}</span>
               </div>
@@ -269,18 +308,22 @@ function IdeaDetailsContent() {
 
             <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
               <button
-                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
-                  data.interactionStatus.isDisliked
-                    ? "border-red-300 bg-red-50 text-red-600"
-                    : "border-border bg-background-surface text-foreground-muted hover:border-red-300 hover:bg-red-50 hover:text-red-600"
-                }`}
-                onClick={() =>
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${data.interactionStatus.isDisliked
+                  ? "border-danger/30 bg-danger-soft text-danger"
+                  : "border-border bg-background-surface text-foreground-muted hover:border-danger/30 hover:bg-danger-soft hover:text-danger"
+                  }`}
+                onClick={() => {
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
                     ideaId,
                     direction: "left",
-                  })
-                }
+                  });
+                  if (data.navigation?.nextIdeaId) {
+                    router.push(`/ideas/${data.navigation.nextIdeaId}${sourceParam}`);
+                  } else {
+                    router.push(backHref);
+                  }
+                }}
                 type="button"
                 disabled={!canSwipe}
               >
@@ -288,18 +331,22 @@ function IdeaDetailsContent() {
                 {data.interactionStatus.isDisliked ? "Disliked" : "Dislike"}
               </button>
               <button
-                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
-                  data.interactionStatus.isLiked
-                    ? "border-emerald-300 bg-emerald-50 text-emerald-700"
-                    : "border-border bg-background-surface text-foreground-muted hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
-                }`}
-                onClick={() =>
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${data.interactionStatus.isLiked
+                  ? "border-success/30 bg-success-soft text-success"
+                  : "border-border bg-background-surface text-foreground-muted hover:border-success/30 hover:bg-success-soft hover:text-success"
+                  }`}
+                onClick={() => {
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
                     ideaId,
                     direction: "right",
-                  })
-                }
+                  });
+                  if (data.navigation?.nextIdeaId) {
+                    router.push(`/ideas/${data.navigation.nextIdeaId}${sourceParam}`);
+                  } else {
+                    router.push(backHref);
+                  }
+                }}
                 type="button"
                 disabled={!canSwipe}
               >
@@ -307,18 +354,22 @@ function IdeaDetailsContent() {
                 {data.interactionStatus.isLiked ? "Liked" : "Like"}
               </button>
               <button
-                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
-                  data.interactionStatus.isFavorited
-                    ? "border-sky-300 bg-sky-50 text-sky-700"
-                    : "border-border bg-background-surface text-foreground-muted hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700"
-                }`}
-                onClick={() =>
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${data.interactionStatus.isFavorited
+                  ? "border-info/30 bg-info-soft text-info"
+                  : "border-border bg-background-surface text-foreground-muted hover:border-info/30 hover:bg-info-soft hover:text-info"
+                  }`}
+                onClick={() => {
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
                     ideaId,
                     direction: "top",
-                  })
-                }
+                  });
+                  if (data.navigation?.nextIdeaId) {
+                    router.push(`/ideas/${data.navigation.nextIdeaId}${sourceParam}`);
+                  } else {
+                    router.push(backHref);
+                  }
+                }}
                 type="button"
                 disabled={!canSwipe}
               >
@@ -327,7 +378,7 @@ function IdeaDetailsContent() {
               </button>
             </div>
             {!canSwipe ? (
-              <p className="mt-4 rounded-xl border border-amber-100 bg-amber-50 p-3 text-sm font-medium text-amber-600">
+              <p className="mt-4 rounded-xl border border-amber-500/20 bg-amber-500/10 p-3 text-sm font-medium text-amber-600 dark:text-amber-400">
                 Generate a new stack on the home page to enable swipe actions
                 for this idea.
               </p>
@@ -351,11 +402,14 @@ function IdeaDetailsContent() {
               Vector Similarity Factor
             </span>
             <div className="flex items-center gap-4">
-              <div className="h-3 w-full overflow-hidden rounded-full bg-slate-200">
+              <div className="relative h-3 w-full overflow-hidden rounded-full bg-background-surface border border-border">
+                {/* Center marker */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-500 shadow-sm z-10 border-2 border-background-surface" />
                 <div
-                  className="h-full rounded-full bg-indigo-500"
+                  className={`absolute top-0 bottom-0 rounded-full ${data.preferenceImpact.similarity >= 0 ? "bg-success" : "bg-danger"}`}
                   style={{
-                    width: `${Math.max(0, Math.min(100, data.preferenceImpact.similarity * 100))}%`,
+                    left: `${data.preferenceImpact.similarity < 0 ? 50 - Math.abs(data.preferenceImpact.similarity) * 50 : 50}%`,
+                    width: `${Math.abs(data.preferenceImpact.similarity) * 50}%`,
                   }}
                 />
               </div>
@@ -432,7 +486,7 @@ function IdeaDetailsContent() {
                 {relatedIdea.description}
               </p>
               <Link
-                className="mt-auto inline-block text-sm font-bold text-indigo-600 hover:text-indigo-700"
+                className="mt-auto inline-block text-sm font-bold text-primary hover:text-indigo-400"
                 href={`/ideas/${relatedIdea.id}${sourceParam}`}
               >
                 Explore &rarr;

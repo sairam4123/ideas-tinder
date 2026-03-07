@@ -51,6 +51,8 @@ export function useIdeaDeck() {
   const isProcessingRef = useRef(false);
   const streamRef = useRef<EventSource | null>(null);
   const lastStackIdRef = useRef<string | null>(null);
+  const isStreamingRef = useRef(false);
+  const autoTriggeredForIdRef = useRef<string | null>(null);
 
   const preferencesQuery = api.idea.getPreferences.useQuery();
   const isOnboardingCompleted =
@@ -147,10 +149,25 @@ export function useIdeaDeck() {
   }, [index, streamedStack?.id, swipeStatusByIdea, stackQuery.data?.id]);
 
   useEffect(() => {
-    if (stackQuery.isSuccess && stackQuery.data === null && !isStreamingStack) {
+    if (
+      stackQuery.isSuccess &&
+      !stackQuery.isFetching &&
+      !stackQuery.isRefetching &&
+      stackQuery.data === null &&
+      !isStreamingStack &&
+      !isStreamingRef.current &&
+      autoTriggeredForIdRef.current !== "initial-empty"
+    ) {
+      autoTriggeredForIdRef.current = "initial-empty";
       startStackStream(false);
     }
-  }, [stackQuery.isSuccess, stackQuery.data, isStreamingStack]);
+  }, [
+    stackQuery.isSuccess,
+    stackQuery.isFetching,
+    stackQuery.isRefetching,
+    stackQuery.data,
+    isStreamingStack,
+  ]);
 
   useEffect(() => {
     return () => {
@@ -167,6 +184,9 @@ export function useIdeaDeck() {
     currentCard?.kind === "idea" ? currentCard.stackItem : null;
   const isStackExhausted = currentCard?.kind === "caught-up";
   const allItems = effectiveStack?.ideas ?? [];
+  const generatedIdeaCount = allItems.filter(
+    (item) => !item.idea.id.startsWith("placeholder-")
+  ).length;
   const stackExpiresAt = streamedStack
     ? null
     : stackQuery.data?.expiresAt
@@ -181,17 +201,26 @@ export function useIdeaDeck() {
   const deckCards = visibleCards.slice(0, 6);
 
   const finishStreaming = async () => {
+    setIsStreamingStack(false);
+    isStreamingRef.current = false;
     await stackQuery.refetch();
     setStreamedStack(null);
     setStreamProgress(null);
-    setIsStreamingStack(false);
     closeStream();
   };
 
   const startStackStream = (forceRefresh: boolean) => {
+    if (isStreamingRef.current && !forceRefresh) return;
+
     closeStream();
     indexRef.current = 0;
     setIsStreamingStack(true);
+    isStreamingRef.current = true;
+    if (!forceRefresh) {
+      autoTriggeredForIdRef.current = "initial-empty";
+    } else {
+      autoTriggeredForIdRef.current = null;
+    }
     setStreamedStack(null);
     setStreamProgress(null);
     setIndex(0);
@@ -293,6 +322,7 @@ export function useIdeaDeck() {
       setStreamedStack(null);
       setStreamProgress(null);
       setIsStreamingStack(false);
+      isStreamingRef.current = false;
       void stackQuery.refetch();
       closeStream();
     });
@@ -301,6 +331,7 @@ export function useIdeaDeck() {
       setStreamedStack(null);
       setStreamProgress(null);
       setIsStreamingStack(false);
+      isStreamingRef.current = false;
       void stackQuery.refetch();
       closeStream();
     };
@@ -364,6 +395,7 @@ export function useIdeaDeck() {
     deckCards,
     effectiveIdeaCount,
     effectiveStackId,
+    generatedIdeaCount,
     index,
     isDeckLoading,
     isOnboardingCompleted,

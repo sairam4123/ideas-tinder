@@ -80,11 +80,10 @@ function OnboardingContent() {
             const checked = selectedFields.includes(field.label);
             return (
               <button
-                className={`rounded-md border px-3 py-2 text-sm ${
-                  checked
-                    ? "border-foreground bg-foreground text-white"
+                className={`rounded-md border px-3 py-2 text-sm ${checked
+                    ? "border-foreground bg-foreground text-background-surface"
                     : "border-border bg-background-surface text-foreground-surface"
-                }`}
+                  }`}
                 key={field.id}
                 onClick={() => {
                   setSelectedFields((previous) =>
@@ -151,7 +150,7 @@ function OnboardingContent() {
         </div>
 
         <button
-          className="bg-foreground rounded-md px-4 py-2 font-medium text-white disabled:opacity-60"
+          className="bg-foreground rounded-md px-4 py-2 font-medium text-background-surface disabled:opacity-60"
           disabled={
             saveMutation.isPending ||
             selectedFields.length + customFields.length === 0

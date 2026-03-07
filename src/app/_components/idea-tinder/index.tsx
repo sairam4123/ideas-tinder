@@ -114,6 +114,7 @@ export function IdeaTinder() {
                 depth={depth}
                 index={deck.index}
                 effectiveIdeaCount={deck.effectiveIdeaCount}
+                generatedIdeaCount={deck.generatedIdeaCount}
                 isStreamingStack={deck.isStreamingStack}
                 streamProgress={deck.streamProgress}
                 isStackExpired={deck.isStackExpired}
@@ -181,6 +182,18 @@ export function IdeaTinder() {
         isStackExhausted={deck.isStackExhausted}
         isStreamingStack={deck.isStreamingStack}
       />
+
+      {process.env.NODE_ENV === "development" && (
+        <div className="flex justify-center">
+          <button
+            className="rounded-full border border-red-500/30 bg-red-500/10 px-4 py-2 text-xs font-bold text-red-600 dark:text-red-400 dark:bg-red-500/20 hover:bg-red-500/20 transition-colors disabled:opacity-50"
+            onClick={() => deck.startStackStream(true)}
+            disabled={deck.isStreamingStack}
+          >
+            {deck.isStreamingStack ? "Generating..." : "Dev: Force Refresh Stack"}
+          </button>
+        </div>
+      )}
 
       <style
         dangerouslySetInnerHTML={{
