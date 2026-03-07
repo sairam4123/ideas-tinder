@@ -260,7 +260,7 @@ export function IdeaTinder() {
 
   if (preferencesQuery.isPending || stackQuery.isPending) {
     return (
-      <div className="flex h-112.5 w-full max-w-sm flex-col items-center justify-center gap-4 rounded-4xl border border-slate-100 bg-white p-10 text-center shadow-xl md:max-w-2xl">
+      <div className="h-112.5 rounded-4xl flex w-full max-w-sm flex-col items-center justify-center gap-4 border border-slate-100 bg-white p-10 text-center shadow-xl md:max-w-2xl">
         <div className="mb-4 flex animate-pulse space-x-2">
           <div className="h-3 w-3 rounded-full bg-indigo-300"></div>
           <div
@@ -281,8 +281,8 @@ export function IdeaTinder() {
 
   if (!preferencesQuery.data?.onboardingCompleted) {
     return (
-      <div className="relative flex h-112.5 w-full max-w-sm flex-col items-center justify-center gap-6 overflow-hidden rounded-4xl border border-slate-100 bg-white p-10 text-center shadow-2xl md:max-w-2xl">
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 h-32 w-32 rounded-full bg-indigo-50 blur-3xl"></div>
+      <div className="h-112.5 rounded-4xl relative flex w-full max-w-sm flex-col items-center justify-center gap-6 overflow-hidden border border-slate-100 bg-white p-10 text-center shadow-2xl md:max-w-2xl">
+        <div className="absolute right-0 top-0 -mr-10 -mt-10 h-32 w-32 rounded-full bg-indigo-50 blur-3xl"></div>
         <div className="absolute bottom-0 left-0 -mb-10 -ml-10 h-32 w-32 rounded-full bg-blue-50 blur-3xl"></div>
 
         <div className="relative z-10">
@@ -310,7 +310,7 @@ export function IdeaTinder() {
 
   return (
     <div className="flex w-full max-w-5xl flex-col gap-6">
-      <div className="relative flex h-150 w-full max-w-sm flex-col items-center self-center select-none md:max-w-2xl">
+      <div className="h-150 relative flex w-full max-w-sm select-none flex-col items-center self-center md:max-w-2xl">
         {/* Unified card stack */}
         {deckCards
           .slice()
@@ -321,56 +321,94 @@ export function IdeaTinder() {
             const isIdea = card.kind === "idea";
 
             // Stack depth visuals — depth 0 is the front card
-            const layerScale = Math.min(1, 1 - depth * 0.03 + (depth > 0 ? swipeProgress * 0.03 : 0));
+            const layerScale = Math.min(
+              1,
+              1 - depth * 0.03 + (depth > 0 ? swipeProgress * 0.03 : 0),
+            );
             const layerY = depth * 8 - (depth > 0 ? swipeProgress * 8 : 0);
-            const layerOpacity = Math.min(1, 1 - depth * 0.12 + (depth > 0 ? swipeProgress * 0.12 : 0));
+            const layerOpacity = Math.min(
+              1,
+              1 - depth * 0.12 + (depth > 0 ? swipeProgress * 0.12 : 0),
+            );
 
             return (
               <motion.div
                 key={card.key}
                 drag={isTop && isIdea}
-                dragConstraints={isTop ? { top: 0, bottom: 0, left: 0, right: 0 } : undefined}
+                dragConstraints={
+                  isTop ? { top: 0, bottom: 0, left: 0, right: 0 } : undefined
+                }
                 dragElastic={isTop ? 1 : undefined}
                 dragMomentum={isTop ? true : undefined}
-                dragTransition={isTop ? { bounceStiffness: 300, bounceDamping: 20 } : undefined}
-                onDrag={isTop ? (_, info) => {
-                  if (!isIdea) return;
-                  dragX.set(info.offset.x);
-                  dragY.set(info.offset.y);
-                  const progress = Math.max(
-                    0,
-                    Math.min(
-                      1,
-                      Math.max(
-                        Math.abs(info.offset.x) / (isTouchDevice ? 80 : 120),
-                        Math.max(0, -info.offset.y) / (isTouchDevice ? 80 : 120),
-                      ),
-                    ),
-                  );
-                  setSwipeProgress(progress);
-                } : undefined}
-                onDragEnd={isTop ? (event, info) => {
-                  if (!isIdea) return;
-                  void handleDragEnd(event, info);
-                } : undefined}
-                animate={isTop ? controls : {
-                  scale: layerScale,
-                  y: layerY,
-                  opacity: layerOpacity,
-                }}
-                transition={isTop ? undefined : { type: "spring", stiffness: 280, damping: 26 }}
-                whileTap={isTop && isIdea ? { cursor: "grabbing", scale: 1.01 } : undefined}
-                style={isTop ? {
-                  transformOrigin: "50% 80%",
-                  rotate: dragRotate,
-                  boxShadow: dragShadow,
-                  x: dragX,
-                  y: dragY,
-                  zIndex: 10,
-                } : {
-                  zIndex: 0,
-                }}
-                className={`absolute top-0 flex h-112.5 w-full flex-col overflow-hidden rounded-4xl border border-slate-200 bg-white p-8 shadow-lg ${
+                dragTransition={
+                  isTop
+                    ? { bounceStiffness: 300, bounceDamping: 20 }
+                    : undefined
+                }
+                onDrag={
+                  isTop
+                    ? (_, info) => {
+                        if (!isIdea) return;
+                        dragX.set(info.offset.x);
+                        dragY.set(info.offset.y);
+                        const progress = Math.max(
+                          0,
+                          Math.min(
+                            1,
+                            Math.max(
+                              Math.abs(info.offset.x) /
+                                (isTouchDevice ? 80 : 120),
+                              Math.max(0, -info.offset.y) /
+                                (isTouchDevice ? 80 : 120),
+                            ),
+                          ),
+                        );
+                        setSwipeProgress(progress);
+                      }
+                    : undefined
+                }
+                onDragEnd={
+                  isTop
+                    ? (event, info) => {
+                        if (!isIdea) return;
+                        void handleDragEnd(event, info);
+                      }
+                    : undefined
+                }
+                animate={
+                  isTop
+                    ? controls
+                    : {
+                        scale: layerScale,
+                        y: layerY,
+                        opacity: layerOpacity,
+                      }
+                }
+                transition={
+                  isTop
+                    ? undefined
+                    : { type: "spring", stiffness: 280, damping: 26 }
+                }
+                whileTap={
+                  isTop && isIdea
+                    ? { cursor: "grabbing", scale: 1.01 }
+                    : undefined
+                }
+                style={
+                  isTop
+                    ? {
+                        transformOrigin: "50% 80%",
+                        rotate: dragRotate,
+                        boxShadow: dragShadow,
+                        x: dragX,
+                        y: dragY,
+                        zIndex: 10,
+                      }
+                    : {
+                        zIndex: 0,
+                      }
+                }
+                className={`h-112.5 rounded-4xl absolute top-0 flex w-full flex-col overflow-hidden border border-slate-200 bg-white p-8 shadow-lg ${
                   isTop ? "touch-none" : "pointer-events-none"
                 } ${isTop && isIdea ? "relative cursor-grab" : "cursor-default"}`}
               >
@@ -391,15 +429,15 @@ export function IdeaTinder() {
                           style={{ opacity: topDragHighlightOpacity }}
                         />
                         <motion.div
-                          className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-red-300"
+                          className="rounded-4xl pointer-events-none absolute inset-0 border-2 border-red-300"
                           style={{ opacity: leftDragBorderOpacity }}
                         />
                         <motion.div
-                          className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-emerald-300"
+                          className="rounded-4xl pointer-events-none absolute inset-0 border-2 border-emerald-300"
                           style={{ opacity: rightDragBorderOpacity }}
                         />
                         <motion.div
-                          className="pointer-events-none absolute inset-0 rounded-4xl border-2 border-sky-300"
+                          className="rounded-4xl pointer-events-none absolute inset-0 border-2 border-sky-300"
                           style={{ opacity: topDragBorderOpacity }}
                         />
                       </>
@@ -419,18 +457,20 @@ export function IdeaTinder() {
                     </div>
 
                     <div className="my-auto flex flex-col pt-4">
-                      <h2 className="mb-4 line-clamp-3 text-3xl leading-tight font-black tracking-tight text-slate-900 transition-all hover:line-clamp-none">
+                      <h2 className="mb-4 line-clamp-3 text-3xl font-black leading-tight tracking-tight text-slate-900 transition-all hover:line-clamp-none">
                         {card.stackItem.idea.title}
                       </h2>
-                      <p className="custom-scrollbar max-h-40 overflow-y-auto pr-2 text-base leading-relaxed font-medium text-slate-600">
+                      <p className="custom-scrollbar max-h-40 overflow-y-auto pr-2 text-base font-medium leading-relaxed text-slate-600">
                         {card.stackItem.idea.description}
                       </p>
                     </div>
 
-                    <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-slate-50 pt-6 text-[10px] font-bold tracking-widest text-slate-400 uppercase">
+                    <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-slate-50 pt-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                       <div>
                         Swipe right to Like{" "}
-                        <span className="mx-1 inline-block text-slate-300">&bull;</span>
+                        <span className="mx-1 inline-block text-slate-300">
+                          &bull;
+                        </span>
                         Swipe up to Like + Fave
                       </div>
                     </div>
@@ -444,7 +484,8 @@ export function IdeaTinder() {
                       You&apos;re caught up!
                     </h2>
                     <p className="mb-6 text-sm leading-relaxed text-slate-500">
-                      Refresh to generate a new stack of AI ideas based on your recent swipes.
+                      Refresh to generate a new stack of AI ideas based on your
+                      recent swipes.
                     </p>
                     {isTop && (
                       <button
@@ -454,7 +495,9 @@ export function IdeaTinder() {
                         }}
                         type="button"
                       >
-                        {isStreamingStack ? "Generating..." : "Generate New Stack"}
+                        {isStreamingStack
+                          ? "Generating..."
+                          : "Generate New Stack"}
                       </button>
                     )}
                   </div>
@@ -494,7 +537,7 @@ export function IdeaTinder() {
       </div>
 
       <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-        <h3 className="text-sm font-semibold tracking-wide text-slate-800 uppercase">
+        <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-800">
           Full Stack
         </h3>
         <div className="mt-3 max-h-64 space-y-2 overflow-y-auto">
@@ -530,7 +573,9 @@ export function IdeaTinder() {
           >
             <div className="flex items-start justify-between gap-3">
               <p className="line-clamp-1 font-medium">You&apos;re caught up</p>
-              <span className="text-xs">#{(stackQuery.data?.ideaCount ?? 0) + 1}</span>
+              <span className="text-xs">
+                #{(stackQuery.data?.ideaCount ?? 0) + 1}
+              </span>
             </div>
           </div>
         </div>

@@ -132,70 +132,70 @@ export const ideaRouter = createTRPCRouter({
   getPreferences: protectedProcedure.query(async ({ ctx }) => {
     const [user, fields, favorites, positiveSwipes, negativeSwipes] =
       await Promise.all([
-      ctx.db.user.findUnique({
-        where: { id: ctx.session.user.id },
-        select: {
-          onboardingCompleted: true,
-          preferenceVector: true,
-        },
-      }),
-      ctx.db.userFieldSelection.findMany({
-        where: { userId: ctx.session.user.id },
-        include: { field: true },
-        orderBy: { createdAt: "asc" },
-      }),
-      ctx.db.favorite.findMany({
-        where: { userId: ctx.session.user.id },
-        include: {
-          idea: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              vector: true,
+        ctx.db.user.findUnique({
+          where: { id: ctx.session.user.id },
+          select: {
+            onboardingCompleted: true,
+            preferenceVector: true,
+          },
+        }),
+        ctx.db.userFieldSelection.findMany({
+          where: { userId: ctx.session.user.id },
+          include: { field: true },
+          orderBy: { createdAt: "asc" },
+        }),
+        ctx.db.favorite.findMany({
+          where: { userId: ctx.session.user.id },
+          include: {
+            idea: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                vector: true,
+              },
             },
           },
-        },
-        orderBy: { createdAt: "desc" },
-        take: 30,
-      }),
-      ctx.db.swipeEvent.findMany({
-        where: {
-          userId: ctx.session.user.id,
-          action: { in: ["LIKE_AND_FAVE", "FAVE_ONLY"] },
-        },
-        include: {
-          idea: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              vector: true,
+          orderBy: { createdAt: "desc" },
+          take: 30,
+        }),
+        ctx.db.swipeEvent.findMany({
+          where: {
+            userId: ctx.session.user.id,
+            action: { in: ["LIKE_AND_FAVE", "FAVE_ONLY"] },
+          },
+          include: {
+            idea: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                vector: true,
+              },
             },
           },
-        },
-        orderBy: { createdAt: "desc" },
-        take: 40,
-      }),
-      ctx.db.swipeEvent.findMany({
-        where: {
-          userId: ctx.session.user.id,
-          action: "DISLIKE",
-        },
-        include: {
-          idea: {
-            select: {
-              id: true,
-              title: true,
-              description: true,
-              vector: true,
+          orderBy: { createdAt: "desc" },
+          take: 40,
+        }),
+        ctx.db.swipeEvent.findMany({
+          where: {
+            userId: ctx.session.user.id,
+            action: "DISLIKE",
+          },
+          include: {
+            idea: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                vector: true,
+              },
             },
           },
-        },
-        orderBy: { createdAt: "desc" },
-        take: 12,
-      }),
-    ]);
+          orderBy: { createdAt: "desc" },
+          take: 12,
+        }),
+      ]);
 
     const vector = asVector(user?.preferenceVector);
     const fieldLabels = fields.map((selection) => selection.field.label);
