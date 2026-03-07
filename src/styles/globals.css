@@ -82,12 +82,28 @@
 @layer base {
   html,
   body {
+    min-height: 100%;
     background: var(--color-background);
     color: var(--color-foreground);
+    overflow-x: clip;
   }
 }
 
 @layer utilities {
+  .mobile-app-shell {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+  }
+
+  .mobile-header-top {
+    top: max(0.75rem, calc(env(safe-area-inset-top, 0px) + 0.25rem));
+  }
+
+  .mobile-bottom-nav {
+    left: max(0.5rem, env(safe-area-inset-left, 0px));
+    right: max(0.5rem, env(safe-area-inset-right, 0px));
+    bottom: max(0.75rem, calc(env(safe-area-inset-bottom, 0px) + 0.25rem));
+  }
+
   .skeleton {
     position: relative;
     overflow: hidden;
@@ -100,6 +116,12 @@
     overflow: hidden;
     background-color: var(--color-slate-100);
     animation: pulse 1.8s ease-in-out infinite;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-app-shell {
+    padding-bottom: 0;
   }
 }
 

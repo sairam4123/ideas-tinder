@@ -502,7 +502,11 @@ export const getOrCreateActiveStack = async (params: {
   userId: string;
   forceRefresh?: boolean;
 }) => {
-  const { db, userId } = params;
+  const { db, userId, forceRefresh = false } = params;
+
+  if (forceRefresh) {
+    return generateFreshStack({ db, userId });
+  }
 
   const active = await db.ideaStack.findFirst({
     where: {

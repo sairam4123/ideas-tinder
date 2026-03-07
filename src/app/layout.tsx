@@ -25,7 +25,7 @@ export default function RootLayout({
       lang="en"
       className={`${geist.variable} bg-background text-foreground`}
     >
-      <body className="relative w-screen overflow-y-auto pb-24 md:pb-0">
+      <body className="mobile-app-shell relative md:pb-0">
         <TRPCReactProvider>
           <AppHeader />
           <div className="bg-background mt-28">{children}</div>

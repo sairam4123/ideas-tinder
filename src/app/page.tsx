@@ -17,7 +17,7 @@ export default function Home() {
             Discover startup concepts matching your vector profile.
           </p>
         </div>
-        <div className="z-10 flex w-full justify-center">
+        <div className="z-10 flex w-full items-center justify-center">
           <IdeaTinder />
         </div>
       </main>

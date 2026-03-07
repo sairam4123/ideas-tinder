@@ -40,22 +40,22 @@ export function AppHeader() {
         className={`border-border/40 bg-background-surface/80 fixed z-50 shadow-sm backdrop-blur-md transition-all duration-300 ${
           isScrolled
             ? "top-0 right-0 left-0 w-full rounded-none border-b"
-            : "top-5 left-1/2 w-[min(96%,72rem)] -translate-x-1/2 rounded-full border shadow-md"
+            : "mobile-header-top top-3 right-2 left-2 w-auto rounded-full border shadow-md md:top-5 md:right-auto md:left-1/2 md:w-[96%] md:-translate-x-1/2 lg:w-[min(96%,72rem)]"
         }`}
       >
         <div
-          className={`mx-auto flex w-full items-center justify-between px-4 py-4 transition-all duration-300 ${
+          className={`mx-auto flex w-full min-w-0 items-center justify-between gap-3 px-3 py-3.5 transition-all duration-300 sm:px-4 sm:py-4 ${
             isScrolled ? "max-w-6xl" : "max-w-full"
           }`}
         >
           <Link
-            className="group text-foreground flex items-center gap-2 text-xl font-black tracking-tight"
+            className="group text-foreground flex min-w-0 items-center gap-2 text-lg font-black tracking-tight sm:text-xl md:min-w-fit md:shrink-0"
             href={session?.user ? "/" : "/landing"}
           >
             <div className="bg-primary rounded-full p-1.5 transition-colors group-hover:bg-indigo-500">
               <Sparkles className="h-5 w-5 text-white" />
             </div>
-            Ideas Tinder
+            <span className="truncate md:overflow-visible">Ideas Tinder</span>
           </Link>
 
           {!session?.user ? (
@@ -137,8 +137,8 @@ export function AppHeader() {
       </header>
 
       {session?.user ? (
-        <nav className="fixed right-0 bottom-4 left-0 z-50 flex justify-center px-4 md:hidden">
-          <div className="border-border bg-background-surface/95 flex w-full max-w-xs items-center justify-between rounded-full border px-3 py-2 shadow-lg backdrop-blur">
+        <nav className="mobile-bottom-nav fixed z-50 flex justify-center md:hidden">
+          <div className="border-border bg-background-surface/95 flex w-full max-w-full items-center justify-between rounded-full border px-3 py-2 shadow-lg backdrop-blur">
             <Link
               aria-label="Discover"
               className={`inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors ${pathname === "/" ? "bg-primary-soft text-primary" : "text-foreground-muted hover:bg-background-muted hover:text-foreground"}`}
