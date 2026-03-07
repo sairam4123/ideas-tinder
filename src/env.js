@@ -1,6 +1,14 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
+const isProduction = process.env.NODE_ENV === "production";
+const resolvedDatabaseUrl = isProduction
+  ? process.env.DATABASE_URL_POSTGRES ?? process.env.DATABASE_URL
+  : process.env.DATABASE_URL_SQLITE ?? "file:./db.sqlite";
+
+process.env.DATABASE_URL = resolvedDatabaseUrl;
+process.env.DB_PROVIDER = isProduction ? "postgres" : "sqlite";
+
 export const env = createEnv({
   /**
    * Specify your server-side environment variables schema here. This way you can ensure the app
@@ -14,7 +22,7 @@ export const env = createEnv({
     BETTER_AUTH_GITHUB_CLIENT_ID: z.string().optional(),
     BETTER_AUTH_GITHUB_CLIENT_SECRET: z.string().optional(),
     DATABASE_URL: z.string().url(),
-    DB_PROVIDER: z.enum(["sqlite", "postgres"]).default("sqlite"),
+    DB_PROVIDER: z.enum(["sqlite", "postgres"]),
     GOOGLE_API_KEY: z.string().min(1),
     GEMINI_MODEL: z.string().default("gemini-2.5-flash"),
     GEMINI_EMBED_MODEL: z.string().default("text-embedding-004"),
