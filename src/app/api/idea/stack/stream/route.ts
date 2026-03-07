@@ -123,6 +123,7 @@ export async function GET(request: Request) {
         } catch (error) {
           const message =
             error instanceof Error ? error.message : "Stack stream failed";
+          console.error("[SSE ERROR]", error);
           pushEvent("stack-error", { message });
         } finally {
           closeStream();
@@ -131,6 +132,9 @@ export async function GET(request: Request) {
 
       void run();
     },
+    cancel() {
+      console.log("[SSE] Client disconnected");
+    }
   });
 
   return new Response(stream, {

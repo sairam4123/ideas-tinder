@@ -81,6 +81,12 @@ export function useIdeaDeck() {
 
   useEffect(() => {
     if (streamedStack) {
+      setVisibleCards(buildDeckCards(streamedStack.ideas.slice(indexRef.current)));
+    }
+  }, [streamedStack]);
+
+  useEffect(() => {
+    if (streamedStack) {
       return;
     }
 
@@ -224,7 +230,6 @@ export function useIdeaDeck() {
         }
 
         nextIdeas.sort((left, right) => left.position - right.position);
-        syncVisibleCardsFromIdeas(nextIdeas);
 
         return {
           id: payload.stackId,

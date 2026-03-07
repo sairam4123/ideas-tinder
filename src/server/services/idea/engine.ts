@@ -327,11 +327,9 @@ export const generateFreshStack = async (params: {
 
   const preferenceSummary =
     fields.length > 0
-      ? `Preferred fields: ${fields.join(", ")}. Current vector dimensions: ${
-          preferenceVector.length
-        }. Vector magnitude: ${magnitude.toFixed(3)}.${
-          vectorPreview.length > 0 ? ` Vector preview: [${vectorPreview}].` : ""
-        }`
+      ? `Preferred fields: ${fields.join(", ")}. Current vector dimensions: ${preferenceVector.length
+      }. Vector magnitude: ${magnitude.toFixed(3)}.${vectorPreview.length > 0 ? ` Vector preview: [${vectorPreview}].` : ""
+      }`
       : "No explicit preferences yet.";
 
   const count = randomStackSize();
@@ -381,107 +379,117 @@ export const generateFreshStack = async (params: {
   const normalizedPreferenceVector = normalizeVector(preferenceVector);
   const generatedTitles = new Set<string>();
 
-  for (let index = 0; index < plannedTotal; index += 1) {
+  const BATCH_SIZE = 3;
+  let index = 0;
+
+  while (index < plannedTotal) {
+    const batchSize = Math.min(BATCH_SIZE, plannedTotal - index);
+
     const generatedIdeas = await generateIdeasWithGemini({
       fields,
-      count: 1,
-      userPreferenceSummary: `${preferenceSummary} Avoid reusing these titles: ${
-        generatedTitles.size > 0
-          ? Array.from(generatedTitles).join(" | ")
-          : "(none yet)"
-      }. Return exactly one distinct new idea.`,
+      count: batchSize,
+      userPreferenceSummary: `${preferenceSummary} Avoid reusing these titles: ${generatedTitles.size > 0
+        ? Array.from(generatedTitles).join(" | ")
+        : "(none yet)"
+        }. Return exactly ${batchSize} distinct new ideas.`,
     });
 
-    const generatedIdea = generatedIdeas[0];
-    if (!generatedIdea) {
-      throw new Error("Idea generation returned no card for this slot.");
+    if (generatedIdeas.length === 0) {
+      throw new Error("Idea generation returned no cards for this batch.");
     }
 
-    generatedTitles.add(generatedIdea.title);
+    await Promise.all(
+      generatedIdeas.map(async (generatedIdea, i) => {
+        const currentIndex = index + i;
+        generatedTitles.add(generatedIdea.title);
 
-    await onProgress?.({
-      stackId: stack.id,
-      phase: "generating",
-      current: index + 1,
-      total: plannedTotal,
-      message: "Generating card content",
-    });
+        await onProgress?.({
+          stackId: stack.id,
+          phase: "generating",
+          current: currentIndex + 1,
+          total: plannedTotal,
+          message: "Generating card content",
+        });
 
-    const { idea, vector: ideaVector } = await createIdeaWithEmbeddings({
-      db,
-      title: generatedIdea.title,
-      description: generatedIdea.description,
-      fieldLabel: generatedIdea.field,
-    });
+        const { idea, vector: ideaVector } = await createIdeaWithEmbeddings({
+          db,
+          title: generatedIdea.title,
+          description: generatedIdea.description,
+          fieldLabel: generatedIdea.field,
+        });
 
-    const ideaTags = await db.ideaTag.findMany({
-      where: { ideaId: idea.id },
-      select: { tagId: true, weight: true },
-    });
+        const ideaTags = await db.ideaTag.findMany({
+          where: { ideaId: idea.id },
+          select: { tagId: true, weight: true },
+        });
 
-    const [ranked] = rankHybridIdeas({
-      userLatentVector: normalizedPreferenceVector,
-      userTagWeights: userTagWeightMap,
-      userSeenTagIds,
-      candidates: [
-        {
+        const [ranked] = rankHybridIdeas({
+          userLatentVector: normalizedPreferenceVector,
+          userTagWeights: userTagWeightMap,
+          userSeenTagIds,
+          candidates: [
+            {
+              idea: {
+                id: idea.id,
+                title: idea.title,
+                description: idea.description,
+                fieldId: idea.fieldId,
+                createdAt: idea.createdAt,
+                vector: ideaVector,
+              },
+              tags: ideaTags,
+            },
+          ],
+        });
+
+        const stackItem = await db.ideaStackItem.create({
+          data: {
+            stackId: stack.id,
+            ideaId: idea.id,
+            position: currentIndex,
+          },
+          select: {
+            id: true,
+          },
+        });
+
+        await db.recommendationImpression.create({
+          data: {
+            userId,
+            ideaId: idea.id,
+            rank: currentIndex,
+            explicitScore: ranked?.explicitScore ?? 0,
+            latentScore: ranked?.latentScore ?? 0,
+            explorationScore: ranked?.explorationScore ?? 0,
+            finalScore: ranked?.finalScore ?? 0,
+          },
+        });
+
+        await onIdeaPersisted?.({
+          stackId: stack.id,
+          stackItemId: stackItem.id,
+          position: currentIndex,
+          total: plannedTotal,
           idea: {
             id: idea.id,
             title: idea.title,
             description: idea.description,
             fieldId: idea.fieldId,
             createdAt: idea.createdAt,
-            vector: ideaVector,
           },
-          tags: ideaTags,
-        },
-      ],
-    });
+        });
 
-    const stackItem = await db.ideaStackItem.create({
-      data: {
-        stackId: stack.id,
-        ideaId: idea.id,
-        position: index,
-      },
-      select: {
-        id: true,
-      },
-    });
+        await onProgress?.({
+          stackId: stack.id,
+          phase: "persisting",
+          current: currentIndex + 1,
+          total: plannedTotal,
+          message: "Card ready",
+        });
+      })
+    );
 
-    await db.recommendationImpression.create({
-      data: {
-        userId,
-        ideaId: idea.id,
-        rank: index,
-        explicitScore: ranked?.explicitScore ?? 0,
-        latentScore: ranked?.latentScore ?? 0,
-        explorationScore: ranked?.explorationScore ?? 0,
-        finalScore: ranked?.finalScore ?? 0,
-      },
-    });
-
-    await onIdeaPersisted?.({
-      stackId: stack.id,
-      stackItemId: stackItem.id,
-      position: index,
-      total: plannedTotal,
-      idea: {
-        id: idea.id,
-        title: idea.title,
-        description: idea.description,
-        fieldId: idea.fieldId,
-        createdAt: idea.createdAt,
-      },
-    });
-
-    await onProgress?.({
-      stackId: stack.id,
-      phase: "persisting",
-      current: index + 1,
-      total: plannedTotal,
-      message: "Card ready",
-    });
+    index += generatedIdeas.length;
   }
 
   return db.ideaStack.findUniqueOrThrow({
@@ -524,7 +532,7 @@ export const getOrCreateActiveStack = async (params: {
     return active;
   }
 
-  return generateFreshStack({ db, userId });
+  return null;
 };
 
 export const registerSwipe = async (params: {
