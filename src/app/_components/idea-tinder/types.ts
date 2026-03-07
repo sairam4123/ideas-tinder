@@ -8,20 +8,20 @@ export type QueuedSwipe = {
   direction: SwipeDirection;
 };
 
-export type StackIdea = RouterOutputs["idea"]["getStack"]["ideas"][number];
+export type StackIdea = NonNullable<RouterOutputs["idea"]["getStack"]>["ideas"][number];
 
 export type SwipeStatus = "dislike" | "like" | "fav";
 
 export type DeckCard =
   | {
-      kind: "idea";
-      key: string;
-      stackItem: StackIdea;
-    }
+    kind: "idea";
+    key: string;
+    stackItem: StackIdea;
+  }
   | {
-      kind: "caught-up";
-      key: "caught-up";
-    };
+    kind: "caught-up";
+    key: "caught-up";
+  };
 
 export type StreamedStackState = {
   id: string;

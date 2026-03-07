@@ -143,25 +143,28 @@ export function IdeaTinder() {
         {deck.currentCard.kind === "idea" && (
           <div className="absolute right-0 bottom-0 left-0 z-10 flex items-center justify-center gap-6">
             <button
-              className="group border-border bg-background-surface flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-red-400 hover:bg-red-50 active:scale-95 disabled:opacity-50"
+              className="group border-border bg-background-surface flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-red-400 hover:bg-red-50 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
               onClick={() => triggerSwipe("left")}
               title="Dislike"
+              disabled={deck.isStreamingStack && deck.currentCard.kind === "idea" && deck.currentCard.stackItem.idea.id.startsWith("placeholder-")}
             >
               <X className="h-8 w-8 text-slate-400 transition-colors group-hover:text-red-500" />
             </button>
 
             <button
-              className="group border-border bg-background-surface -mt-10 flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-sky-400 hover:bg-sky-50 active:scale-95 disabled:opacity-50"
+              className="group border-border bg-background-surface -mt-10 flex h-14 w-14 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-sky-400 hover:bg-sky-50 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
               onClick={() => triggerSwipe("top")}
               title="Like + Favorite"
+              disabled={deck.isStreamingStack && deck.currentCard.kind === "idea" && deck.currentCard.stackItem.idea.id.startsWith("placeholder-")}
             >
               <Star className="h-6 w-6 text-slate-400 transition-all group-hover:fill-sky-500 group-hover:text-sky-500" />
             </button>
 
             <button
-              className="group border-border bg-background-surface flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-emerald-400 hover:bg-emerald-50 active:scale-95 disabled:opacity-50"
+              className="group border-border bg-background-surface flex h-16 w-16 items-center justify-center rounded-full border-2 shadow-sm transition-all hover:scale-110 hover:border-emerald-400 hover:bg-emerald-50 active:scale-95 disabled:opacity-50 disabled:pointer-events-none"
               onClick={() => triggerSwipe("right")}
               title="Like"
+              disabled={deck.isStreamingStack && deck.currentCard.kind === "idea" && deck.currentCard.stackItem.idea.id.startsWith("placeholder-")}
             >
               <Heart className="h-8 w-8 text-slate-400 transition-all group-hover:fill-emerald-500 group-hover:text-emerald-500" />
             </button>

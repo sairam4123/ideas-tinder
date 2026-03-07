@@ -72,6 +72,7 @@ export function DeckCard(props: DeckCardProps) {
 
   const isTop = depth === 0;
   const isIdea = card.kind === "idea";
+  const isPlaceholder = isIdea && card.stackItem.idea.id.startsWith("placeholder-");
 
   // Stack depth visuals — depth 0 is the front card
   const layerScale = Math.min(
@@ -117,51 +118,51 @@ export function DeckCard(props: DeckCardProps) {
 
   return (
     <motion.div
-      drag={isTop && isIdea}
+      drag={isTop && isIdea && !isPlaceholder}
       dragConstraints={
-        isTop ? { top: 0, bottom: 0, left: 0, right: 0 } : undefined
+        isTop && !isPlaceholder ? { top: 0, bottom: 0, left: 0, right: 0 } : undefined
       }
-      dragElastic={isTop ? 1 : undefined}
-      dragMomentum={isTop ? true : undefined}
+      dragElastic={isTop && !isPlaceholder ? 1 : undefined}
+      dragMomentum={isTop && !isPlaceholder ? true : undefined}
       dragTransition={
-        isTop ? { bounceStiffness: 300, bounceDamping: 20 } : undefined
+        isTop && !isPlaceholder ? { bounceStiffness: 300, bounceDamping: 20 } : undefined
       }
       onDrag={
-        isTop
+        isTop && !isPlaceholder
           ? (_, info) => {
-              if (!isIdea) return;
-              dragX.set(info.offset.x);
-              dragY.set(info.offset.y);
-              const progress = Math.max(
-                0,
-                Math.min(
-                  1,
-                  Math.max(
-                    Math.abs(info.offset.x) / (isTouchDevice ? 80 : 120),
-                    Math.max(0, -info.offset.y) / (isTouchDevice ? 80 : 120),
-                  ),
+            if (!isIdea) return;
+            dragX.set(info.offset.x);
+            dragY.set(info.offset.y);
+            const progress = Math.max(
+              0,
+              Math.min(
+                1,
+                Math.max(
+                  Math.abs(info.offset.x) / (isTouchDevice ? 80 : 120),
+                  Math.max(0, -info.offset.y) / (isTouchDevice ? 80 : 120),
                 ),
-              );
-              onSwipeProgress(progress);
-            }
+              ),
+            );
+            onSwipeProgress(progress);
+          }
           : undefined
       }
       onDragEnd={
-        isTop
+        isTop && !isPlaceholder
           ? (event, info) => {
-              if (!isIdea) return;
-              void handleDragEnd(event, info);
-            }
+            if (!isIdea) return;
+            void handleDragEnd(event, info);
+          }
           : undefined
       }
       animate={
         isTop
           ? controls
           : {
-              scale: layerScale,
-              y: layerY,
-              opacity: layerOpacity,
-            }
+            scale: layerScale,
+            y: layerY,
+            opacity: layerOpacity,
+          }
       }
       transition={
         isTop ? undefined : { type: "spring", stiffness: 280, damping: 26 }
@@ -172,20 +173,19 @@ export function DeckCard(props: DeckCardProps) {
       style={
         isTop
           ? {
-              transformOrigin: "50% 80%",
-              rotate: dragRotate,
-              boxShadow: dragShadow,
-              x: dragX,
-              y: dragY,
-              zIndex: 10,
-            }
+            transformOrigin: "50% 80%",
+            rotate: dragRotate,
+            boxShadow: dragShadow,
+            x: dragX,
+            y: dragY,
+            zIndex: 10,
+          }
           : {
-              zIndex: 0,
-            }
+            zIndex: 0,
+          }
       }
-      className={`border-border bg-background-surface absolute top-0 flex h-112.5 w-full flex-col overflow-hidden rounded-4xl border p-8 shadow-sm ${
-        isTop ? "touch-none" : "pointer-events-none"
-      } ${isTop && isIdea ? "relative cursor-grab" : "cursor-default"}`}
+      className={`border-border bg-background-surface absolute top-0 flex h-112.5 w-full flex-col overflow-hidden rounded-4xl border p-8 shadow-sm ${isTop && !isPlaceholder ? "touch-none" : "pointer-events-none"
+        } ${isTop && isIdea && !isPlaceholder ? "relative cursor-grab" : "cursor-default"}`}
     >
       {isIdea ? (
         <>
@@ -260,9 +260,9 @@ export function DeckCard(props: DeckCardProps) {
             {isStackExpired
               ? "Your stack expired. Generate a new set of AI ideas based on your recent swipes."
               : `Your current stack is still active until ${stackExpiresAt?.toLocaleTimeString(
-                  [],
-                  { hour: "2-digit", minute: "2-digit" },
-                )}.`}
+                [],
+                { hour: "2-digit", minute: "2-digit" },
+              )}.`}
           </p>
           {isTop && (
             <button

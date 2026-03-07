@@ -72,12 +72,14 @@ export async function GET(request: Request) {
               userId: session.user.id,
             });
 
-            pushEvent("ready", {
-              stackId: stack.id,
-              ideaCount: stack.items.length,
-            });
-            closeStream();
-            return;
+            if (stack) {
+              pushEvent("ready", {
+                stackId: stack.id,
+                ideaCount: stack.items.length,
+              });
+              closeStream();
+              return;
+            }
           }
 
           const stack = await generateFreshStack({

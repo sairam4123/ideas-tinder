@@ -221,7 +221,7 @@ export const ideaRouter = createTRPCRouter({
     const averageSignal =
       vector.length > 0
         ? vector.reduce((sum, value) => sum + Math.abs(value), 0) /
-          vector.length
+        vector.length
         : 0;
 
     let summary = buildFallbackPreferenceSummary({
@@ -409,6 +409,10 @@ export const ideaRouter = createTRPCRouter({
         forceRefresh: input?.forceRefresh ?? false,
       });
 
+      if (!stack) {
+        return null;
+      }
+
       const swipeEvents = await ctx.db.swipeEvent.findMany({
         where: {
           userId: ctx.session.user.id,
@@ -428,6 +432,7 @@ export const ideaRouter = createTRPCRouter({
       }
 
       return {
+
         id: stack.id,
         expiresAt: stack.expiresAt,
         ideaCount: stack.items.length,
@@ -835,18 +840,18 @@ export const ideaRouter = createTRPCRouter({
       const navigation =
         currentStackIndex >= 0
           ? {
-              stackId: lastStack!.id,
-              currentPosition: currentStackIndex + 1,
-              totalIdeas: stackItems.length,
-              previousIdeaId:
-                currentStackIndex > 0
-                  ? (stackItems[currentStackIndex - 1]?.ideaId ?? null)
-                  : null,
-              nextIdeaId:
-                currentStackIndex < stackItems.length - 1
-                  ? (stackItems[currentStackIndex + 1]?.ideaId ?? null)
-                  : null,
-            }
+            stackId: lastStack!.id,
+            currentPosition: currentStackIndex + 1,
+            totalIdeas: stackItems.length,
+            previousIdeaId:
+              currentStackIndex > 0
+                ? (stackItems[currentStackIndex - 1]?.ideaId ?? null)
+                : null,
+            nextIdeaId:
+              currentStackIndex < stackItems.length - 1
+                ? (stackItems[currentStackIndex + 1]?.ideaId ?? null)
+                : null,
+          }
           : null;
 
       const lastAction = latestSwipe?.action ?? null;

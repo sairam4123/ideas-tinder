@@ -147,6 +147,12 @@ export function useIdeaDeck() {
   }, [index, streamedStack?.id, swipeStatusByIdea, stackQuery.data?.id]);
 
   useEffect(() => {
+    if (stackQuery.isSuccess && stackQuery.data === null && !isStreamingStack) {
+      startStackStream(false);
+    }
+  }, [stackQuery.isSuccess, stackQuery.data, isStreamingStack]);
+
+  useEffect(() => {
     return () => {
       closeStream();
     };
