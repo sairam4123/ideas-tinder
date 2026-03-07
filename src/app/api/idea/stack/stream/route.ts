@@ -5,6 +5,9 @@ import {
   getOrCreateActiveStack,
 } from "~/server/services/idea/engine";
 
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 export async function GET(request: Request) {
   const session = await getSession();
   if (!session?.user?.id) {
@@ -19,12 +22,19 @@ export async function GET(request: Request) {
   const stream = new ReadableStream<Uint8Array>({
     start(controller) {
       let isClosed = false;
+      const keepAliveTimer = setInterval(() => {
+        if (isClosed) {
+          return;
+        }
+        controller.enqueue(encoder.encode(`: keepalive ${Date.now()}\n\n`));
+      }, 10000);
 
       const closeStream = () => {
         if (isClosed) {
           return;
         }
         isClosed = true;
+        clearInterval(keepAliveTimer);
         controller.close();
       };
 
@@ -73,6 +83,22 @@ export async function GET(request: Request) {
           const stack = await generateFreshStack({
             db,
             userId: session.user.id,
+            onPlanReady: (plan) => {
+              pushEvent("plan", {
+                stackId: plan.stackId,
+                total: plan.total,
+                cards: plan.cards,
+              });
+            },
+            onProgress: (progress) => {
+              pushEvent("progress", {
+                stackId: progress.stackId,
+                phase: progress.phase,
+                current: progress.current,
+                total: progress.total,
+                message: progress.message,
+              });
+            },
             onIdeaPersisted: (progress) => {
               pushEvent("idea", {
                 stackId: progress.stackId,
@@ -97,7 +123,7 @@ export async function GET(request: Request) {
         } catch (error) {
           const message =
             error instanceof Error ? error.message : "Stack stream failed";
-          pushEvent("error", { message });
+          pushEvent("stack-error", { message });
         } finally {
           closeStream();
         }

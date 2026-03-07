@@ -284,12 +284,32 @@ export type StackIdeaProgress = {
   };
 };
 
+export type StackGenerationProgress = {
+  stackId: string;
+  phase: "planning" | "generating" | "persisting";
+  current: number;
+  total: number;
+  message: string;
+};
+
+export type StackGenerationPlan = {
+  stackId: string;
+  total: number;
+  cards: Array<{
+    position: number;
+    title: string;
+    field: string;
+  }>;
+};
+
 export const generateFreshStack = async (params: {
   db: PrismaClient;
   userId: string;
   onIdeaPersisted?: (progress: StackIdeaProgress) => Promise<void> | void;
+  onProgress?: (progress: StackGenerationProgress) => Promise<void> | void;
+  onPlanReady?: (plan: StackGenerationPlan) => Promise<void> | void;
 }) => {
-  const { db, userId, onIdeaPersisted } = params;
+  const { db, userId, onIdeaPersisted, onProgress, onPlanReady } = params;
 
   const fields = await getUserFieldLabels(db, userId);
   if (fields.length === 0) {
@@ -315,15 +335,6 @@ export const generateFreshStack = async (params: {
       : "No explicit preferences yet.";
 
   const count = randomStackSize();
-  const generatedIdeas = await generateIdeasWithGemini({
-    fields,
-    count,
-    userPreferenceSummary: preferenceSummary,
-  });
-
-  if (generatedIdeas.length === 0) {
-    throw new Error("Idea generation returned no candidates.");
-  }
 
   const expiresAt = new Date(Date.now() + stackRefreshSeconds * 1000);
 
@@ -337,19 +348,65 @@ export const generateFreshStack = async (params: {
     },
   });
 
-  const createdCandidates = [] as Array<{
-    idea: {
-      id: string;
-      title: string;
-      description: string;
-      fieldId: string | null;
-      createdAt: Date;
-      vector: number[];
-    };
-    tags: Array<{ tagId: string; weight: number }>;
-  }>;
+  const plannedTotal = count;
+  const plannedCards = Array.from({ length: plannedTotal }, (_, position) => ({
+    position,
+    title: `Idea slot ${position + 1}`,
+    field: fields[position % fields.length] ?? fields[0] ?? "General",
+  }));
 
-  for (const generatedIdea of generatedIdeas) {
+  await onPlanReady?.({
+    stackId: stack.id,
+    total: plannedTotal,
+    cards: plannedCards,
+  });
+
+  await onProgress?.({
+    stackId: stack.id,
+    phase: "planning",
+    current: 0,
+    total: plannedTotal,
+    message: "Stack plan created",
+  });
+
+  await applyLazyDecayToUserTags({ db, userId });
+  const userTagProfile = await getUserTagProfileSummary({ db, userId });
+  const userTagWeightMap = new Map(
+    userTagProfile.topInterests.map((entry) => [entry.tagId, entry.weight]),
+  );
+  const userSeenTagIds = new Set(
+    userTagProfile.topInterests.map((entry) => entry.tagId),
+  );
+
+  const normalizedPreferenceVector = normalizeVector(preferenceVector);
+  const generatedTitles = new Set<string>();
+
+  for (let index = 0; index < plannedTotal; index += 1) {
+    const generatedIdeas = await generateIdeasWithGemini({
+      fields,
+      count: 1,
+      userPreferenceSummary: `${preferenceSummary} Avoid reusing these titles: ${
+        generatedTitles.size > 0
+          ? Array.from(generatedTitles).join(" | ")
+          : "(none yet)"
+      }. Return exactly one distinct new idea.`,
+    });
+
+    const generatedIdea = generatedIdeas[0];
+    if (!generatedIdea) {
+      throw new Error("Idea generation returned no card for this slot.");
+    }
+
+    generatedTitles.add(generatedIdea.title);
+
+    await onProgress?.({
+      stackId: stack.id,
+      phase: "generating",
+      current: index + 1,
+      total: plannedTotal,
+      message: "Generating card content",
+    });
+
     const { idea, vector: ideaVector } = await createIdeaWithEmbeddings({
       db,
       title: generatedIdea.title,
@@ -362,91 +419,24 @@ export const generateFreshStack = async (params: {
       select: { tagId: true, weight: true },
     });
 
-    createdCandidates.push({
-      idea: {
-        ...idea,
-        vector: ideaVector,
-      },
-      tags: ideaTags,
-    });
-  }
-
-  const historicalIdeas = await db.idea.findMany({
-    where: {
-      swipeEvents: {
-        none: {
-          userId,
+    const [ranked] = rankHybridIdeas({
+      userLatentVector: normalizedPreferenceVector,
+      userTagWeights: userTagWeightMap,
+      userSeenTagIds,
+      candidates: [
+        {
+          idea: {
+            id: idea.id,
+            title: idea.title,
+            description: idea.description,
+            fieldId: idea.fieldId,
+            createdAt: idea.createdAt,
+            vector: ideaVector,
+          },
+          tags: ideaTags,
         },
-      },
-    },
-    orderBy: { createdAt: "desc" },
-    take: Math.max(count, 12),
-    include: {
-      tags: {
-        select: {
-          tagId: true,
-          weight: true,
-        },
-      },
-    },
-  });
-
-  const allCandidatesMap = new Map<
-    string,
-    {
-      idea: {
-        id: string;
-        title: string;
-        description: string;
-        fieldId: string | null;
-        createdAt: Date;
-        vector: number[];
-      };
-      tags: Array<{ tagId: string; weight: number }>;
-    }
-  >();
-
-  for (const candidate of createdCandidates) {
-    allCandidatesMap.set(candidate.idea.id, candidate);
-  }
-
-  for (const idea of historicalIdeas) {
-    if (allCandidatesMap.has(idea.id)) {
-      continue;
-    }
-
-    allCandidatesMap.set(idea.id, {
-      idea: {
-        id: idea.id,
-        title: idea.title,
-        description: idea.description,
-        fieldId: idea.fieldId,
-        createdAt: idea.createdAt,
-        vector: asVector(idea.vector),
-      },
-      tags: idea.tags,
+      ],
     });
-  }
-
-  await applyLazyDecayToUserTags({ db, userId });
-  const userTagProfile = await getUserTagProfileSummary({ db, userId });
-  const userTagWeightMap = new Map(
-    userTagProfile.topInterests.map((entry) => [entry.tagId, entry.weight]),
-  );
-  const userSeenTagIds = new Set(
-    userTagProfile.topInterests.map((entry) => entry.tagId),
-  );
-
-  const rankedIdeas = rankHybridIdeas({
-    userLatentVector: normalizeVector(preferenceVector),
-    userTagWeights: userTagWeightMap,
-    userSeenTagIds,
-    candidates: Array.from(allCandidatesMap.values()),
-  }).slice(0, count);
-
-  for (let index = 0; index < rankedIdeas.length; index += 1) {
-    const ranked = rankedIdeas[index]!;
-    const idea = ranked.idea;
 
     const stackItem = await db.ideaStackItem.create({
       data: {
@@ -464,10 +454,10 @@ export const generateFreshStack = async (params: {
         userId,
         ideaId: idea.id,
         rank: index,
-        explicitScore: ranked.explicitScore,
-        latentScore: ranked.latentScore,
-        explorationScore: ranked.explorationScore,
-        finalScore: ranked.finalScore,
+        explicitScore: ranked?.explicitScore ?? 0,
+        latentScore: ranked?.latentScore ?? 0,
+        explorationScore: ranked?.explorationScore ?? 0,
+        finalScore: ranked?.finalScore ?? 0,
       },
     });
 
@@ -475,7 +465,7 @@ export const generateFreshStack = async (params: {
       stackId: stack.id,
       stackItemId: stackItem.id,
       position: index,
-      total: rankedIdeas.length,
+      total: plannedTotal,
       idea: {
         id: idea.id,
         title: idea.title,
@@ -483,6 +473,14 @@ export const generateFreshStack = async (params: {
         fieldId: idea.fieldId,
         createdAt: idea.createdAt,
       },
+    });
+
+    await onProgress?.({
+      stackId: stack.id,
+      phase: "persisting",
+      current: index + 1,
+      total: plannedTotal,
+      message: "Card ready",
     });
   }
 

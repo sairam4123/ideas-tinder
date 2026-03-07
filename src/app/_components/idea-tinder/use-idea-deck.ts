@@ -13,6 +13,8 @@ import type {
   DeckCard,
   QueuedSwipe,
   StackIdea,
+  StackStreamPlan,
+  StackStreamProgress,
   StreamedStackState,
   SwipeDirection,
   SwipeStatus,
@@ -41,6 +43,8 @@ export function useIdeaDeck() {
   const [streamedStack, setStreamedStack] = useState<StreamedStackState | null>(
     null,
   );
+  const [streamProgress, setStreamProgress] =
+    useState<StackStreamProgress | null>(null);
   const [isStreamingStack, setIsStreamingStack] = useState(false);
   const indexRef = useRef(0);
   const pendingSwipesRef = useRef<QueuedSwipe[]>([]);
@@ -49,10 +53,15 @@ export function useIdeaDeck() {
   const lastStackIdRef = useRef<string | null>(null);
 
   const preferencesQuery = api.idea.getPreferences.useQuery();
+  const isOnboardingCompleted =
+    preferencesQuery.data?.onboardingCompleted === true;
   const stackQuery = api.idea.getStack.useQuery(undefined, {
-    enabled: preferencesQuery.data?.onboardingCompleted === true,
+    enabled: isOnboardingCompleted,
   });
   const swipeMutation = api.idea.swipeIdea.useMutation();
+  const isDeckLoading =
+    preferencesQuery.isPending ||
+    (isOnboardingCompleted && stackQuery.isPending);
 
   const syncVisibleCardsFromIdeas = (
     ideas: StackIdea[],
@@ -162,6 +171,7 @@ export function useIdeaDeck() {
   const finishStreaming = async () => {
     await stackQuery.refetch();
     setStreamedStack(null);
+    setStreamProgress(null);
     setIsStreamingStack(false);
     closeStream();
   };
@@ -171,6 +181,7 @@ export function useIdeaDeck() {
     indexRef.current = 0;
     setIsStreamingStack(true);
     setStreamedStack(null);
+    setStreamProgress(null);
     setIndex(0);
     setSwipeStatusByIdea({});
     syncVisibleCardsFromIdeas([], 0);
@@ -223,6 +234,42 @@ export function useIdeaDeck() {
       });
     });
 
+    source.addEventListener("plan", (event) => {
+      const payload = parseStreamEvent<StackStreamPlan>(event);
+      if (!payload) {
+        return;
+      }
+
+      setStreamedStack((previous) => ({
+        id: payload.stackId,
+        ideaCount: payload.total,
+        ideas: previous?.ideas ?? [],
+      }));
+    });
+
+    source.addEventListener("progress", (event) => {
+      const payload = parseStreamEvent<StackStreamProgress>(event);
+      if (!payload) {
+        return;
+      }
+
+      setStreamProgress(payload);
+      setStreamedStack((previous) => {
+        if (!previous) {
+          return {
+            id: payload.stackId,
+            ideaCount: payload.total,
+            ideas: [],
+          };
+        }
+
+        return {
+          ...previous,
+          ideaCount: Math.max(previous.ideaCount, payload.total),
+        };
+      });
+    });
+
     source.addEventListener("ready", () => {
       void finishStreaming();
     });
@@ -231,8 +278,9 @@ export function useIdeaDeck() {
       void finishStreaming();
     });
 
-    source.addEventListener("error", () => {
+    source.addEventListener("stack-error", () => {
       setStreamedStack(null);
+      setStreamProgress(null);
       setIsStreamingStack(false);
       void stackQuery.refetch();
       closeStream();
@@ -240,6 +288,7 @@ export function useIdeaDeck() {
 
     source.onerror = () => {
       setStreamedStack(null);
+      setStreamProgress(null);
       setIsStreamingStack(false);
       void stackQuery.refetch();
       closeStream();
@@ -305,9 +354,12 @@ export function useIdeaDeck() {
     effectiveIdeaCount,
     effectiveStackId,
     index,
+    isDeckLoading,
+    isOnboardingCompleted,
     isStackExhausted,
     isStackExpired,
     isStreamingStack,
+    streamProgress,
     preferencesQuery,
     stackExpiresAt,
     stackQuery,

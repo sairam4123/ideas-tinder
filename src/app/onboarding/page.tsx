@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { SessionGuard } from "~/app/_components/session-guard";
 import { api } from "~/trpc/react";
@@ -20,6 +20,7 @@ function OnboardingContent() {
   const [selectedFields, setSelectedFields] = useState<string[]>([]);
   const [customField, setCustomField] = useState("");
   const [customFields, setCustomFields] = useState<string[]>([]);
+  const initializedFromExistingPreferencesRef = useRef(false);
 
   const fieldOptions = useMemo(
     () => (fieldsQuery.data ?? []).filter((field) => !field.isCustom),
@@ -30,13 +31,34 @@ function OnboardingContent() {
     preferencesQuery.data?.onboardingCompleted === true;
 
   useEffect(() => {
-    if (onboardingCompleted) {
-      router.replace("/");
+    if (initializedFromExistingPreferencesRef.current) {
+      return;
     }
-  }, [onboardingCompleted, router]);
+    if (!fieldsQuery.data || !preferencesQuery.data) {
+      return;
+    }
 
-  if (onboardingCompleted) {
-    return null;
+    const optionLabels = new Set(fieldOptions.map((field) => field.label));
+    const existingFields = preferencesQuery.data.fields;
+
+    setSelectedFields(
+      existingFields.filter((field) => optionLabels.has(field)),
+    );
+    setCustomFields(existingFields.filter((field) => !optionLabels.has(field)));
+
+    initializedFromExistingPreferencesRef.current = true;
+  }, [fieldOptions, fieldsQuery.data, preferencesQuery.data]);
+
+  if (fieldsQuery.isPending || preferencesQuery.isPending) {
+    return (
+      <main className="bg-background flex min-h-screen items-center justify-center px-4 py-10">
+        <div className="border-border bg-background-surface w-full max-w-3xl rounded-2xl border p-6 shadow-sm">
+          <p className="text-foreground-muted text-sm">
+            Loading preferences...
+          </p>
+        </div>
+      </main>
+    );
   }
 
   return (
@@ -44,11 +66,12 @@ function OnboardingContent() {
       <div className="border-border bg-background-surface w-full max-w-3xl space-y-6 rounded-2xl border p-6 shadow-sm">
         <div>
           <h1 className="text-foreground text-2xl font-bold">
-            Choose your fields
+            {onboardingCompleted ? "Retune your fields" : "Choose your fields"}
           </h1>
           <p className="text-foreground-muted text-sm">
-            We use these interests as an initial seed and adapt over time from
-            your interactions.
+            {onboardingCompleted
+              ? "Update your interests anytime. New recommendations will adapt from this updated seed plus your ongoing interactions."
+              : "We use these interests as an initial seed and adapt over time from your interactions."}
           </p>
         </div>
 

@@ -10,6 +10,7 @@ type StackListProps = {
   swipeStatusByIdea: Record<string, SwipeStatus>;
   effectiveIdeaCount: number;
   isStackExhausted: boolean;
+  isStreamingStack: boolean;
 };
 
 export function StackList(props: StackListProps) {
@@ -20,7 +21,10 @@ export function StackList(props: StackListProps) {
     swipeStatusByIdea,
     effectiveIdeaCount,
     isStackExhausted,
+    isStreamingStack,
   } = props;
+
+  const pendingCount = Math.max(0, effectiveIdeaCount - allItems.length);
 
   return (
     <section className="border-border bg-background-surface rounded-2xl border p-4 shadow-sm">
@@ -69,6 +73,26 @@ export function StackList(props: StackListProps) {
             </Link>
           );
         })}
+        {isStreamingStack
+          ? Array.from({ length: pendingCount }, (_, pendingIndex) => {
+              const slotNumber = allItems.length + pendingIndex + 1;
+              return (
+                <div
+                  className="border-border bg-background-muted/60 rounded-lg border border-dashed px-3 py-2 text-sm"
+                  key={`pending-${slotNumber}`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="line-clamp-1 font-medium text-slate-500">
+                      Generating card...
+                    </p>
+                    <span className="text-xs text-slate-500">
+                      #{slotNumber}
+                    </span>
+                  </div>
+                </div>
+              );
+            })
+          : null}
         <div
           className={`rounded-lg border px-3 py-2 text-sm transition ${
             currentCard.kind === "caught-up"

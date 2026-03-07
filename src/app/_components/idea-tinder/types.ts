@@ -29,6 +29,24 @@ export type StreamedStackState = {
   ideas: StackIdea[];
 };
 
+export type StackStreamProgress = {
+  stackId: string;
+  phase: "planning" | "generating" | "persisting";
+  current: number;
+  total: number;
+  message: string;
+};
+
+export type StackStreamPlan = {
+  stackId: string;
+  total: number;
+  cards: Array<{
+    position: number;
+    title: string;
+    field: string;
+  }>;
+};
+
 export type PersistedStackProgress = {
   index: number;
   actions: Record<string, SwipeStatus>;
