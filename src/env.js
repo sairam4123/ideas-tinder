@@ -24,7 +24,7 @@ export const env = createEnv({
     STACK_REFRESH_PROD_SECONDS: z.coerce.number().int().min(60).default(1800),
     SWIPE_WEIGHT_LEFT: z.coerce.number().default(-1),
     SWIPE_WEIGHT_RIGHT: z.coerce.number().default(1),
-    SWIPE_WEIGHT_TOP: z.coerce.number().default(0.5),
+    SWIPE_WEIGHT_TOP: z.coerce.number().default(1.5),
     PREF_LEARNING_RATE: z.coerce.number().min(0).max(1).default(0.1),
     EMBED_CHUNK_SIZE: z.coerce.number().int().min(100).default(800),
     NODE_ENV: z

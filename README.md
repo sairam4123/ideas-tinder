@@ -1,21 +1,14 @@
 # Ideas Tinder
 
-A simple Tinder-like idea discovery app built with Next.js + T3 stack tooling.
+Ideas Tinder is a swipe-style idea discovery app built with Next.js, tRPC, Prisma, and better-auth.
 
-Users can swipe through a pre-coded set of startup ideas with:
-
-- Drag and swipe interactions (mouse + touch)
-- Like / Dislike actions
-- Card stack depth animation (z-direction)
-- Restart deck flow when all ideas are consumed
-
-## Tech Stack
+## Stack
 
 - Next.js (App Router)
 - React + TypeScript
 - Tailwind CSS
 - tRPC
-- Prisma
+- Prisma ORM
 - better-auth
 
 ## Quick Start
@@ -26,63 +19,83 @@ Users can swipe through a pre-coded set of startup ideas with:
 npm install
 ```
 
-2. Create your environment file (for example `.env`):
+2. Create `.env` in the project root:
 
 ```env
+# SQLite (default local setup)
 DATABASE_URL="file:./db.sqlite"
+
 BETTER_AUTH_SECRET="replace-with-a-random-secret"
 BETTER_AUTH_GITHUB_CLIENT_ID="your-github-client-id"
 BETTER_AUTH_GITHUB_CLIENT_SECRET="your-github-client-secret"
 ```
 
-3. Run the app:
+3. Run database setup (SQLite):
+
+```bash
+npm run db:generate
+```
+
+4. Start dev server:
 
 ```bash
 npm run dev
 ```
 
-4. Open:
+5. Open `http://localhost:3000`
 
-```text
-http://localhost:3000
+## Prisma Schema Organization
+
+This repo keeps Prisma models in modular files and supports multiple database engines.
+
+- Main data models/enums: `prisma/main/models.prisma`
+- SQLite header (generator + datasource): `prisma/engines/sqlite/header.prisma`
+- PostgreSQL header: `prisma/engines/postgres/header.prisma`
+- Compose script: `scripts/compose-prisma-schema.mjs`
+
+### SQLite flow
+
+For local development, a composed sqlite schema is generated from `prisma/engines/sqlite/header.prisma` + `prisma/main/models.prisma`, then used for Prisma commands.
+
+```bash
+npm run db:generate
+npm run db:push
 ```
 
-## Scripts
+### PostgreSQL flow
 
-- `npm run dev` – Start local dev server
-- `npm run build` – Production build
-- `npm run start` – Run built app
-- `npm run lint` – ESLint
-- `npm run typecheck` – TypeScript check
-- `npm run check` – Lint + type check
-- `npm run db:generate` – Create/apply Prisma migration in dev
-- `npm run db:push` – Push Prisma schema to database
-- `npm run db:studio` – Open Prisma Studio
+Postgres uses a composed schema generated at `prisma/schema.postgres.prisma`.
 
-## Swipe Deck Location
+```bash
+npm run prisma:compose:postgres
+npm run db:push:postgres
+# or
+npm run db:migrate:postgres
+```
 
-Main swipe UI lives in:
+For Postgres, `DATABASE_URL` must start with `postgresql://` (or `postgres://`).
 
-- `src/app/_components/idea-tinder.tsx`
+## Useful Scripts
 
-Home page renders the deck in:
+- `npm run dev` - Start local dev server
+- `npm run build` - Production build
+- `npm run start` - Start production server
+- `npm run lint` - ESLint
+- `npm run typecheck` - TypeScript check
+- `npm run check` - Lint + typecheck
+- `npm run db:generate` - Run Prisma migrate dev (SQLite)
+- `npm run db:push` - Push schema to DB (SQLite)
+- `npm run db:push:postgres` - Compose + push for PostgreSQL
+- `npm run db:migrate:postgres` - Compose + deploy migrations for PostgreSQL
+- `npm run db:studio` - Open Prisma Studio
 
-- `src/app/page.tsx`
+## Project Entry Points
 
-## Important Environment Note
+- Main app page: `src/app/page.tsx`
+- Swipe UI component: `src/app/_components/idea-tinder.tsx`
+- Auth routes/pages: `src/app/auth/*`
 
-`src/server/better-auth/config.ts` uses:
+## Notes
 
-- `env.BETTER_AUTH_GITHUB_CLIENT_ID`
-- `env.BETTER_AUTH_GITHUB_CLIENT_SECRET`
-
-If type checks fail saying those properties do not exist, ensure the same keys are defined in `src/env.js` under both:
-
-- `server`
-- `runtimeEnv`
-
-They are currently commented out in many fresh templates and must be enabled if GitHub auth is configured.
-
-## Current Scope
-
-This project is intentionally minimal: pre-defined ideas + Tinder-style swipe animation. No persistence or backend idea feed is required for the MVP UI.
+- If auth env keys are used in code, make sure they are also declared in `src/env.js`.
+- Generated Prisma client output is configured to `generated/prisma`.

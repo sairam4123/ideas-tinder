@@ -9,6 +9,7 @@ import { api } from "~/trpc/react";
 function UserPageContent() {
   const preferences = api.idea.getPreferences.useQuery();
   const favorites = api.idea.getFavorites.useQuery();
+  const vectorInsights = preferences.data?.vectorInsights;
 
   if (preferences.isPending || favorites.isPending) {
     return (
@@ -88,6 +89,27 @@ function UserPageContent() {
                     No fields selected
                   </span>
                 )}
+              </div>
+            </div>
+
+            <div>
+              <span className="mb-2 block font-semibold text-slate-700">
+                AI Preference Summary
+              </span>
+              <p className="mb-3 text-sm leading-relaxed text-slate-600">
+                {vectorInsights?.summary ??
+                  "No preference signal yet. Start swiping ideas to build your profile."}
+              </p>
+              <div className="flex flex-wrap gap-2 text-xs font-medium text-slate-500">
+                <span className="rounded-md border border-slate-200 bg-white px-2 py-1">
+                  dims: {vectorInsights?.dimensions ?? 0}
+                </span>
+                <span className="rounded-md border border-slate-200 bg-white px-2 py-1">
+                  magnitude: {(vectorInsights?.magnitude ?? 0).toFixed(2)}
+                </span>
+                <span className="rounded-md border border-slate-200 bg-white px-2 py-1">
+                  avg signal: {(vectorInsights?.averageSignal ?? 0).toFixed(2)}
+                </span>
               </div>
             </div>
           </div>

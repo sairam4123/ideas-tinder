@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 const engine = process.argv[2] ?? "sqlite";
-const outputPath = process.argv[3] ?? "prisma/schema.prisma";
+const outputPath = process.argv[3] ?? "prisma/schema.sqlite.prisma";
 
 const validEngines = new Set(["sqlite", "postgres"]);
 if (!validEngines.has(engine)) {

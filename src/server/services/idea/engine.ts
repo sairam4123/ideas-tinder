@@ -176,6 +176,145 @@ const getUserPreferenceVector = async (db: PrismaClient, userId: string) => {
   return asVector(user?.preferenceVector);
 };
 
+export type StackIdeaProgress = {
+  stackId: string;
+  stackItemId: string;
+  position: number;
+  total: number;
+  idea: {
+    id: string;
+    title: string;
+    description: string;
+    fieldId: string | null;
+    createdAt: Date;
+  };
+};
+
+export const generateFreshStack = async (params: {
+  db: PrismaClient;
+  userId: string;
+  onIdeaPersisted?: (progress: StackIdeaProgress) => Promise<void> | void;
+}) => {
+  const { db, userId, onIdeaPersisted } = params;
+
+  const fields = await getUserFieldLabels(db, userId);
+  if (fields.length === 0) {
+    throw new Error(
+      "Please select at least one field before generating ideas.",
+    );
+  }
+
+  const preferenceVector = await getUserPreferenceVector(db, userId);
+  const vectorMagnitude = Math.sqrt(
+    preferenceVector.reduce((sum, value) => sum + value * value, 0),
+  );
+  const vectorPreview = preferenceVector
+    .slice(0, 8)
+    .map((value) => value.toFixed(3))
+    .join(", ");
+
+  const preferenceSummary =
+    fields.length > 0
+      ? `Preferred fields: ${fields.join(", ")}. Current vector dimensions: ${
+          preferenceVector.length
+        }. Vector magnitude: ${vectorMagnitude.toFixed(3)}.${
+          vectorPreview.length > 0 ? ` Vector preview: [${vectorPreview}].` : ""
+        }`
+      : "No explicit preferences yet.";
+
+  const count = randomStackSize();
+  const generatedIdeas = await generateIdeasWithGemini({
+    fields,
+    count,
+    userPreferenceSummary: preferenceSummary,
+  });
+
+  if (generatedIdeas.length === 0) {
+    throw new Error("Idea generation returned no candidates.");
+  }
+
+  const expiresAt = new Date(Date.now() + stackRefreshSeconds * 1000);
+
+  const stack = await db.ideaStack.create({
+    data: {
+      userId,
+      expiresAt,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  const createdIdeas = [] as Array<{
+    idea: {
+      id: string;
+      title: string;
+      description: string;
+      fieldId: string | null;
+      createdAt: Date;
+    };
+    score: number;
+  }>;
+
+  for (const generatedIdea of generatedIdeas) {
+    const { idea, vector: ideaVector } = await createIdeaWithEmbeddings({
+      db,
+      title: generatedIdea.title,
+      description: generatedIdea.description,
+      fieldLabel: generatedIdea.field,
+    });
+
+    const score = cosineSimilarity(preferenceVector, ideaVector);
+    createdIdeas.push({
+      idea,
+      score,
+    });
+  }
+
+  const rankedIdeas = createdIdeas
+    .sort((a, b) => b.score - a.score)
+    .map((entry) => entry.idea);
+
+  for (let index = 0; index < rankedIdeas.length; index += 1) {
+    const idea = rankedIdeas[index]!;
+
+    const stackItem = await db.ideaStackItem.create({
+      data: {
+        stackId: stack.id,
+        ideaId: idea.id,
+        position: index,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    await onIdeaPersisted?.({
+      stackId: stack.id,
+      stackItemId: stackItem.id,
+      position: index,
+      total: rankedIdeas.length,
+      idea: {
+        id: idea.id,
+        title: idea.title,
+        description: idea.description,
+        fieldId: idea.fieldId,
+        createdAt: idea.createdAt,
+      },
+    });
+  }
+
+  return db.ideaStack.findUniqueOrThrow({
+    where: { id: stack.id },
+    include: {
+      items: {
+        orderBy: { position: "asc" },
+        include: { idea: true },
+      },
+    },
+  });
+};
+
 export const getOrCreateActiveStack = async (params: {
   db: PrismaClient;
   userId: string;
@@ -198,79 +337,22 @@ export const getOrCreateActiveStack = async (params: {
   });
 
   if (active && !forceRefresh) {
-    return active;
-  }
-
-  const fields = await getUserFieldLabels(db, userId);
-  if (fields.length === 0) {
-    throw new Error(
-      "Please select at least one field before generating ideas.",
-    );
-  }
-
-  const preferenceVector = await getUserPreferenceVector(db, userId);
-  const preferenceSummary =
-    fields.length > 0
-      ? `Preferred fields: ${fields.join(", ")}. Current vector dimensions: ${
-          preferenceVector.length
-        }.`
-      : "No explicit preferences yet.";
-
-  const count = randomStackSize();
-  const generatedIdeas = await generateIdeasWithGemini({
-    fields,
-    count,
-    userPreferenceSummary: preferenceSummary,
-  });
-
-  if (generatedIdeas.length === 0) {
-    throw new Error("Idea generation returned no candidates.");
-  }
-
-  const createdIdeas = [] as Array<{ ideaId: string; score: number }>;
-
-  for (const generatedIdea of generatedIdeas) {
-    const { idea, vector } = await createIdeaWithEmbeddings({
-      db,
-      title: generatedIdea.title,
-      description: generatedIdea.description,
-      fieldLabel: generatedIdea.field,
+    const latestPreferenceUpdate = await db.preferenceUpdateLog.findFirst({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      select: { createdAt: true },
     });
 
-    const score = cosineSimilarity(preferenceVector, vector);
-    createdIdeas.push({
-      ideaId: idea.id,
-      score,
-    });
+    const hasPreferenceUpdatesAfterStack =
+      latestPreferenceUpdate !== null &&
+      latestPreferenceUpdate.createdAt > active.createdAt;
+
+    if (!hasPreferenceUpdatesAfterStack) {
+      return active;
+    }
   }
 
-  const rankedIdeaIds = createdIdeas
-    .sort((a, b) => b.score - a.score)
-    .map((entry) => entry.ideaId)
-    .slice(0, count);
-
-  const expiresAt = new Date(Date.now() + stackRefreshSeconds * 1000);
-
-  const stack = await db.ideaStack.create({
-    data: {
-      userId,
-      expiresAt,
-      items: {
-        create: rankedIdeaIds.map((ideaId, index) => ({
-          ideaId,
-          position: index,
-        })),
-      },
-    },
-    include: {
-      items: {
-        orderBy: { position: "asc" },
-        include: { idea: true },
-      },
-    },
-  });
-
-  return stack;
+  return generateFreshStack({ db, userId });
 };
 
 export const registerSwipe = async (params: {
@@ -289,12 +371,12 @@ export const registerSwipe = async (params: {
       favorite: false,
     },
     right: {
-      action: "LIKE_AND_FAVE",
+      action: "FAVE_ONLY",
       delta: env.SWIPE_WEIGHT_RIGHT,
-      favorite: true,
+      favorite: false,
     },
     top: {
-      action: "FAVE_ONLY",
+      action: "LIKE_AND_FAVE",
       delta: env.SWIPE_WEIGHT_TOP,
       favorite: true,
     },
