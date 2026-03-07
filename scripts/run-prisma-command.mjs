@@ -2,7 +2,10 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { spawn } from "node:child_process";
 
-import { composePrismaSchema, resolvePrismaEngine } from "./compose-prisma-schema.mjs";
+import {
+  composePrismaSchema,
+  resolvePrismaEngine,
+} from "./compose-prisma-schema.mjs";
 
 const dotenvLine = /^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)?\s*$/;
 
@@ -53,7 +56,12 @@ const loadEnvFiles = async (cwd, nodeEnv) => {
       const content = await readFile(filePath, "utf8");
       Object.assign(combined, parseDotenv(content));
     } catch (error) {
-      if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") {
+      if (
+        error &&
+        typeof error === "object" &&
+        "code" in error &&
+        error.code === "ENOENT"
+      ) {
         continue;
       }
 
@@ -65,10 +73,14 @@ const loadEnvFiles = async (cwd, nodeEnv) => {
 };
 
 const engineFlag = process.argv.find((arg) => arg.startsWith("--engine="));
-const prismaArgs = process.argv.slice(2).filter((arg) => !arg.startsWith("--engine="));
+const prismaArgs = process.argv
+  .slice(2)
+  .filter((arg) => !arg.startsWith("--engine="));
 
 if (prismaArgs.length === 0) {
-  throw new Error("Usage: node scripts/run-prisma-command.mjs [--engine=sqlite|postgres] <prisma args>");
+  throw new Error(
+    "Usage: node scripts/run-prisma-command.mjs [--engine=sqlite|postgres] <prisma args>",
+  );
 }
 
 const requestedEngine = engineFlag?.slice("--engine=".length);
@@ -81,8 +93,8 @@ const mergedEnv = {
 };
 const resolvedDatabaseUrl =
   engine === "postgres"
-    ? mergedEnv.DATABASE_URL_POSTGRES ?? mergedEnv.DATABASE_URL
-    : mergedEnv.DATABASE_URL_SQLITE ?? "file:./db.sqlite";
+    ? (mergedEnv.DATABASE_URL_POSTGRES ?? mergedEnv.DATABASE_URL)
+    : (mergedEnv.DATABASE_URL_SQLITE ?? "file:./db.sqlite");
 
 if (!resolvedDatabaseUrl) {
   throw new Error(
@@ -99,7 +111,14 @@ const prismaEnv = {
 };
 const { outputPath } = await composePrismaSchema({ engine });
 const prismaCommand = process.platform === "win32" ? "npm.cmd" : "npm";
-const prismaCommandArgs = ["exec", "--", "prisma", ...prismaArgs, "--schema", outputPath];
+const prismaCommandArgs = [
+  "exec",
+  "--",
+  "prisma",
+  ...prismaArgs,
+  "--schema",
+  outputPath,
+];
 const sanitizedPrismaEnv = Object.fromEntries(
   Object.entries(prismaEnv).filter(
     ([key, value]) => !key.startsWith("=") && typeof value === "string",

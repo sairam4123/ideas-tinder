@@ -3,8 +3,8 @@ import { z } from "zod";
 
 const isProduction = process.env.NODE_ENV === "production";
 const resolvedDatabaseUrl = isProduction
-  ? process.env.DATABASE_URL_POSTGRES ?? process.env.DATABASE_URL
-  : process.env.DATABASE_URL_SQLITE ?? "file:./db.sqlite";
+  ? (process.env.DATABASE_URL_POSTGRES ?? process.env.DATABASE_URL)
+  : (process.env.DATABASE_URL_SQLITE ?? "file:./db.sqlite");
 
 process.env.DATABASE_URL = resolvedDatabaseUrl;
 process.env.DB_PROVIDER = isProduction ? "postgres" : "sqlite";
