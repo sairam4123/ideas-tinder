@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, ArrowRight, Zap, Repeat, Bot, Target } from "lucide-react";
+import { Sparkles, ArrowRight, Zap, Repeat, Bot, Target, Info } from "lucide-react";
 import { motion, useAnimationControls } from "framer-motion";
 import { useEffect, useState } from "react";
+import { SampleDeck } from "./sample-deck";
 
 export default function LandingPage() {
   const [mounted, setMounted] = useState(false);
@@ -116,48 +117,50 @@ export default function LandingPage() {
 
               {/* Card 1 (Front - The Active Card) */}
               <motion.div
-                initial={{ opacity: 0, y: 100, rotate: -10 }}
+                initial={{ opacity: 0, y: 100, rotate: -10, x: 0 }}
                 animate={{
-                  opacity: 1,
-                  y: 0,
-                  rotate: -3
+                  opacity: [0, 1, 1, 1, 0, 0],
+                  y: [100, 0, 0, -200, -200, 100],
+                  x: [0, 0, 0, 300, 300, 0],
+                  rotate: [-10, -3, -3, 20, 20, -10],
+                  scale: [0.95, 1, 1, 1, 1, 0.95]
                 }}
                 transition={{
-                  duration: 0.8,
-                  delay: 0.6,
+                  duration: 5,
                   repeat: Infinity,
-                  repeatType: "reverse",
-                  repeatDelay: 2,
-                  type: "spring", stiffness: 200, damping: 20
+                  times: [0, 0.15, 0.75, 0.95, 0.98, 1],
+                  ease: "easeInOut"
                 }}
                 className="absolute inset-0 bg-background-surface rounded-3xl border-2 border-indigo-100 dark:border-indigo-900/50 shadow-2xl shadow-indigo-500/20 z-20 overflow-hidden flex flex-col"
               >
                 {/* Fake App header */}
                 <div className="w-full bg-background-muted px-6 py-4 border-b border-border flex items-center justify-between">
-                  <div className="h-2 w-16 bg-border rounded-full" />
-                  <div className="h-6 w-6 rounded-full bg-indigo-100 dark:bg-indigo-900/50 flex items-center justify-center">
-                    <Sparkles className="h-3 w-3 text-indigo-600 dark:text-indigo-400" />
+                  <span className="border-border bg-background-surface text-foreground-muted rounded-full border px-3 py-1.5 text-xs font-bold tracking-wide">
+                    1 / 10
+                  </span>
+                  <div className="border-border bg-background-surface text-foreground-muted rounded-full border p-2">
+                    <Info className="h-5 w-5" />
                   </div>
                 </div>
 
                 {/* Fake Idea Content */}
-                <div className="flex-1 p-6 flex flex-col justify-center space-y-6">
-                  <div className="space-y-3">
-                    <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-bold uppercase tracking-wider rounded-lg">
+                <div className="flex-1 p-4 sm:p-6 flex flex-col justify-center space-y-4 sm:space-y-6">
+                  <div className="space-y-2 sm:space-y-3">
+                    <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-lg">
                       SaaS • DevTools
                     </span>
-                    <h3 className="text-2xl font-bold text-foreground leading-tight">
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground leading-tight">
                       AI-Native API Documentation Generator
                     </h3>
                   </div>
-                  <p className="text-foreground-muted font-medium">
+                  <p className="text-foreground-muted text-xs sm:text-sm font-medium line-clamp-3 sm:line-clamp-none">
                     An agent that scans your codebase, identifies all REST/tRPC endpoints, and automatically maintains an interactive, stunning documentation portal without developers writing a single line of markdown.
                   </p>
 
                   {/* Fake tags */}
-                  <div className="flex flex-wrap gap-2 pt-4">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2 sm:pt-4">
                     {["Automation", "B2B", "LLMs"].map((tag) => (
-                      <div key={tag} className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-semibold text-slate-600 dark:text-slate-300">
+                      <div key={tag} className="px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-[10px] sm:text-sm font-semibold text-slate-600 dark:text-slate-300">
                         {tag}
                       </div>
                     ))}
@@ -177,8 +180,17 @@ export default function LandingPage() {
                 {/* Floating "Like" badge overlay (simulated) */}
                 <motion.div
                   initial={{ opacity: 0, rotate: -15, scale: 0.8 }}
-                  animate={{ opacity: [0, 1, 0], x: [0, 20, 40], y: [0, -10, -20] }}
-                  transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, ease: "easeOut" }}
+                  animate={{
+                    opacity: [0, 0, 1, 1, 0, 0],
+                    scale: [0.8, 0.8, 1.2, 1, 1, 0.8],
+                    rotate: [-15, -15, -5, -15, -15, -15]
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    times: [0, 0.65, 0.75, 0.85, 0.95, 1],
+                    ease: "easeInOut"
+                  }}
                   className="absolute top-12 right-6 border-4 border-emerald-500 text-emerald-500 rounded-xl px-4 py-2 font-black text-2xl uppercase tracking-widest backdrop-blur-sm bg-background-surface/50 shadow-xl"
                 >
                   LIKE
@@ -234,6 +246,28 @@ export default function LandingPage() {
               </p>
             </motion.div>
           ))}
+        </div>
+      </div>
+
+      {/* Interactive Sample Section */}
+      <div className="relative z-10 w-full py-24 px-6 mb-24 flex items-center justify-center pt-16">
+        <div className="max-w-4xl mx-auto w-full flex flex-col items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center space-y-4 mb-2"
+          >
+            <h2 className="text-3xl md:text-5xl font-black text-foreground tracking-tight">
+              Try a sample deck.
+            </h2>
+            <p className="text-foreground-muted text-lg font-medium max-w-xl mx-auto">
+              Real swiping mechanics. Drag cards left, right, or top to experience what our app feels like before you sign up.
+            </p>
+          </motion.div>
+          <div className="w-full h-full flex items-center justify-center pt-8">
+            <SampleDeck />
+          </div>
         </div>
       </div>
     </main>

@@ -497,7 +497,18 @@ export const generateFreshStack = async (params: {
     include: {
       items: {
         orderBy: { position: "asc" },
-        include: { idea: true },
+        include: {
+          idea: {
+            include: {
+              field: true,
+              tags: {
+                include: {
+                  tag: true,
+                },
+              },
+            },
+          },
+        },
       },
     },
   });
@@ -523,7 +534,18 @@ export const getOrCreateActiveStack = async (params: {
     include: {
       items: {
         orderBy: { position: "asc" },
-        include: { idea: true },
+        include: {
+          idea: {
+            include: {
+              field: true,
+              tags: {
+                include: {
+                  tag: true,
+                },
+              },
+            },
+          },
+        },
       },
     },
   });

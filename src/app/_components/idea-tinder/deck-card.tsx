@@ -186,7 +186,7 @@ export function DeckCard(props: DeckCardProps) {
             zIndex: 0,
           }
       }
-      className={`border-border bg-background-surface absolute top-0 flex h-112.5 w-full flex-col overflow-hidden rounded-4xl border p-8 shadow-sm ${isTop && !isPlaceholder ? "touch-none" : "pointer-events-none"
+      className={`border-border bg-background-surface absolute top-0 flex h-112.5 w-full flex-col overflow-hidden rounded-3xl sm:rounded-4xl p-6 sm:p-8 shadow-sm ${isTop && !isPlaceholder ? "touch-none" : "pointer-events-none"
         } ${isTop && isIdea && !isPlaceholder ? "relative cursor-grab" : "cursor-default"}`}
     >
       {isIdea ? (
@@ -233,13 +233,31 @@ export function DeckCard(props: DeckCardProps) {
             </Link>
           </div>
 
-          <div className="my-auto flex flex-col pt-4">
-            <h2 className="text-foreground mb-4 line-clamp-3 text-3xl leading-tight font-black tracking-tight transition-all hover:line-clamp-none">
+          <div className="my-auto flex flex-col pt-2 sm:pt-4">
+            {card.stackItem.idea.field ? (
+              <div className="mb-2 sm:mb-3">
+                <span className="inline-block px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider rounded-lg">
+                  {card.stackItem.idea.field.label}
+                </span>
+              </div>
+            ) : null}
+            <h2 className="text-foreground mb-2 sm:mb-4 line-clamp-3 text-2xl sm:text-3xl leading-tight font-black tracking-tight transition-all hover:line-clamp-none">
               {card.stackItem.idea.title}
             </h2>
-            <p className="custom-scrollbar text-foreground-muted max-h-40 overflow-y-auto pr-2 text-base leading-relaxed font-medium">
+            <p className="custom-scrollbar text-foreground-muted line-clamp-4 sm:line-clamp-none sm:max-h-40 overflow-y-auto pr-2 text-sm leading-relaxed font-medium">
               {card.stackItem.idea.description}
             </p>
+
+            {/* Tags array */}
+            {card.stackItem.idea.tags && card.stackItem.idea.tags.length > 0 ? (
+              <div className="flex flex-wrap gap-1.5 sm:gap-2 pt-2 sm:pt-4">
+                {card.stackItem.idea.tags.map((tag) => (
+                  <div key={tag.tagId} className="px-2 sm:px-3 py-1 sm:py-1.5 bg-slate-100 dark:bg-slate-800 rounded-lg text-xs sm:text-sm font-semibold text-slate-600 dark:text-slate-300">
+                    {tag.label}
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           <div className="mt-auto flex flex-col items-center justify-center gap-2 border-t border-border pt-6 text-[10px] font-bold tracking-widest text-foreground-muted uppercase">

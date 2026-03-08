@@ -444,6 +444,16 @@ export const ideaRouter = createTRPCRouter({
             title: item.idea.title,
             description: item.idea.description,
             fieldId: item.idea.fieldId,
+            field: item.idea.field
+              ? {
+                id: item.idea.field.id,
+                label: item.idea.field.label,
+              }
+              : null,
+            tags: item.idea.tags.map((t) => ({
+              tagId: t.tag.id,
+              label: t.tag.label,
+            })),
             createdAt: item.idea.createdAt,
           },
           swipeAction: swipeActionByIdeaId.get(item.idea.id) ?? null,
