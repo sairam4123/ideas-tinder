@@ -14,6 +14,7 @@ import {
 } from "~/server/services/idea/engine";
 import {
   summarizePreferenceVectorFromCorpusWithGemini,
+  compareIdeasWithGemini,
   type CorpusItem,
 } from "~/server/services/idea/gemini";
 import { asVector, cosineSimilarity } from "~/server/services/idea/vector";
@@ -221,7 +222,7 @@ export const ideaRouter = createTRPCRouter({
     const averageSignal =
       vector.length > 0
         ? vector.reduce((sum, value) => sum + Math.abs(value), 0) /
-        vector.length
+          vector.length
         : 0;
 
     let summary = buildFallbackPreferenceSummary({
@@ -432,7 +433,6 @@ export const ideaRouter = createTRPCRouter({
       }
 
       return {
-
         id: stack.id,
         expiresAt: stack.expiresAt,
         ideaCount: stack.items.length,
@@ -446,9 +446,9 @@ export const ideaRouter = createTRPCRouter({
             fieldId: item.idea.fieldId,
             field: item.idea.field
               ? {
-                id: item.idea.field.id,
-                label: item.idea.field.label,
-              }
+                  id: item.idea.field.id,
+                  label: item.idea.field.label,
+                }
               : null,
             tags: item.idea.tags.map((t) => ({
               tagId: t.tag.id,
@@ -850,18 +850,18 @@ export const ideaRouter = createTRPCRouter({
       const navigation =
         currentStackIndex >= 0
           ? {
-            stackId: lastStack!.id,
-            currentPosition: currentStackIndex + 1,
-            totalIdeas: stackItems.length,
-            previousIdeaId:
-              currentStackIndex > 0
-                ? (stackItems[currentStackIndex - 1]?.ideaId ?? null)
-                : null,
-            nextIdeaId:
-              currentStackIndex < stackItems.length - 1
-                ? (stackItems[currentStackIndex + 1]?.ideaId ?? null)
-                : null,
-          }
+              stackId: lastStack!.id,
+              currentPosition: currentStackIndex + 1,
+              totalIdeas: stackItems.length,
+              previousIdeaId:
+                currentStackIndex > 0
+                  ? (stackItems[currentStackIndex - 1]?.ideaId ?? null)
+                  : null,
+              nextIdeaId:
+                currentStackIndex < stackItems.length - 1
+                  ? (stackItems[currentStackIndex + 1]?.ideaId ?? null)
+                  : null,
+            }
           : null;
 
       const lastAction = latestSwipe?.action ?? null;
@@ -906,6 +906,44 @@ export const ideaRouter = createTRPCRouter({
         navigation,
         relatedIdeas,
         lastStackId: lastStack?.id ?? "",
+      };
+    }),
+
+  compare: protectedProcedure
+    .input(z.object({ ideaId1: z.string(), ideaId2: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const [idea1, idea2] = await Promise.all([
+        ctx.db.idea.findUnique({
+          where: { id: input.ideaId1 },
+          include: { field: true },
+        }),
+        ctx.db.idea.findUnique({
+          where: { id: input.ideaId2 },
+          include: { field: true },
+        }),
+      ]);
+
+      if (!idea1 || !idea2) {
+        throw new Error("One or both ideas not found");
+      }
+
+      const comparison = await compareIdeasWithGemini({
+        idea1: {
+          title: idea1.title,
+          description: idea1.description,
+          field: idea1.field?.label ?? "General",
+        },
+        idea2: {
+          title: idea2.title,
+          description: idea2.description,
+          field: idea2.field?.label ?? "General",
+        },
+      });
+
+      return {
+        idea1,
+        idea2,
+        comparison,
       };
     }),
 });

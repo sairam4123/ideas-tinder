@@ -11,6 +11,7 @@ import {
   X,
   Heart,
   Star,
+  ArrowRightLeft,
 } from "lucide-react";
 
 import { SessionGuard } from "~/app/_components/session-guard";
@@ -43,6 +44,11 @@ function IdeaDetailsContent() {
 
   const detailsQuery = api.idea.getIdeaDetails.useQuery({ ideaId });
   const swipeMutation = api.idea.swipeIdea.useMutation();
+  const getFavoritesQuery = api.idea.getFavorites.useQuery();
+
+  const [compareMode, setCompareMode] = useState(false);
+  const [selectedCompareId, setSelectedCompareId] = useState("");
+
   const [navigationTrail, setNavigationTrail] = useState<NavigationTrailItem[]>(
     [],
   );
@@ -75,10 +81,14 @@ function IdeaDetailsContent() {
 
     // As requested: left swipe -> previous idea, right swipe -> next idea
     if (isLeftSwipe && detailsQuery.data?.navigation?.previousIdeaId) {
-      router.push(`/ideas/${detailsQuery.data.navigation.previousIdeaId}${sourceParam}`);
+      router.push(
+        `/ideas/${detailsQuery.data.navigation.previousIdeaId}${sourceParam}`,
+      );
     }
     if (isRightSwipe && detailsQuery.data?.navigation?.nextIdeaId) {
-      router.push(`/ideas/${detailsQuery.data.navigation.nextIdeaId}${sourceParam}`);
+      router.push(
+        `/ideas/${detailsQuery.data.navigation.nextIdeaId}${sourceParam}`,
+      );
     }
   };
 
@@ -112,11 +122,11 @@ function IdeaDetailsContent() {
 
   if (detailsQuery.isPending) {
     return (
-      <main className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 bg-background px-4 py-8">
+      <main className="bg-background mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 px-4 py-8">
         <div>
           <div className="skeleton mb-6 h-5 w-32 rounded-lg" />
 
-          <section className="mb-4 rounded-2xl border border-border bg-background-surface p-4 shadow-sm">
+          <section className="border-border bg-background-surface mb-4 rounded-2xl border p-4 shadow-sm">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="skeleton h-5 w-60 rounded-lg" />
               <div className="flex gap-2">
@@ -131,7 +141,7 @@ function IdeaDetailsContent() {
             </div>
           </section>
 
-          <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+          <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
             <div className="mb-6 flex flex-wrap gap-2">
               <div className="skeleton h-6 w-28 rounded-full" />
               <div className="skeleton h-6 w-36 rounded-full" />
@@ -142,7 +152,7 @@ function IdeaDetailsContent() {
               <div className="skeleton h-5 w-11/12 rounded-lg" />
               <div className="skeleton h-5 w-4/5 rounded-lg" />
             </div>
-            <div className="mt-10 flex flex-wrap gap-3 border-t border-border pt-8">
+            <div className="border-border mt-10 flex flex-wrap gap-3 border-t pt-8">
               <div className="skeleton h-12 w-24 rounded-xl" />
               <div className="skeleton h-12 w-24 rounded-xl" />
               <div className="skeleton h-12 w-28 rounded-xl" />
@@ -150,22 +160,22 @@ function IdeaDetailsContent() {
           </section>
         </div>
 
-        <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+        <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
           <div className="skeleton mb-6 h-7 w-36 rounded-lg" />
-          <div className="rounded-2xl border border-border bg-background-muted p-6">
+          <div className="border-border bg-background-muted rounded-2xl border p-6">
             <div className="skeleton mb-5 h-5 w-48 rounded-lg" />
             <div className="skeleton mb-5 h-3 w-full rounded-full" />
             <div className="skeleton h-4 w-2/3 rounded-lg" />
           </div>
         </section>
 
-        <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+        <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
           <div className="skeleton mb-6 h-7 w-56 rounded-lg" />
           <div className="grid gap-3 sm:grid-cols-2">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="rounded-xl border border-border bg-background-muted p-4"
+                className="border-border bg-background-muted rounded-xl border p-4"
               >
                 <div className="skeleton mb-2 h-5 w-1/2 rounded-lg" />
                 <div className="skeleton mb-2 h-4 w-3/5 rounded-lg" />
@@ -175,13 +185,13 @@ function IdeaDetailsContent() {
           </div>
         </section>
 
-        <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+        <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
           <div className="skeleton mb-6 h-7 w-40 rounded-lg" />
           <div className="grid gap-4 sm:grid-cols-2">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="rounded-2xl border border-border bg-background-muted p-6"
+                className="border-border bg-background-muted rounded-2xl border p-6"
               >
                 <div className="skeleton mb-2 h-5 w-4/5 rounded-lg" />
                 <div className="skeleton mb-4 h-4 w-full rounded-lg" />
@@ -196,17 +206,17 @@ function IdeaDetailsContent() {
 
   if (!detailsQuery.data) {
     return (
-      <main className="flex min-h-[calc(100vh-73px)] items-center justify-center bg-background px-4">
+      <main className="bg-background flex min-h-[calc(100vh-73px)] items-center justify-center px-4">
         <div className="flex flex-col items-center gap-4 text-center">
-          <h2 className="text-3xl font-black tracking-tight text-foreground-surface">
+          <h2 className="text-foreground-surface text-3xl font-black tracking-tight">
             Idea not found
           </h2>
-          <p className="font-medium text-foreground-muted">
+          <p className="text-foreground-muted font-medium">
             We couldn&apos;t locate the details for this idea.
           </p>
           <Link
             href="/"
-            className="mt-4 rounded-xl bg-foreground px-6 py-3 font-bold text-white transition-all hover:scale-105"
+            className="bg-foreground mt-4 rounded-xl px-6 py-3 font-bold text-white transition-all hover:scale-105"
           >
             Back to Deck
           </Link>
@@ -225,7 +235,7 @@ function IdeaDetailsContent() {
 
   return (
     <main
-      className="mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 bg-background px-4 py-8 overflow-x-hidden"
+      className="bg-background mx-auto min-h-[calc(100vh-73px)] w-full max-w-4xl space-y-8 overflow-x-hidden px-4 py-8"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -233,14 +243,14 @@ function IdeaDetailsContent() {
       <div>
         <Link
           href={backHref}
-          className="mb-6 inline-flex items-center gap-2 text-sm font-bold text-foreground-muted transition-colors hover:text-foreground"
+          className="text-foreground-muted hover:text-foreground mb-6 inline-flex items-center gap-2 text-sm font-bold transition-colors"
         >
           <ArrowLeft className="h-4 w-4" /> {backLabel}
         </Link>
 
-        <section className="mb-4 rounded-2xl border border-border bg-background-surface p-4 shadow-sm">
+        <section className="border-border bg-background-surface mb-4 rounded-2xl border p-4 shadow-sm">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="text-sm font-semibold text-foreground-surface">
+            <div className="text-foreground-surface text-sm font-semibold">
               {data.navigation
                 ? `Stack navigation: ${data.navigation.currentPosition} / ${data.navigation.totalIdeas}`
                 : "Stack navigation: unavailable for this idea"}
@@ -249,7 +259,7 @@ function IdeaDetailsContent() {
               {data.navigation?.previousIdeaId ? (
                 <Link
                   href={`/ideas/${data.navigation.previousIdeaId}${sourceParam}`}
-                  className="rounded-lg border border-border bg-background-surface px-3 py-1.5 text-xs font-semibold text-foreground-surface hover:border-slate-300"
+                  className="border-border bg-background-surface text-foreground-surface rounded-lg border px-3 py-1.5 text-xs font-semibold hover:border-slate-300"
                 >
                   Previous
                 </Link>
@@ -257,7 +267,7 @@ function IdeaDetailsContent() {
               {data.navigation?.nextIdeaId ? (
                 <Link
                   href={`/ideas/${data.navigation.nextIdeaId}${sourceParam}`}
-                  className="rounded-lg border border-border bg-background-surface px-3 py-1.5 text-xs font-semibold text-foreground-surface hover:border-slate-300"
+                  className="border-border bg-background-surface text-foreground-surface rounded-lg border px-3 py-1.5 text-xs font-semibold hover:border-slate-300"
                 >
                   Next
                 </Link>
@@ -270,7 +280,7 @@ function IdeaDetailsContent() {
                 <Link
                   key={`trail-${entry.id}`}
                   href={`/ideas/${entry.id}${sourceParam}`}
-                  className="max-w-48 truncate rounded-full border border-border bg-background-muted px-2.5 py-1 text-xs font-medium text-foreground-muted hover:border-slate-300"
+                  className="border-border bg-background-muted text-foreground-muted max-w-48 truncate rounded-full border px-2.5 py-1 text-xs font-medium hover:border-slate-300"
                   title={entry.title}
                 >
                   {entry.title}
@@ -280,17 +290,17 @@ function IdeaDetailsContent() {
           ) : null}
         </section>
 
-        <section className="relative overflow-hidden rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
-          <div className="pointer-events-none absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full bg-primary-soft dark:bg-primary/10 blur-3xl" />
+        <section className="border-border bg-background-surface relative overflow-hidden rounded-3xl border p-8 shadow-sm">
+          <div className="bg-primary-soft dark:bg-primary/10 pointer-events-none absolute top-0 right-0 -mt-20 -mr-20 h-64 w-64 rounded-full blur-3xl" />
 
           <div className="relative z-10">
             <div className="mb-6 flex flex-wrap items-center gap-2">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary-soft px-3 py-1 text-xs font-bold tracking-wide text-primary uppercase">
+              <div className="border-primary/20 bg-primary-soft text-primary inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-bold tracking-wide uppercase">
                 <Layers className="h-4 w-4" />
                 <span>{data.idea.field ?? "Discovery"}</span>
               </div>
               {data.interactionStatus.lastActionAt ? (
-                <span className="rounded-full border border-border bg-background-muted px-3 py-1 text-xs font-medium text-foreground-muted">
+                <span className="border-border bg-background-muted text-foreground-muted rounded-full border px-3 py-1 text-xs font-medium">
                   Last action{" "}
                   {new Date(
                     data.interactionStatus.lastActionAt,
@@ -299,19 +309,20 @@ function IdeaDetailsContent() {
               ) : null}
             </div>
 
-            <h1 className="text-4xl leading-tight font-black tracking-tight text-foreground">
+            <h1 className="text-foreground text-4xl leading-tight font-black tracking-tight">
               {data.idea.title}
             </h1>
-            <p className="mt-6 text-lg leading-relaxed font-medium text-foreground-muted">
+            <p className="text-foreground-muted mt-6 text-lg leading-relaxed font-medium">
               {data.idea.description}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-4 border-t border-slate-100 pt-8">
               <button
-                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${data.interactionStatus.isDisliked
-                  ? "border-danger/30 bg-danger-soft text-danger"
-                  : "border-border bg-background-surface text-foreground-muted hover:border-danger/30 hover:bg-danger-soft hover:text-danger"
-                  }`}
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
+                  data.interactionStatus.isDisliked
+                    ? "border-danger/30 bg-danger-soft text-danger"
+                    : "border-border bg-background-surface text-foreground-muted hover:border-danger/30 hover:bg-danger-soft hover:text-danger"
+                }`}
                 onClick={() => {
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
@@ -319,7 +330,9 @@ function IdeaDetailsContent() {
                     direction: "left",
                   });
                   if (data.navigation?.nextIdeaId) {
-                    router.push(`/ideas/${data.navigation.nextIdeaId}${sourceParam}`);
+                    router.push(
+                      `/ideas/${data.navigation.nextIdeaId}${sourceParam}`,
+                    );
                   } else {
                     router.push(backHref);
                   }
@@ -331,10 +344,11 @@ function IdeaDetailsContent() {
                 {data.interactionStatus.isDisliked ? "Disliked" : "Dislike"}
               </button>
               <button
-                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${data.interactionStatus.isLiked
-                  ? "border-success/30 bg-success-soft text-success"
-                  : "border-border bg-background-surface text-foreground-muted hover:border-success/30 hover:bg-success-soft hover:text-success"
-                  }`}
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
+                  data.interactionStatus.isLiked
+                    ? "border-success/30 bg-success-soft text-success"
+                    : "border-border bg-background-surface text-foreground-muted hover:border-success/30 hover:bg-success-soft hover:text-success"
+                }`}
                 onClick={() => {
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
@@ -342,7 +356,9 @@ function IdeaDetailsContent() {
                     direction: "right",
                   });
                   if (data.navigation?.nextIdeaId) {
-                    router.push(`/ideas/${data.navigation.nextIdeaId}${sourceParam}`);
+                    router.push(
+                      `/ideas/${data.navigation.nextIdeaId}${sourceParam}`,
+                    );
                   } else {
                     router.push(backHref);
                   }
@@ -354,10 +370,11 @@ function IdeaDetailsContent() {
                 {data.interactionStatus.isLiked ? "Liked" : "Like"}
               </button>
               <button
-                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${data.interactionStatus.isFavorited
-                  ? "border-info/30 bg-info-soft text-info"
-                  : "border-border bg-background-surface text-foreground-muted hover:border-info/30 hover:bg-info-soft hover:text-info"
-                  }`}
+                className={`group flex flex-1 items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:opacity-50 sm:flex-none ${
+                  data.interactionStatus.isFavorited
+                    ? "border-info/30 bg-info-soft text-info"
+                    : "border-border bg-background-surface text-foreground-muted hover:border-info/30 hover:bg-info-soft hover:text-info"
+                }`}
                 onClick={() => {
                   swipeMutation.mutate({
                     stackId: data.lastStackId,
@@ -365,7 +382,9 @@ function IdeaDetailsContent() {
                     direction: "top",
                   });
                   if (data.navigation?.nextIdeaId) {
-                    router.push(`/ideas/${data.navigation.nextIdeaId}${sourceParam}`);
+                    router.push(
+                      `/ideas/${data.navigation.nextIdeaId}${sourceParam}`,
+                    );
                   } else {
                     router.push(backHref);
                   }
@@ -387,24 +406,109 @@ function IdeaDetailsContent() {
         </section>
       </div>
 
-      <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+      {/* Compare Section */}
+      <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="rounded-xl bg-orange-100 p-2">
+              <ArrowRightLeft className="h-6 w-6 text-orange-600" />
+            </div>
+            <div>
+              <h2 className="text-foreground text-2xl font-black tracking-tight">
+                Compare Idea
+              </h2>
+              <p className="text-foreground-muted mt-1 text-sm">
+                See how this idea stacks up against your favorites.
+              </p>
+            </div>
+          </div>
+          {!compareMode ? (
+            <button
+              onClick={() => setCompareMode(true)}
+              className="group border-primary/30 bg-primary/10 text-primary hover:bg-primary/20 flex items-center justify-center gap-2 rounded-xl border-2 px-5 py-3 font-bold shadow-sm transition-all active:scale-95"
+            >
+              <ArrowRightLeft className="h-5 w-5" />
+              Compare
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                setCompareMode(false);
+                setSelectedCompareId("");
+              }}
+              className="text-foreground-muted hover:text-foreground rounded-full p-2 hover:bg-black/5 dark:hover:bg-white/10"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          )}
+        </div>
+
+        {compareMode && (
+          <div className="mt-6 flex flex-col gap-4 sm:flex-row">
+            <div className="flex-1">
+              <select
+                value={selectedCompareId}
+                onChange={(e) => setSelectedCompareId(e.target.value)}
+                className="border-border bg-background-muted text-foreground focus:border-primary focus:ring-primary w-full rounded-xl border px-4 py-3 text-sm focus:ring-1 focus:outline-none"
+              >
+                <option value="" disabled>
+                  Select a favorited idea...
+                </option>
+                {getFavoritesQuery.data
+                  ?.filter((f) => f.idea.id !== ideaId)
+                  .map((favorite) => (
+                    <option key={favorite.idea.id} value={favorite.idea.id}>
+                      {favorite.idea.title}
+                    </option>
+                  ))}
+              </select>
+              {getFavoritesQuery.isLoading && (
+                <p className="text-foreground-muted mt-2 animate-pulse text-xs">
+                  Loading favorites...
+                </p>
+              )}
+              {getFavoritesQuery.data?.length === 0 && (
+                <p className="mt-2 text-xs text-amber-500">
+                  You need to favorite some ideas first.
+                </p>
+              )}
+            </div>
+            <button
+              onClick={() => {
+                if (selectedCompareId) {
+                  router.push(
+                    `/ideas/compare?id1=${ideaId}&id2=${selectedCompareId}`,
+                  );
+                }
+              }}
+              disabled={!selectedCompareId}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2 rounded-xl px-6 py-3 font-bold shadow-sm transition-all active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+            >
+              Let&apos;s Compare
+              <ArrowRightLeft className="h-4 w-4" />
+            </button>
+          </div>
+        )}
+      </section>
+
+      <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
           <div className="rounded-xl bg-purple-100 p-2">
             <Target className="h-6 w-6 text-purple-600" />
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-foreground">
+          <h2 className="text-foreground text-2xl font-black tracking-tight">
             AI Analysis
           </h2>
         </div>
-        <div className="space-y-4 rounded-2xl border border-border bg-background-muted p-6">
+        <div className="border-border bg-background-muted space-y-4 rounded-2xl border p-6">
           <div>
-            <span className="mb-2 block text-xs font-bold tracking-wider text-foreground-muted uppercase">
+            <span className="text-foreground-muted mb-2 block text-xs font-bold tracking-wider uppercase">
               Vector Similarity Factor
             </span>
             <div className="flex items-center gap-4">
-              <div className="relative h-3 w-full overflow-hidden rounded-full bg-background-surface border border-border">
+              <div className="bg-background-surface border-border relative h-3 w-full overflow-hidden rounded-full border">
                 {/* Center marker */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-5 w-1.5 rounded-full bg-slate-400 dark:bg-slate-500 shadow-sm z-10 border-2 border-background-surface" />
+                <div className="border-background-surface absolute top-1/2 left-1/2 z-10 h-5 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 bg-slate-400 shadow-sm dark:bg-slate-500" />
                 <div
                   className={`absolute top-0 bottom-0 rounded-full ${data.preferenceImpact.similarity >= 0 ? "bg-success" : "bg-danger"}`}
                   style={{
@@ -413,28 +517,28 @@ function IdeaDetailsContent() {
                   }}
                 />
               </div>
-              <span className="text-sm font-bold text-foreground-surface">
+              <span className="text-foreground-surface text-sm font-bold">
                 {data.preferenceImpact.similarity.toFixed(3)}
               </span>
             </div>
           </div>
           <div className="border-t border-slate-200 pt-4">
-            <span className="mb-2 block text-xs font-bold tracking-wider text-foreground-muted uppercase">
+            <span className="text-foreground-muted mb-2 block text-xs font-bold tracking-wider uppercase">
               Impact Summary
             </span>
-            <p className="leading-relaxed font-medium text-foreground-surface">
+            <p className="text-foreground-surface leading-relaxed font-medium">
               {data.preferenceImpact.summary}
             </p>
           </div>
         </div>
       </section>
 
-      <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+      <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
           <div className="rounded-xl bg-indigo-100 p-2">
             <Layers className="h-6 w-6 text-indigo-600" />
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-foreground">
+          <h2 className="text-foreground text-2xl font-black tracking-tight">
             Profile Tag Contributions
           </h2>
         </div>
@@ -442,51 +546,51 @@ function IdeaDetailsContent() {
           {data.profileTagContributions.map((item) => (
             <div
               key={`contribution-${item.tagId}`}
-              className="rounded-xl border border-border bg-background-muted p-4"
+              className="border-border bg-background-muted rounded-xl border p-4"
             >
-              <p className="text-sm font-bold text-foreground">
+              <p className="text-foreground text-sm font-bold">
                 {item.tagLabel}
               </p>
-              <p className="mt-1 text-xs text-foreground-muted">
+              <p className="text-foreground-muted mt-1 text-xs">
                 contribution {item.contribution.toFixed(3)}
               </p>
-              <p className="mt-1 text-[11px] text-foreground-muted">
+              <p className="text-foreground-muted mt-1 text-[11px]">
                 idea tag {item.ideaTagWeight.toFixed(2)} × profile tag{" "}
                 {item.userTagWeight.toFixed(2)}
               </p>
             </div>
           ))}
           {data.profileTagContributions.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-border p-4 text-sm text-foreground-muted sm:col-span-2">
+            <p className="border-border text-foreground-muted rounded-xl border border-dashed p-4 text-sm sm:col-span-2">
               No tag-level contribution data is available for this idea.
             </p>
           ) : null}
         </div>
       </section>
 
-      <section className="rounded-3xl border border-border bg-background-surface p-8 shadow-sm">
+      <section className="border-border bg-background-surface rounded-3xl border p-8 shadow-sm">
         <div className="mb-6 flex items-center gap-3">
           <div className="rounded-xl bg-blue-100 p-2">
             <Sparkles className="h-6 w-6 text-blue-600" />
           </div>
-          <h2 className="text-2xl font-black tracking-tight text-foreground">
+          <h2 className="text-foreground text-2xl font-black tracking-tight">
             Related Ideas
           </h2>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           {data.relatedIdeas.map((relatedIdea) => (
             <article
-              className="flex flex-col rounded-2xl border border-border bg-background-muted/70 p-6 transition-all hover:border-slate-200 hover:bg-background-surface"
+              className="border-border bg-background-muted/70 hover:bg-background-surface flex flex-col rounded-2xl border p-6 transition-all hover:border-slate-200"
               key={relatedIdea.id}
             >
-              <h3 className="mb-2 line-clamp-2 font-bold text-foreground">
+              <h3 className="text-foreground mb-2 line-clamp-2 font-bold">
                 {relatedIdea.title}
               </h3>
-              <p className="mb-4 line-clamp-3 grow text-sm font-medium text-foreground-muted">
+              <p className="text-foreground-muted mb-4 line-clamp-3 grow text-sm font-medium">
                 {relatedIdea.description}
               </p>
               <Link
-                className="mt-auto inline-block text-sm font-bold text-primary hover:text-indigo-400"
+                className="text-primary mt-auto inline-block text-sm font-bold hover:text-indigo-400"
                 href={`/ideas/${relatedIdea.id}${sourceParam}`}
               >
                 Explore &rarr;
@@ -494,7 +598,7 @@ function IdeaDetailsContent() {
             </article>
           ))}
           {data.relatedIdeas.length === 0 ? (
-            <p className="col-span-2 rounded-2xl border-2 border-dashed border-border p-6 text-center text-sm font-medium text-foreground-muted">
+            <p className="border-border text-foreground-muted col-span-2 rounded-2xl border-2 border-dashed p-6 text-center text-sm font-medium">
               No closely related ideas found in your historical stack.
             </p>
           ) : null}

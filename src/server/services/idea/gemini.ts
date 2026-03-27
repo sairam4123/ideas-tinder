@@ -378,3 +378,62 @@ export const embedManyTextsWithGemini = async (texts: string[]) => {
   }
   return vectors;
 };
+
+export const compareIdeasWithGemini = async (params: {
+  idea1: { title: string; description: string; field: string };
+  idea2: { title: string; description: string; field: string };
+}) => {
+  const prompt = `Compare these two startup ideas side-by-side and provide a detailed analysis.
+
+IDEA 1:
+Title: ${params.idea1.title}
+Description: ${params.idea1.description}
+Field: ${params.idea1.field}
+
+IDEA 2:
+Title: ${params.idea2.title}
+Description: ${params.idea2.description}
+Field: ${params.idea2.field}
+
+Provide a comparison in this JSON format:
+{
+  "similarities": ["..."],
+  "differences": ["..."],
+  "idea1_strengths": ["..."],
+  "idea2_strengths": ["..."],
+  "idea1_challenges": ["..."],
+  "idea2_challenges": ["..."],
+  "recommendation": "..."
+}`;
+
+  type CompareResponse = {
+    candidates?: Array<{
+      content?: {
+        parts?: Array<{ text?: string }>;
+      };
+    }>;
+  };
+
+  const response = await geminiRequest<CompareResponse>("generateContent", {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.7,
+      responseMimeType: "application/json",
+    },
+  });
+
+  const text =
+    response.candidates?.[0]?.content?.parts
+      ?.map((part) => part.text ?? "")
+      .join("\n") ?? "{}";
+
+  return JSON.parse(text) as {
+    similarities: string[];
+    differences: string[];
+    idea1_strengths: string[];
+    idea2_strengths: string[];
+    idea1_challenges: string[];
+    idea2_challenges: string[];
+    recommendation: string;
+  };
+};
